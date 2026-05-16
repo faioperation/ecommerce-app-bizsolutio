@@ -4,6 +4,7 @@ import '../controllers/auth_controller.dart';
 import '../controllers/login_controller.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/constants/app_images.dart';
 
 class LoginScreen extends StatelessWidget {
   final UserRole role;
@@ -29,11 +30,7 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(
-                    role == UserRole.buyer ? Icons.shopping_bag : Icons.storefront,
-                    size: 80,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  Image.asset(AppImages.logo, height: 100),
                   const SizedBox(height: 32),
                   Text(
                     'Welcome Back!',

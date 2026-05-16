@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../controllers/register_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/constants/app_images.dart';
 
 class BuyerRegisterScreen extends StatelessWidget {
   const BuyerRegisterScreen({super.key});
@@ -21,7 +22,7 @@ class BuyerRegisterScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Icon(Icons.person_add_outlined, size: 64, color: AppColors.primary),
+                Image.asset(AppImages.logo, height: 80),
                 const SizedBox(height: 24),
                 Text('Create an Account', style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
                 const SizedBox(height: 24),
