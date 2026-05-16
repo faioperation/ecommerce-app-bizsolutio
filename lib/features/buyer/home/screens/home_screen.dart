@@ -5,8 +5,8 @@ import '../../../../routes/app_routes.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/home_widgets.dart';
 import '../widgets/feed_card.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/theme_controller.dart';
 
 class BuyerHomeScreen extends StatelessWidget {
   const BuyerHomeScreen({super.key});
@@ -16,19 +16,34 @@ class BuyerHomeScreen extends StatelessWidget {
     final controller = Get.put(HomeController());
 
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
         title: Text(
           'ShopLive',
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold, color: AppColors.lightTextPrimary),
+          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.onSurface
+          ),
         ),
         actions: [
+          Obx(() {
+            final themeController = Get.find<ThemeController>();
+            return IconButton(
+              icon: Icon(
+                themeController.themeMode.value == ThemeMode.dark
+                    ? Icons.light_mode_outlined
+                    : Icons.dark_mode_outlined,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+              onPressed: () => themeController.toggleTheme(),
+            );
+          }),
           IconButton(
-            icon: const Badge(
-              label: Text('2'),
-              child: Icon(Icons.notifications_outlined, color: AppColors.lightTextPrimary),
+            icon: Badge(
+              label: const Text('2'),
+              child: Icon(Icons.notifications_outlined, color: Theme.of(context).colorScheme.onSurface),
             ),
             onPressed: () {},
           ),

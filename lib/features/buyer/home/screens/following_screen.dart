@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../controllers/following_controller.dart';
 import '../widgets/following_card.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 
 class FollowingScreen extends StatelessWidget {
@@ -14,24 +13,24 @@ class FollowingScreen extends StatelessWidget {
     final controller = Get.put(FollowingController());
 
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.lightTextPrimary),
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
-        title: const Text(
+        title: Text(
           'Following',
-          style: TextStyle(color: AppColors.lightTextPrimary, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
         ),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
-        
+
         return ListView.builder(
           padding: AppSpacing.edgeInsetsAllLg,
           itemCount: controller.followingContent.length,

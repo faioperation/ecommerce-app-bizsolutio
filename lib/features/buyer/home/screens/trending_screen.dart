@@ -14,21 +14,21 @@ class TrendingScreen extends StatelessWidget {
     final controller = Get.put(TrendingController());
 
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.lightTextPrimary),
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
-        title: const Row(
+        title: Row(
           children: [
-            Icon(Icons.trending_up, color: AppColors.primary),
-            SizedBox(width: 12),
+            const Icon(Icons.trending_up, color: AppColors.primary),
+            const SizedBox(width: 12),
             Text(
               'Trending Now',
-              style: TextStyle(color: AppColors.lightTextPrimary, fontWeight: FontWeight.bold),
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -89,7 +89,7 @@ class TrendingScreen extends StatelessWidget {
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 24),
 
             Obx(() => GridView.builder(

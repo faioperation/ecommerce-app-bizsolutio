@@ -14,24 +14,24 @@ class LiveListScreen extends StatelessWidget {
     final controller = Get.put(LiveListController());
 
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.lightTextPrimary),
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Live Shopping',
-              style: TextStyle(color: AppColors.lightTextPrimary, fontWeight: FontWeight.bold, fontSize: 20),
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 20),
             ),
             Obx(() => Text(
               '${controller.liveStreams.length} live streams now',
-              style: const TextStyle(color: AppColors.lightTextSecondary, fontSize: 13),
+              style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6), fontSize: 13),
             )),
           ],
         ),
@@ -61,7 +61,7 @@ class LiveListScreen extends StatelessWidget {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
-        
+
         return ListView.builder(
           padding: AppSpacing.edgeInsetsAllLg,
           itemCount: controller.liveStreams.length,
