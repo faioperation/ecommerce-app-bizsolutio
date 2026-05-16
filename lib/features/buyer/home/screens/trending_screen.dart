@@ -18,10 +18,7 @@ class TrendingScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
-          onPressed: () => context.pop(),
-        ),
+        leading: const BackButton(),
         title: Flexible(
           child: Row(
             children: [
@@ -43,60 +40,60 @@ class TrendingScreen extends StatelessWidget {
         child: Column(
           children: [
 
-            Container(
-              width: double.infinity,
-              padding: AppSpacing.edgeInsetsAllLg,
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF6C4DFF), Color(0xFFFF4FD8)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: AppSpacing.borderRadiusLg,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Row(
-                      children: [
-                        Icon(Icons.flash_on, color: Colors.white),
-                        SizedBox(width: 8),
-                        Text(
-                          'Flash Sale',
-                          style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'Ending in 2h 45m',
-                    style: TextStyle(color: Colors.white70, fontSize: 14),
-                  ),
-                  const SizedBox(height: 16),
-                  Obx(() {
-                    final parts = controller.countdownTime.split(':');
-                    return Row(
-                      children: [
-                        _buildTimerBlock(parts[0]),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4),
-                          child: Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        ),
-                        _buildTimerBlock(parts[1]),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4),
-                          child: Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        ),
-                        _buildTimerBlock(parts[2]),
-                      ],
-                    );
-                  }),
-                ],
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   padding: AppSpacing.edgeInsetsAllLg,
+            //   decoration: BoxDecoration(
+            //     gradient: const LinearGradient(
+            //       colors: [Color(0xFF6C4DFF), Color(0xFFFF4FD8)],
+            //       begin: Alignment.topLeft,
+            //       end: Alignment.bottomRight,
+            //     ),
+            //     borderRadius: AppSpacing.borderRadiusLg,
+            //   ),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       const FittedBox(
+            //         fit: BoxFit.scaleDown,
+            //         child: Row(
+            //           children: [
+            //             Icon(Icons.flash_on, color: Colors.white),
+            //             SizedBox(width: 8),
+            //             Text(
+            //               'Flash Sale',
+            //               style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //       const SizedBox(height: 8),
+            //       const Text(
+            //         'Ending in 2h 45m',
+            //         style: TextStyle(color: Colors.white70, fontSize: 14),
+            //       ),
+            //       const SizedBox(height: 16),
+            //       Obx(() {
+            //         final parts = controller.countdownTime.split(':');
+            //         return Row(
+            //           children: [
+            //             _buildTimerBlock(parts[0]),
+            //             const Padding(
+            //               padding: EdgeInsets.symmetric(horizontal: 4),
+            //               child: Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            //             ),
+            //             _buildTimerBlock(parts[1]),
+            //             const Padding(
+            //               padding: EdgeInsets.symmetric(horizontal: 4),
+            //               child: Text(':', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            //             ),
+            //             _buildTimerBlock(parts[2]),
+            //           ],
+            //         );
+            //       }),
+            //     ],
+            //   ),
+            // ),
 
             const SizedBox(height: 24),
 

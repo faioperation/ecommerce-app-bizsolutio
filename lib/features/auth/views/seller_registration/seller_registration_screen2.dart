@@ -16,10 +16,7 @@ class SellerRegistrationScreen2 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Business Info'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
+        leading: const BackButton(),
       ),
       body: SingleChildScrollView(
         padding: AppSpacing.edgeInsetsAllLg,

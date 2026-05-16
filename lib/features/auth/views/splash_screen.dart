@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToNext() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 10));
     if (mounted) {
       final authController = Get.find<AuthController>();
       if (!authController.isAuthenticated.value) {
@@ -32,18 +32,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: AppColors.primary,
+      backgroundColor: isDark ? Theme.of(context).scaffoldBackgroundColor : AppColors.primary,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.shopping_bag_outlined, size: 80, color: Colors.white),
+            Icon(Icons.shopping_bag_outlined, size: 80, color: isDark ? AppColors.primary : Colors.white),
             const SizedBox(height: 16),
             Text(
-              'Vango Live',
+              'BizSolutio',
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                color: Colors.white,
+                color: isDark ? Theme.of(context).colorScheme.onSurface : Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -51,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Text(
               'Your Social Commerce Hub',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Colors.white70,
+                color: isDark ? Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7) : Colors.white70,
               ),
             ),
           ],

@@ -106,6 +106,9 @@ class AppTheme {
         type: BottomNavigationBarType.fixed,
         elevation: 8,
       ),
+      actionIconTheme: ActionIconThemeData(
+        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new),
+      ),
     );
   }
 
@@ -207,6 +210,9 @@ class AppTheme {
         unselectedItemColor: AppColors.darkTextSecondary,
         type: BottomNavigationBarType.fixed,
         elevation: 8,
+      ),
+      actionIconTheme: ActionIconThemeData(
+        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new),
       ),
     );
   }

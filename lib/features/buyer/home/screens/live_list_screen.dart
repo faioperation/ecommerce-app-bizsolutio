@@ -18,10 +18,7 @@ class LiveListScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
-          onPressed: () => context.pop(),
-        ),
+        leading: const BackButton(),
         title: Flexible(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

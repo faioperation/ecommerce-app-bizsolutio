@@ -16,10 +16,7 @@ class SellerRegistrationScreen5 extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Payment Setup'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
+        leading: const BackButton(),
         actions: [
           TextButton(
             onPressed: () => _showSuccessDialog(context, controller),

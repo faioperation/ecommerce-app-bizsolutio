@@ -12,32 +12,31 @@ class SellerRegistrationScreen1 extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          
+
           Positioned.fill(
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [AppColors.primary, Color(0xFF4F46E5)],
+                  colors: Theme.of(context).brightness == Brightness.dark
+                      ? [const Color(0xFF1F1D2B), const Color(0xFF111019)]
+                      : [AppColors.primary, const Color(0xFF4F46E5)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
               ),
             ),
           ),
-          
+
           SafeArea(
             child: Padding(
               padding: AppSpacing.edgeInsetsAllLg,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => context.pop(),
-                  ),
+                  const BackButton(color: Colors.white),
                   const SizedBox(height: 40),
                   const Text(
-                    'Sell on Vango Live',
+                    'Sell on ShopLive',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
@@ -50,7 +49,7 @@ class SellerRegistrationScreen1 extends StatelessWidget {
                     style: TextStyle(color: Colors.white70, fontSize: 16),
                   ),
                   const SizedBox(height: 60),
-                  
+
                   _buildBenefitItem(
                     icon: Icons.videocam_outlined,
                     title: 'Go Live',
@@ -66,17 +65,21 @@ class SellerRegistrationScreen1 extends StatelessWidget {
                     title: 'Earn Money',
                     description: 'Get paid instantly and track your business growth with ease.',
                   ),
-                  
+
                   const Spacer(),
-                  
+
                   SizedBox(
                     width: double.infinity,
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () => context.push(AppRoutes.sellerRegStep2),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: AppColors.primary,
+                        backgroundColor: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.primary
+                            : Colors.white,
+                        foregroundColor: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : AppColors.primary,
                         shape: RoundedRectangleBorder(borderRadius: AppSpacing.borderRadiusMd),
                       ),
                       child: const Text('Become Seller', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
