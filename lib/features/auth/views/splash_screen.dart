@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const Icon(Icons.shopping_bag_outlined, size: 80, color: Colors.white),
             const SizedBox(height: 16),
             Text(
-              'BizSolutio',
+              'Vango Live',
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

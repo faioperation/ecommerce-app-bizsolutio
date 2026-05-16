@@ -19,7 +19,7 @@ class RoleSelectionScreen extends StatelessWidget {
             children: [
               const Spacer(),
               Text(
-                'Welcome to BizSolutio',
+                'Welcome to Vango Live',
                 style: Theme.of(context).textTheme.displayMedium,
                 textAlign: TextAlign.center,
               ),
@@ -47,7 +47,7 @@ class RoleSelectionScreen extends StatelessWidget {
                 description: 'Set up your shop, go live, and start selling!',
                 icon: Icons.storefront_outlined,
                 color: AppColors.accentPink,
-                onTap: () => context.push(AppRoutes.login, extra: UserRole.seller),
+                onTap: () => context.push(AppRoutes.sellerRegStep1),
               ),
               const Spacer(),
             ],
@@ -58,13 +58,13 @@ class RoleSelectionScreen extends StatelessWidget {
   }
 
   Widget _buildRoleCard(
-    BuildContext context, {
-    required String title,
-    required String description,
-    required IconData icon,
-    required Color color,
-    required VoidCallback onTap,
-  }) {
+      BuildContext context, {
+        required String title,
+        required String description,
+        required IconData icon,
+        required Color color,
+        required VoidCallback onTap,
+      }) {
     return InkWell(
       onTap: onTap,
       borderRadius: AppSpacing.borderRadiusLg,

@@ -8,6 +8,11 @@ class AppRoutes {
 
   static const String registerBuyer = '/register/buyer';
   static const String registerSeller = '/register/seller';
+  static const String sellerRegStep1 = '/register/seller/step1';
+  static const String sellerRegStep2 = '/register/seller/step2';
+  static const String sellerRegStep3 = '/register/seller/step3';
+  static const String sellerRegStep4 = '/register/seller/step4';
+  static const String sellerRegStep5 = '/register/seller/step5';
 
   static const String forgotPassword = '/forgot-password';
   static const String otpVerification = '/otp-verification';

@@ -16,6 +16,12 @@ import '../features/auth/views/forgot_password/forgot_password_screen.dart';
 import '../features/auth/views/forgot_password/otp_verification_screen.dart';
 import '../features/auth/views/forgot_password/reset_password_screen.dart';
 import '../features/auth/views/forgot_password/success_screen.dart';
+import '../features/auth/views/seller_registration/seller_registration_screen1.dart';
+import '../features/auth/views/seller_registration/seller_registration_screen2.dart';
+import '../features/auth/views/seller_registration/seller_registration_screen3.dart';
+import '../features/auth/views/seller_registration/seller_registration_screen4.dart';
+import '../features/auth/views/seller_registration/seller_registration_screen5.dart';
+import '../features/auth/controllers/seller_registration_controller.dart';
 import '../features/buyer/home/screens/home_screen.dart';
 import '../features/buyer/home/screens/trending_screen.dart';
 import '../features/buyer/home/screens/following_screen.dart';
@@ -34,7 +40,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
     notifyListeners();
     _subscription = stream.asBroadcastStream().listen(
-      (dynamic _) => notifyListeners(),
+          (dynamic _) => notifyListeners(),
     );
   }
   late final StreamSubscription<dynamic> _subscription;
@@ -63,7 +69,7 @@ class AppPages {
       final authController = Get.find<AuthController>();
       final isAuth = authController.isAuthenticated.value;
       final role = authController.userRole.value;
-      
+
       final isSplash = state.matchedLocation == AppRoutes.splash;
       final isRoleSelection = state.matchedLocation == AppRoutes.roleSelection;
       final isLogin = state.matchedLocation == AppRoutes.login;
@@ -122,6 +128,29 @@ class AppPages {
       GoRoute(
         path: AppRoutes.registerSeller,
         builder: (context, state) => const SellerRegisterScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerRegStep1,
+        builder: (context, state) {
+          Get.lazyPut(() => SellerRegistrationController());
+          return const SellerRegistrationScreen1();
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.sellerRegStep2,
+        builder: (context, state) => const SellerRegistrationScreen2(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerRegStep3,
+        builder: (context, state) => const SellerRegistrationScreen3(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerRegStep4,
+        builder: (context, state) => const SellerRegistrationScreen4(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerRegStep5,
+        builder: (context, state) => const SellerRegistrationScreen5(),
       ),
       GoRoute(
         path: AppRoutes.forgotPassword,
@@ -255,7 +284,7 @@ class StreamGroup {
   static Stream<T> merge<T>(Iterable<Stream<T>> streams) {
     final controller = StreamController<T>();
     final subscriptions = <StreamSubscription<T>>[];
-    
+
     void onDone(StreamSubscription<T> sub) {
       subscriptions.remove(sub);
       if (subscriptions.isEmpty) {
@@ -272,7 +301,7 @@ class StreamGroup {
       );
       subscriptions.add(sub);
     }
-    
+
     return controller.stream;
   }
 }
