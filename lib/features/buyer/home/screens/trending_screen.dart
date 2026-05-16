@@ -22,15 +22,20 @@ class TrendingScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
-        title: Row(
-          children: [
-            const Icon(Icons.trending_up, color: AppColors.primary),
-            const SizedBox(width: 12),
-            Text(
-              'Trending Now',
-              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
-            ),
-          ],
+        title: Flexible(
+          child: Row(
+            children: [
+              const Icon(Icons.trending_up, color: AppColors.primary),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  'Trending Now',
+                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -52,15 +57,18 @@ class TrendingScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
-                    children: [
-                      Icon(Icons.flash_on, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text(
-                        'Flash Sale',
-                        style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  const FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Row(
+                      children: [
+                        Icon(Icons.flash_on, color: Colors.white),
+                        SizedBox(width: 8),
+                        Text(
+                          'Flash Sale',
+                          style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 8),
                   const Text(
@@ -97,7 +105,7 @@ class TrendingScreen extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.68,
+                childAspectRatio: 0.6,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
               ),

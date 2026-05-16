@@ -12,11 +12,11 @@ class TrendingProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: AppSpacing.borderRadiusMd,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: Theme.of(context).brightness == Brightness.dark ? 0.2 : 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -37,8 +37,8 @@ class TrendingProductCard extends StatelessWidget {
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
                     height: 150,
-                    color: AppColors.lightBorder,
-                    child: const Icon(Icons.broken_image, color: AppColors.lightTextSecondary),
+                    color: Theme.of(context).dividerColor,
+                    child: Icon(Icons.broken_image, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5)),
                   ),
                 ),
               ),
@@ -78,7 +78,7 @@ class TrendingProductCard extends StatelessWidget {
               ),
             ],
           ),
-          
+
           Padding(
             padding: const EdgeInsets.all(12),
             child: Column(
@@ -91,42 +91,50 @@ class TrendingProductCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Text(
-                      '\$${product.currentPrice.toInt()}',
-                      style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16),
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '\$${product.originalPrice.toInt()}',
-                      style: const TextStyle(
-                        color: AppColors.lightTextSecondary,
-                        fontSize: 12,
-                        decoration: TextDecoration.lineThrough,
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    children: [
+                      Text(
+                        '\$${product.currentPrice.toInt()}',
+                        style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16),
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 8),
+                      Text(
+                        '\$${product.originalPrice.toInt()}',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                          fontSize: 12,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.star, color: AppColors.warning, size: 14),
-                        const SizedBox(width: 4),
-                        Text(
-                          product.rating.toString(),
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      '${product.soldCount} sold',
-                      style: const TextStyle(color: AppColors.lightTextSecondary, fontSize: 11),
-                    ),
-                  ],
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.star, color: AppColors.warning, size: 14),
+                          const SizedBox(width: 4),
+                          Text(
+                            product.rating.toString(),
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${product.soldCount} sold',
+                        style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6), fontSize: 11),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

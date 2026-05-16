@@ -22,18 +22,22 @@ class LiveListScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back, color: Theme.of(context).colorScheme.onSurface),
           onPressed: () => context.pop(),
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Live Shopping',
-              style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            Obx(() => Text(
-              '${controller.liveStreams.length} live streams now',
-              style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6), fontSize: 13),
-            )),
-          ],
+        title: Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Live Shopping',
+                style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 20),
+                overflow: TextOverflow.ellipsis,
+              ),
+              Obx(() => Text(
+                '${controller.liveStreams.length} live streams now',
+                style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6), fontSize: 13),
+              )),
+            ],
+          ),
         ),
         actions: [
           Container(
