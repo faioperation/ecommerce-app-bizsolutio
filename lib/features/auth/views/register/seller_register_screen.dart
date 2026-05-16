@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../controllers/register_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/constants/app_images.dart';
 
 class SellerRegisterScreen extends StatelessWidget {
   const SellerRegisterScreen({super.key});
@@ -22,7 +23,7 @@ class SellerRegisterScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Icon(Icons.storefront_outlined, size: 64, color: AppColors.accentPink),
+                Image.asset(AppImages.logo, height: 80),
                 const SizedBox(height: 24),
                 Text('Create Your Shop', style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
                 const SizedBox(height: 24),

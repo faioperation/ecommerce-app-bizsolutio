@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Obx(() => MaterialApp.router(
-      title: 'BizSolutio E-Commerce',
+      title: 'Vango Live E-Commerce',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

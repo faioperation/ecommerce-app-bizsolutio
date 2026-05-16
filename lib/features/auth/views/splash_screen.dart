@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
+import '../../../core/constants/app_images.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/auth_controller.dart';
 
@@ -40,10 +41,10 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.shopping_bag_outlined, size: 80, color: isDark ? AppColors.primary : Colors.white),
+            Image.asset(AppImages.logo, height: 120),
             const SizedBox(height: 16),
             Text(
-              'BizSolutio',
+              'Vango Live',
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
                 color: isDark ? Theme.of(context).colorScheme.onSurface : Colors.white,
                 fontWeight: FontWeight.bold,

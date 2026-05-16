@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../controllers/forgot_password_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/constants/app_images.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
   const ResetPasswordScreen({super.key});
@@ -20,7 +21,7 @@ class ResetPasswordScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 32),
-              const Icon(Icons.password_outlined, size: 80, color: AppColors.primary),
+              Image.asset(AppImages.logo, height: 100),
               const SizedBox(height: 24),
               Text('Create New Password', style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
               const SizedBox(height: 32),
