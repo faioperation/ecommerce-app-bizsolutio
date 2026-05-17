@@ -1,65 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get/get.dart';
-import '../home/models/live_model.dart';
+import '../../home/models/live_model.dart';
+import '../controllers/live_sell_controller.dart';
+import '../widgets/live_comment_bubble.dart';
+import '../widgets/live_product_card.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 
-class LiveSellScreen extends StatefulWidget {
+class LiveSellScreen extends StatelessWidget {
   final LiveStreamModel stream;
 
   const LiveSellScreen({super.key, required this.stream});
 
   @override
-  State<LiveSellScreen> createState() => _LiveSellScreenState();
-}
-
-class _LiveSellScreenState extends State<LiveSellScreen> {
-  final TextEditingController _commentController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-  
-  // Real-time reactive comment list
-  final List<Map<String, String>> _comments = [
-    {'username': 'user123', 'comment': 'This looks amazing! 😍'},
-    {'username': 'shopper456', 'comment': "What's the price?"},
-    {'username': 'buyer789', 'comment': 'Just ordered one!'},
-  ];
-
-  bool _isLiked = false;
-
-  @override
-  void dispose() {
-    _commentController.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _addComment() {
-    final text = _commentController.text.trim();
-    if (text.isEmpty) return;
-
-    setState(() {
-      _comments.add({
-        'username': 'You',
-        'comment': text,
-      });
-      _commentController.clear();
-    });
-
-    // Auto-scroll to bottom of comments
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_scrollController.hasClients) {
-        _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeOut,
-        );
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Instantiate or retrieve the Sell Controller
+    final controller = Get.put(LiveSellController());
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
@@ -67,7 +25,7 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
           // 1. Live stream background image (full screen)
           Positioned.fill(
             child: Image.network(
-              widget.stream.previewImageUrl,
+              stream.previewImageUrl,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
                 color: Colors.grey[900],
@@ -115,7 +73,7 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
                           children: [
                             CircleAvatar(
                               radius: 16,
-                              backgroundImage: NetworkImage(widget.stream.sellerProfileImage),
+                              backgroundImage: NetworkImage(stream.sellerProfileImage),
                               onBackgroundImageError: (e, s) => const Icon(Icons.person),
                             ),
                             const SizedBox(width: 8),
@@ -124,7 +82,7 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  widget.stream.sellerName,
+                                  stream.sellerName,
                                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                                 ),
                                 Row(
@@ -141,7 +99,7 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
                                     Icon(Icons.remove_red_eye_outlined, color: Colors.white.withValues(alpha: 0.8), size: 10),
                                     const SizedBox(width: 2),
                                     Text(
-                                      widget.stream.viewerCount,
+                                      stream.viewerCount,
                                       style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 9, fontWeight: FontWeight.bold),
                                     ),
                                   ],
@@ -173,7 +131,7 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
 
                   const Spacer(),
 
-                  // --- MIDDLE-LOWER PORTION (Structured Comments on top, Product, Input below) ---
+                  // --- MIDDLE-LOWER PORTION (Structured Comments, Product, Input) ---
                   
                   // 1. Scrollable real-time comments section (placed above Product card)
                   Container(
@@ -190,94 +148,39 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
                         ).createShader(rect);
                       },
                       blendMode: BlendMode.dstIn,
-                      child: ListView.builder(
-                        controller: _scrollController,
+                      child: Obx(() => ListView.builder(
+                        controller: controller.scrollController,
                         physics: const BouncingScrollPhysics(),
-                        itemCount: _comments.length,
+                        itemCount: controller.comments.length,
                         itemBuilder: (context, index) {
-                          final item = _comments[index];
+                          final item = controller.comments[index];
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 6),
-                            child: _buildCommentRow(item['username']!, item['comment']!),
+                            child: LiveCommentBubble(
+                              username: item.username,
+                              comment: item.text,
+                            ),
                           );
                         },
-                      ),
+                      )),
                     ),
                   ),
 
                   // 2. Product Preview Card (Stunning floating white card)
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(12),
-                    margin: const EdgeInsets.only(bottom: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.95),
-                      borderRadius: AppSpacing.borderRadiusLg,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.15),
-                          blurRadius: 15,
-                          offset: const Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        // Product image thumbnail
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            widget.stream.previewImageUrl,
-                            height: 60,
-                            width: 60,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        // Title & Price
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Summer Dress Collection',
-                                style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 15),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '£89',
-                                style: TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Buy button
-                        ElevatedButton(
-                          onPressed: () {
-                            Get.snackbar(
-                              'Success', 
-                              'Summer Dress added to cart!',
-                              backgroundColor: AppColors.success.withValues(alpha: 0.9),
-                              colorText: Colors.white,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                          ),
-                          child: const Text('Buy', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-                        ),
-                      ],
-                    ),
+                  LiveProductCard(
+                    imageUrl: stream.previewImageUrl,
+                    title: 'Summer Dress Collection',
+                    price: 89,
+                    onBuyPressed: () {
+                      Get.snackbar(
+                        'Success', 
+                        'Summer Dress added to cart!',
+                        backgroundColor: AppColors.success.withValues(alpha: 0.9),
+                        colorText: Colors.white,
+                      );
+                    },
                   ),
+                  const SizedBox(height: 16),
 
                   // 3. Comment Input Row (Comment box + Heart toggle)
                   Row(
@@ -296,12 +199,12 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
                             children: [
                               Expanded(
                                 child: TextField(
-                                  controller: _commentController,
+                                  controller: controller.commentController,
                                   style: const TextStyle(color: Colors.white, fontSize: 13),
-                                  onSubmitted: (_) => _addComment(),
+                                  onSubmitted: (_) => controller.addComment(),
                                   decoration: const InputDecoration(
                                     hintText: 'Add a comment...',
-                                    hintStyle: TextStyle(color: Colors.white60, fontSize: 13),
+                                    hintStyle: TextStyle(color: Colors.white54, fontSize: 13),
                                     border: InputBorder.none,
                                     isDense: true,
                                   ),
@@ -309,7 +212,7 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
                               ),
                               IconButton(
                                 icon: const Icon(Icons.send_rounded, color: Colors.orangeAccent, size: 18),
-                                onPressed: _addComment,
+                                onPressed: controller.addComment,
                                 constraints: const BoxConstraints(),
                                 padding: EdgeInsets.zero,
                               ),
@@ -320,32 +223,18 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
                       const SizedBox(width: 12),
                       // Heart Toggle Button
                       GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isLiked = !_isLiked;
-                          });
-                          Get.snackbar(
-                            _isLiked ? 'Loved!' : 'Unloved', 
-                            _isLiked ? 'You liked the live stream!' : 'You removed your like.',
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: _isLiked 
-                                ? Colors.pink.withValues(alpha: 0.8) 
-                                : Colors.black87.withValues(alpha: 0.8),
-                            colorText: Colors.white,
-                            duration: const Duration(seconds: 1),
-                          );
-                        },
-                        child: CircleAvatar(
+                        onTap: controller.toggleLike,
+                        child: Obx(() => CircleAvatar(
                           radius: 24,
-                          backgroundColor: _isLiked 
+                          backgroundColor: controller.isLiked.value 
                               ? Colors.pink.withValues(alpha: 0.9) 
                               : Colors.black.withValues(alpha: 0.5),
                           child: Icon(
-                            _isLiked ? Icons.favorite : Icons.favorite_border, 
+                            controller.isLiked.value ? Icons.favorite : Icons.favorite_border, 
                             color: Colors.white, 
                             size: 22,
                           ),
-                        ),
+                        )),
                       ),
                     ],
                   ),
@@ -354,34 +243,6 @@ class _LiveSellScreenState extends State<LiveSellScreen> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildCommentRow(String username, String comment) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.4),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: RichText(
-          text: TextSpan(
-            style: const TextStyle(fontSize: 12),
-            children: [
-              TextSpan(
-                text: '$username: ',
-                style: const TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.bold),
-              ),
-              TextSpan(
-                text: comment,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../home/controllers/live_list_controller.dart';
-import '../home/widgets/live_stream_card.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_spacing.dart';
+import '../../home/controllers/live_list_controller.dart';
+import '../../home/widgets/live_stream_card.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
 
 class BuyerLiveScreen extends StatelessWidget {
   const BuyerLiveScreen({super.key});
