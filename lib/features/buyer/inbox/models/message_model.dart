@@ -15,18 +15,18 @@ class MessageModel {
 
   // Future API integration: fromJson / toJson
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
-        id: json['id'],
-        chatId: json['chatId'],
-        text: json['text'],
-        timestamp: DateTime.parse(json['timestamp']),
-        isMe: json['isMe'],
-      );
+    id: json['id'],
+    chatId: json['chatId'],
+    text: json['text'],
+    timestamp: DateTime.parse(json['timestamp']),
+    isMe: json['isMe'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'chatId': chatId,
-        'text': text,
-        'timestamp': timestamp.toIso8601String(),
-        'isMe': isMe,
-      };
+    'id': id,
+    'chatId': chatId,
+    'text': text,
+    'timestamp': timestamp.toIso8601String(),
+    'isMe': isMe,
+  };
 }

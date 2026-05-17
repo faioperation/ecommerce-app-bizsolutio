@@ -4,16 +4,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../controllers/inbox_controller.dart';
 import '../models/chat_model.dart';
 
-/// A single row in the inbox list — shows avatar, name, last message, time, unread badge.
 class ChatListTile extends StatelessWidget {
   final ChatModel chat;
   final VoidCallback onTap;
 
-  const ChatListTile({
-    super.key,
-    required this.chat,
-    required this.onTap,
-  });
+  const ChatListTile({super.key, required this.chat, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +21,6 @@ class ChatListTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
-            // Avatar
             Stack(
               children: [
                 CircleAvatar(
@@ -35,7 +29,7 @@ class ChatListTile extends StatelessWidget {
                   onBackgroundImageError: (_, __) {},
                   backgroundColor: Colors.grey[300],
                 ),
-                // Online dot — toggle via API later
+
                 Positioned(
                   bottom: 2,
                   right: 2,
@@ -55,7 +49,7 @@ class ChatListTile extends StatelessWidget {
               ],
             ),
             const SizedBox(width: 14),
-            // Name + last message
+
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,10 +66,11 @@ class ChatListTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
-                  // Rebuild when lastMessage changes
+
                   Obx(() {
-                    // Re-read from chatList to get latest value
-                    final current = ctrl.chatList.firstWhereOrNull((c) => c.id == chat.id);
+                    final current = ctrl.chatList.firstWhereOrNull(
+                      (c) => c.id == chat.id,
+                    );
                     final msg = current?.lastMessage ?? '';
                     return Text(
                       msg.isEmpty ? 'Start a conversation...' : msg,
@@ -95,14 +90,18 @@ class ChatListTile extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            // Time + unread badge
+
             Obx(() {
-              final current = ctrl.chatList.firstWhereOrNull((c) => c.id == chat.id);
+              final current = ctrl.chatList.firstWhereOrNull(
+                (c) => c.id == chat.id,
+              );
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    ctrl.formatTime(current?.lastMessageTime ?? chat.lastMessageTime),
+                    ctrl.formatTime(
+                      current?.lastMessageTime ?? chat.lastMessageTime,
+                    ),
                     style: TextStyle(
                       color: (current?.unreadCount ?? 0) > 0
                           ? AppColors.primary

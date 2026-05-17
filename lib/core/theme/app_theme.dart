@@ -107,7 +107,7 @@ class AppTheme {
         elevation: 8,
       ),
       actionIconTheme: ActionIconThemeData(
-        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new),
+        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new_rounded),
       ),
     );
   }
@@ -213,7 +213,7 @@ class AppTheme {
         elevation: 8,
       ),
       actionIconTheme: ActionIconThemeData(
-        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new),
+        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new_rounded),
       ),
     );
   }

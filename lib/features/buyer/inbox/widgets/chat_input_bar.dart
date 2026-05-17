@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
-/// Text input bar at the bottom of the chat screen.
 class ChatInputBar extends StatefulWidget {
   final void Function(String text) onSend;
 
@@ -55,7 +54,6 @@ class _ChatInputBarState extends State<ChatInputBar> {
         top: false,
         child: Row(
           children: [
-            // Text Field
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -87,7 +85,7 @@ class _ChatInputBarState extends State<ChatInputBar> {
               ),
             ),
             const SizedBox(width: 10),
-            // Send Button
+
             AnimatedScale(
               scale: _hasText ? 1.0 : 0.8,
               duration: const Duration(milliseconds: 200),
@@ -100,7 +98,11 @@ class _ChatInputBarState extends State<ChatInputBar> {
                     color: _hasText ? AppColors.primary : Colors.grey[400],
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(Icons.send_rounded, color: Colors.white, size: 20),
+                  child: const Icon(
+                    Icons.send_rounded,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                 ),
               ),
             ),

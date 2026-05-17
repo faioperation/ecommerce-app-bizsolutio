@@ -25,7 +25,8 @@ class InboxController extends GetxController {
       ChatModel(
         id: 'techstore',
         name: 'TechStore',
-        profileImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=200',
+        profileImage:
+            'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=200',
         lastMessage: 'Your order has been shipped! 🚀',
         lastMessageTime: DateTime.now().subtract(const Duration(minutes: 30)),
         unreadCount: 2,
@@ -33,7 +34,8 @@ class InboxController extends GetxController {
       ChatModel(
         id: 'fashionhub',
         name: 'FashionHub',
-        profileImage: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=200',
+        profileImage:
+            'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=200',
         lastMessage: 'Thanks for your purchase! 🛍️',
         lastMessageTime: DateTime.now().subtract(const Duration(hours: 3)),
         unreadCount: 0,
@@ -41,7 +43,8 @@ class InboxController extends GetxController {
       ChatModel(
         id: 'audiophile',
         name: 'AudioPhile',
-        profileImage: 'https://images.unsplash.com/photo-1545127398-14699f92334b?q=80&w=200',
+        profileImage:
+            'https://images.unsplash.com/photo-1545127398-14699f92334b?q=80&w=200',
         lastMessage: 'Let me know if you need anything else.',
         lastMessageTime: DateTime.now().subtract(const Duration(days: 1)),
         unreadCount: 1,
@@ -49,13 +52,41 @@ class InboxController extends GetxController {
     ]);
 
     _messagesMap['techstore'] = <MessageModel>[
-      MessageModel(id: 'm1', chatId: 'techstore', text: 'Hi, I ordered a headphone. Is it shipped?', timestamp: DateTime.now().subtract(const Duration(hours: 1, minutes: 10)), isMe: true),
-      MessageModel(id: 'm2', chatId: 'techstore', text: 'Yes! Your order has been shipped! 🚀', timestamp: DateTime.now().subtract(const Duration(minutes: 30)), isMe: false),
+      MessageModel(
+        id: 'm1',
+        chatId: 'techstore',
+        text: 'Hi, I ordered a headphone. Is it shipped?',
+        timestamp: DateTime.now().subtract(
+          const Duration(hours: 1, minutes: 10),
+        ),
+        isMe: true,
+      ),
+      MessageModel(
+        id: 'm2',
+        chatId: 'techstore',
+        text: 'Yes! Your order has been shipped! 🚀',
+        timestamp: DateTime.now().subtract(const Duration(minutes: 30)),
+        isMe: false,
+      ),
     ].obs;
 
     _messagesMap['fashionhub'] = <MessageModel>[
-      MessageModel(id: 'm3', chatId: 'fashionhub', text: 'I love the jacket!', timestamp: DateTime.now().subtract(const Duration(hours: 3, minutes: 10)), isMe: true),
-      MessageModel(id: 'm4', chatId: 'fashionhub', text: 'Thanks for your purchase! 🛍️', timestamp: DateTime.now().subtract(const Duration(hours: 3)), isMe: false),
+      MessageModel(
+        id: 'm3',
+        chatId: 'fashionhub',
+        text: 'I love the jacket!',
+        timestamp: DateTime.now().subtract(
+          const Duration(hours: 3, minutes: 10),
+        ),
+        isMe: true,
+      ),
+      MessageModel(
+        id: 'm4',
+        chatId: 'fashionhub',
+        text: 'Thanks for your purchase! 🛍️',
+        timestamp: DateTime.now().subtract(const Duration(hours: 3)),
+        isMe: false,
+      ),
     ].obs;
   }
 
@@ -145,7 +176,9 @@ class InboxController extends GetxController {
     final now = DateTime.now();
     final diff = now.difference(time);
     if (diff.inDays == 0 && now.day == time.day) {
-      final h = time.hour > 12 ? time.hour - 12 : (time.hour == 0 ? 12 : time.hour);
+      final h = time.hour > 12
+          ? time.hour - 12
+          : (time.hour == 0 ? 12 : time.hour);
       final m = time.minute.toString().padLeft(2, '0');
       final period = time.hour >= 12 ? 'PM' : 'AM';
       return '$h:$m $period';

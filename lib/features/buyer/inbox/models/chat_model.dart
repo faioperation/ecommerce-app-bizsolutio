@@ -17,20 +17,20 @@ class ChatModel {
 
   // Future API integration: fromJson / toJson
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
-        id: json['id'],
-        name: json['name'],
-        profileImage: json['profileImage'],
-        lastMessage: json['lastMessage'],
-        lastMessageTime: DateTime.parse(json['lastMessageTime']),
-        unreadCount: json['unreadCount'] ?? 0,
-      );
+    id: json['id'],
+    name: json['name'],
+    profileImage: json['profileImage'],
+    lastMessage: json['lastMessage'],
+    lastMessageTime: DateTime.parse(json['lastMessageTime']),
+    unreadCount: json['unreadCount'] ?? 0,
+  );
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'profileImage': profileImage,
-        'lastMessage': lastMessage,
-        'lastMessageTime': lastMessageTime.toIso8601String(),
-        'unreadCount': unreadCount,
-      };
+    'id': id,
+    'name': name,
+    'profileImage': profileImage,
+    'lastMessage': lastMessage,
+    'lastMessageTime': lastMessageTime.toIso8601String(),
+    'unreadCount': unreadCount,
+  };
 }

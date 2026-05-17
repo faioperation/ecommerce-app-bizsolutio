@@ -4,7 +4,6 @@ import '../controllers/inbox_controller.dart';
 import '../widgets/message_bubble.dart';
 import '../widgets/chat_input_bar.dart';
 
-/// Individual chat thread screen.
 class ChatScreen extends StatelessWidget {
   final String chatId;
   final String shopName;
@@ -24,7 +23,6 @@ class ChatScreen extends StatelessWidget {
     final messages = ctrl.getMessages(chatId);
     final scrollCtrl = ScrollController();
 
-    // Mark as read after the build phase completes
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ctrl.markAsRead(chatId);
     });
@@ -88,7 +86,6 @@ class ChatScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Messages list
           Expanded(
             child: Obx(() {
               if (messages.isEmpty) {
@@ -126,7 +123,6 @@ class ChatScreen extends StatelessWidget {
                 );
               }
 
-              // Auto-scroll to bottom when new message arrives
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 if (scrollCtrl.hasClients) {
                   scrollCtrl.animateTo(
@@ -142,9 +138,9 @@ class ChatScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16, bottom: 8),
                 itemCount: messages.length,
                 itemBuilder: (context, index) {
-                  // Show date separator if day changes
                   final msg = messages[index];
-                  final showDateSep = index == 0 ||
+                  final showDateSep =
+                      index == 0 ||
                       messages[index - 1].timestamp.day != msg.timestamp.day;
                   return Column(
                     children: [
@@ -157,7 +153,6 @@ class ChatScreen extends StatelessWidget {
             }),
           ),
 
-          // Input bar
           ChatInputBar(
             onSend: (text) {
               ctrl.sendMessage(chatId, text);
@@ -178,7 +173,9 @@ class _DateSeparator extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final now = DateTime.now();
     String label;
-    if (time.day == now.day && time.month == now.month && time.year == now.year) {
+    if (time.day == now.day &&
+        time.month == now.month &&
+        time.year == now.year) {
       label = 'Today';
     } else if (time.day == now.subtract(const Duration(days: 1)).day) {
       label = 'Yesterday';
@@ -190,7 +187,9 @@ class _DateSeparator extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         children: [
-          Expanded(child: Divider(color: isDark ? Colors.grey[800] : Colors.grey[300])),
+          Expanded(
+            child: Divider(color: isDark ? Colors.grey[800] : Colors.grey[300]),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Text(
@@ -202,7 +201,9 @@ class _DateSeparator extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(child: Divider(color: isDark ? Colors.grey[800] : Colors.grey[300])),
+          Expanded(
+            child: Divider(color: isDark ? Colors.grey[800] : Colors.grey[300]),
+          ),
         ],
       ),
     );

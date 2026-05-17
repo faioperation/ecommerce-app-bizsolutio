@@ -5,7 +5,6 @@ import '../../../../routes/app_routes.dart';
 import '../controllers/inbox_controller.dart';
 import '../widgets/chat_list_tile.dart';
 
-/// Inbox list screen — shows all conversations like Instagram DMs.
 class InboxListScreen extends StatelessWidget {
   const InboxListScreen({super.key});
 
