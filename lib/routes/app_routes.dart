@@ -47,4 +47,9 @@ class AppRoutes {
   static const String profileWishlist = '/buyer/profile/wishlist';
   static const String profileCart = '/buyer/profile/cart';
   static const String profileSettings = '/buyer/profile/settings';
+  static const String profileEdit = '/buyer/profile/edit';
+  static const String profileChangePassword = '/buyer/profile/change-password';
+  static const String privacyPolicy = '/buyer/profile/privacy-policy';
+  static const String privacySecurity = '/buyer/profile/privacy-security';
+  static const String termsOfService = '/buyer/profile/terms-of-service';
 }

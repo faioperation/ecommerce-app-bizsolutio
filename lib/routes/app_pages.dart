@@ -45,6 +45,11 @@ import '../features/buyer/profile/screens/my_orders_screen.dart';
 import '../features/buyer/profile/screens/wishlist_screen.dart';
 import '../features/buyer/profile/screens/cart_screen.dart';
 import '../features/buyer/profile/screens/settings_screen.dart';
+import '../features/buyer/profile/screens/edit_profile_screen.dart';
+import '../features/buyer/profile/screens/change_password_screen.dart';
+import '../features/buyer/profile/screens/privacy_policy_screen.dart';
+import '../features/buyer/profile/screens/privacy_security_screen.dart';
+import '../features/buyer/profile/screens/terms_of_service_screen.dart';
 import '../features/seller/dashboard/dashboard_screen.dart';
 import '../features/seller/products/products_screen.dart';
 import '../features/seller/live/live_screen.dart';
@@ -218,6 +223,26 @@ class AppPages {
       GoRoute(
         path: AppRoutes.profileCart,
         builder: (context, state) => const CartScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileEdit,
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileChangePassword,
+        builder: (context, state) => const ChangePasswordScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.privacyPolicy,
+        builder: (context, state) => const PrivacyPolicyScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.privacySecurity,
+        builder: (context, state) => const PrivacySecurityScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.termsOfService,
+        builder: (context, state) => const TermsOfServiceScreen(),
       ),
       GoRoute(
         path: AppRoutes.buyerLiveSell,

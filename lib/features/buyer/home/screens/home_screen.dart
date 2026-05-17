@@ -6,7 +6,6 @@ import '../controllers/home_controller.dart';
 import '../widgets/home_widgets.dart';
 import '../widgets/feed_card.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/theme_controller.dart';
 
 class BuyerHomeScreen extends StatelessWidget {
   const BuyerHomeScreen({super.key});
@@ -28,18 +27,7 @@ class BuyerHomeScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          Obx(() {
-            final themeController = Get.find<ThemeController>();
-            return IconButton(
-              icon: Icon(
-                themeController.themeMode.value == ThemeMode.dark
-                    ? Icons.light_mode_outlined
-                    : Icons.dark_mode_outlined,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-              onPressed: () => themeController.toggleTheme(),
-            );
-          }),
+          // Theme toggle moved to Settings Screen
           IconButton(
             icon: Badge(
               label: const Text('2'),

@@ -1,54 +1,45 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/theme/theme_controller.dart';
+import '../../../../routes/app_routes.dart';
 
 /// Controls the Settings screen state.
-/// Each setting maps directly to a future API preference endpoint.
 class SettingsController extends GetxController {
   // ─── Preferences ─────────────────────────────────────────────────────────
   final notificationsEnabled = true.obs;
-  final darkModeEnabled = false.obs;
-  final selectedLanguage = 'English'.obs;
 
-  final List<String> availableLanguages = [
-    'English',
-    'Bengali',
-    'Arabic',
-    'French',
-    'Spanish',
-  ];
+  bool get isDarkMode {
+    try {
+      final themeController = Get.find<ThemeController>();
+      return themeController.themeMode.value == ThemeMode.dark;
+    } catch (_) {
+      return false;
+    }
+  }
 
-  /// TODO: Sync with real API → PATCH /api/buyer/preferences
+  /// Sync with real API → PATCH /api/buyer/preferences
   void toggleNotifications(bool val) => notificationsEnabled.value = val;
 
   void toggleDarkMode(bool val) {
-    darkModeEnabled.value = val;
-    // TODO: Apply theme change via ThemeController
-  }
-
-  void setLanguage(String lang) {
-    selectedLanguage.value = lang;
-    Get.back();
+    try {
+      final themeController = Get.find<ThemeController>();
+      if (val) {
+        themeController.setDarkMode();
+      } else {
+        themeController.setLightMode();
+      }
+    } catch (_) {
+      Get.snackbar('Theme Error', 'Theme controller not found.');
+    }
   }
 
   // ─── Account Actions ──────────────────────────────────────────────────────
   void editProfile() {
-    // TODO: Navigate to edit profile screen
-    Get.snackbar('Edit Profile', 'Coming soon!');
+    Get.toNamed(AppRoutes.profileEdit);
   }
 
   void changePassword() {
-    // TODO: Navigate to change password screen
-    Get.snackbar('Change Password', 'Coming soon!');
+    Get.toNamed(AppRoutes.profileChangePassword);
   }
 
-  void privacyAndSecurity() {
-    Get.snackbar('Privacy & Security', 'Coming soon!');
-  }
-
-  void termsOfService() {
-    Get.snackbar('Terms of Service', 'Coming soon!');
-  }
-
-  void privacyPolicy() {
-    Get.snackbar('Privacy Policy', 'Coming soon!');
-  }
 }

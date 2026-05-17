@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/theme_controller.dart';
+import '../../../../routes/app_routes.dart';
 import '../controllers/settings_controller.dart';
 import '../widgets/profile_menu_tile.dart';
 import '../widgets/profile_section_header.dart';
@@ -11,6 +14,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SettingsController());
+    final themeController = Get.find<ThemeController>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -60,18 +64,9 @@ class SettingsScreen extends StatelessWidget {
                       icon: Icons.dark_mode_outlined,
                       iconColor: isDark ? Colors.white : Colors.black87,
                       title: 'Dark Mode',
-                      value: controller.darkModeEnabled.value,
+                      value: themeController.themeMode.value == ThemeMode.dark,
                       onChanged: controller.toggleDarkMode,
                     )),
-                _separator(isDark),
-                // Language Selector
-                ProfileMenuTile(
-                  icon: Icons.language_outlined,
-                  iconColor: AppColors.success,
-                  title: 'Language',
-                  subtitle: controller.selectedLanguage.value,
-                  onTap: () => _showLanguagePicker(context, controller, isDark),
-                ),
               ],
             ),
 
@@ -84,21 +79,21 @@ class SettingsScreen extends StatelessWidget {
                   icon: Icons.person_outline,
                   iconColor: AppColors.accentPink,
                   title: 'Edit Profile',
-                  onTap: controller.editProfile,
+                  onTap: () => context.push(AppRoutes.profileEdit),
                 ),
                 _separator(isDark),
                 ProfileMenuTile(
                   icon: Icons.lock_outline_rounded,
                   iconColor: AppColors.warning,
                   title: 'Change Password',
-                  onTap: controller.changePassword,
+                  onTap: () => context.push(AppRoutes.profileChangePassword),
                 ),
                 _separator(isDark),
                 ProfileMenuTile(
                   icon: Icons.shield_outlined,
                   iconColor: AppColors.info,
                   title: 'Privacy & Security',
-                  onTap: controller.privacyAndSecurity,
+                  onTap: () => context.push(AppRoutes.privacySecurity),
                 ),
               ],
             ),
@@ -112,14 +107,14 @@ class SettingsScreen extends StatelessWidget {
                   icon: Icons.description_outlined,
                   iconColor: Colors.grey,
                   title: 'Terms of Service',
-                  onTap: controller.termsOfService,
+                  onTap: () => context.push(AppRoutes.termsOfService),
                 ),
                 _separator(isDark),
                 ProfileMenuTile(
                   icon: Icons.privacy_tip_outlined,
                   iconColor: Colors.grey,
                   title: 'Privacy Policy',
-                  onTap: controller.privacyPolicy,
+                  onTap: () => context.push(AppRoutes.privacyPolicy),
                 ),
                 _separator(isDark),
                 Padding(
@@ -240,67 +235,6 @@ class SettingsScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  void _showLanguagePicker(
-      BuildContext context, SettingsController controller, bool isDark) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: isDark ? const Color(0xFF1A1625) : Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (context) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 16),
-              Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: isDark ? Colors.white24 : Colors.grey[300],
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'Select Language',
-                style: TextStyle(
-                  color: isDark
-                      ? AppColors.darkTextPrimary
-                      : AppColors.lightTextPrimary,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                  fontFamily: 'Inter',
-                ),
-              ),
-              const SizedBox(height: 16),
-              ...controller.availableLanguages.map((lang) {
-                return ListTile(
-                  title: Text(
-                    lang,
-                    style: TextStyle(
-                      color: isDark
-                          ? AppColors.darkTextPrimary
-                          : AppColors.lightTextPrimary,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                  trailing: controller.selectedLanguage.value == lang
-                      ? const Icon(Icons.check_circle_rounded,
-                          color: AppColors.primary)
-                      : null,
-                  onTap: () => controller.setLanguage(lang),
-                );
-              }),
-              const SizedBox(height: 16),
-            ],
-          ),
-        );
-      },
     );
   }
 }
