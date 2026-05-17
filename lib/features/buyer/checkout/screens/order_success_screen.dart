@@ -14,7 +14,6 @@ class OrderSuccessScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor:
           isDark ? Colors.black : const Color(0xFFF8F9FC),
-      // No AppBar — full-screen success experience
       body: SafeArea(
         child: Obx(() => SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -24,7 +23,6 @@ class OrderSuccessScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 30),
 
-              // ── Success Icon ───────────────────────────────────────────
               Container(
                 width: 90,
                 height: 90,
@@ -40,7 +38,6 @@ class OrderSuccessScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              // ── Title ─────────────────────────────────────────────────
               Text(
                 'Order Placed\nSuccessfully!',
                 textAlign: TextAlign.center,
@@ -67,7 +64,6 @@ class OrderSuccessScreen extends StatelessWidget {
               ),
               const SizedBox(height: 32),
 
-              // ── Order Details Card ─────────────────────────────────────
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
@@ -89,7 +85,6 @@ class OrderSuccessScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // Order Number
                     Text(
                       'Order Number',
                       style: TextStyle(
@@ -114,7 +109,6 @@ class OrderSuccessScreen extends StatelessWidget {
                     ),
                     const Divider(height: 28),
 
-                    // Total Amount Row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -143,7 +137,6 @@ class OrderSuccessScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
 
-                    // Estimated Delivery
                     Container(
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
@@ -192,13 +185,11 @@ class OrderSuccessScreen extends StatelessWidget {
               ),
               const SizedBox(height: 32),
 
-              // ── Track Order Button ─────────────────────────────────────
               SizedBox(
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Navigate to Order Tracking screen with API
                     Get.snackbar(
                       'Track Order',
                       'Tracking for ${controller.orderNumber.value} will be available shortly.',
@@ -225,10 +216,8 @@ class OrderSuccessScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // ── Back to Home ───────────────────────────────────────────
               GestureDetector(
                 onTap: () {
-                  // Pop all checkout screens back to the shell
                   Navigator.of(context).popUntil(
                     (route) => route.settings.name == null || route.isFirst,
                   );

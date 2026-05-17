@@ -41,7 +41,6 @@ class ChangePasswordController extends GetxController {
 
     isLoading.value = true;
     
-    // TODO: Call API to change password
     await Future.delayed(const Duration(milliseconds: 1000));
     
     isLoading.value = false;

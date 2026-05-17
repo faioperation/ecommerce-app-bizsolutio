@@ -12,7 +12,6 @@ class DiscoverScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Instantiate GetX controller
     final controller = Get.put(DiscoverController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -25,14 +24,12 @@ class DiscoverScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Discover Search Bar (Screenshot 1 Top)
               DiscoverSearchBar(
                 controller: controller.searchController,
                 onSubmitted: (val) => controller.performSearch(val),
               ),
               const SizedBox(height: 24),
 
-              // 2. Categories Header
               Text(
                 'Categories',
                 style: TextStyle(
@@ -44,7 +41,6 @@ class DiscoverScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              // 3. Grid of 6 Categories (Screenshot 1 center Grid)
               GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -60,7 +56,6 @@ class DiscoverScreen extends StatelessWidget {
                   return CategoryCard(
                     category: cat,
                     onTap: () {
-                      // Navigate to Screen 2 using GoRouter with Category parameter passed as extra
                       context.push('/buyer/discover/products', extra: cat);
                     },
                   );
@@ -68,7 +63,6 @@ class DiscoverScreen extends StatelessWidget {
               ),
               const SizedBox(height: 28),
 
-              // 4. Recent Searches Section (Screenshot 1)
               Row(
                 children: [
                   const Icon(Icons.access_time_rounded, color: Colors.grey, size: 20),
@@ -107,7 +101,6 @@ class DiscoverScreen extends StatelessWidget {
               }),
               const SizedBox(height: 24),
 
-              // 5. Trending Searches Section (Screenshot 1 bottom chips)
               Row(
                 children: [
                   const Icon(Icons.trending_up_rounded, color: Color(0xFF7C3AED), size: 20),
@@ -137,7 +130,7 @@ class DiscoverScreen extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFEEF2FF), // Soft Indigo accent
+                        color: const Color(0xFFEEF2FF),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(

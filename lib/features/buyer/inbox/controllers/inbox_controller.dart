@@ -2,14 +2,10 @@ import 'package:get/get.dart';
 import '../models/chat_model.dart';
 import '../models/message_model.dart';
 
-/// InboxController manages the conversations list and messages per chat.
-/// Designed for easy API integration: replace the mock data methods with
-/// real API calls in the future.
+
 class InboxController extends GetxController {
-  /// All conversations, sorted by latest message.
   final chatList = <ChatModel>[].obs;
 
-  /// Messages per chatId. Key = chatId, Value = list of messages.
   final Map<String, RxList<MessageModel>> _messagesMap = {};
 
   @override
@@ -18,7 +14,6 @@ class InboxController extends GetxController {
     _loadMockData();
   }
 
-  // ── MOCK DATA (Replace with API calls) ───────────────────────────────────
 
   void _loadMockData() {
     chatList.assignAll([
@@ -90,21 +85,16 @@ class InboxController extends GetxController {
     ].obs;
   }
 
-  // ── PUBLIC METHODS (API-ready) ────────────────────────────────────────────
 
-  /// Fetch all chats – replace body with API call.
   Future<void> fetchChats() async {
-    // TODO: final response = await ApiService.getChats();
     // chatList.assignAll(response.map(ChatModel.fromJson));
   }
 
-  /// Get or create messages list for a given chatId.
   RxList<MessageModel> getMessages(String chatId) {
     _messagesMap.putIfAbsent(chatId, () => <MessageModel>[].obs);
     return _messagesMap[chatId]!;
   }
 
-  /// Open/start a chat with a shop. Called from ShopProfileScreen.
   void openOrCreateChat({
     required String chatId,
     required String name,
@@ -123,17 +113,14 @@ class InboxController extends GetxController {
         ),
       );
     } else {
-      // Move to top
       final chat = chatList.removeAt(existing);
       chatList.insert(0, chat);
     }
     _messagesMap.putIfAbsent(chatId, () => <MessageModel>[].obs);
 
-    // Mark as read when opening
     markAsRead(chatId);
   }
 
-  /// Send a message – add to local state and update inbox list.
   void sendMessage(String chatId, String text) {
     if (text.trim().isEmpty) return;
 
@@ -148,7 +135,6 @@ class InboxController extends GetxController {
     _messagesMap.putIfAbsent(chatId, () => <MessageModel>[].obs);
     _messagesMap[chatId]!.add(msg);
 
-    // Update inbox list entry
     final idx = chatList.indexWhere((c) => c.id == chatId);
     if (idx != -1) {
       chatList[idx].lastMessage = text.trim();
@@ -157,20 +143,16 @@ class InboxController extends GetxController {
       chatList.insert(0, chat);
     }
 
-    // TODO: await ApiService.sendMessage(chatId, text);
   }
 
-  /// Mark all messages in a chat as read.
   void markAsRead(String chatId) {
     final idx = chatList.indexWhere((c) => c.id == chatId);
     if (idx != -1) {
       chatList[idx].unreadCount = 0;
-      chatList.refresh(); // Notify Obx
+      chatList.refresh();
     }
-    // TODO: await ApiService.markRead(chatId);
   }
 
-  // ── HELPERS ────────────────────────────────────────────────────────────────
 
   String formatTime(DateTime time) {
     final now = DateTime.now();

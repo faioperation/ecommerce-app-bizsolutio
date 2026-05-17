@@ -33,13 +33,11 @@ class DiscoverProductModel {
     required this.subcategory,
   });
 
-  // Calculate dynamic discount percentage
   int get discountPercentage {
     if (originalPrice <= 0 || price >= originalPrice) return 0;
     return (((originalPrice - price) / originalPrice) * 100).round();
   }
 
-  // API Integration helpers
   factory DiscoverProductModel.fromJson(Map<String, dynamic> json) {
     return DiscoverProductModel(
       id: json['id'] ?? '',

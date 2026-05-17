@@ -13,7 +13,6 @@ class MessageModel {
     required this.isMe,
   });
 
-  // Future API integration: fromJson / toJson
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
     id: json['id'],
     chatId: json['chatId'],

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
-/// Reusable section card used across all checkout screens.
-/// Wraps any content inside a styled card with optional title and trailing arrow.
 class CheckoutSectionCard extends StatelessWidget {
   final String? title;
   final IconData? titleIcon;

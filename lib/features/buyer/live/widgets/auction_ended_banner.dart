@@ -30,7 +30,6 @@ class AuctionEndedBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Golden fire icon circle
           Container(
             height: 38,
             width: 38,
@@ -60,7 +59,6 @@ class AuctionEndedBanner extends StatelessWidget {
               ],
             ),
           ),
-          // Close button
           InkWell(
             onTap: onClosePressed,
             child: Container(

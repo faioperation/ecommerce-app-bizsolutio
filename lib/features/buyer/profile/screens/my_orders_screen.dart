@@ -42,7 +42,6 @@ class MyOrdersScreen extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Filter Tabs
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -92,7 +91,6 @@ class MyOrdersScreen extends StatelessWidget {
             ),
             const SizedBox(height: 4),
 
-            // Orders List
             Expanded(
               child: controller.filteredOrders.isEmpty
                   ? Center(

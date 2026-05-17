@@ -31,7 +31,6 @@ class BuyerProfileScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ── App Bar ────────────────────────────────────────────
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -63,7 +62,6 @@ class BuyerProfileScreen extends StatelessWidget {
                   ),
                 ),
 
-                // ── User Card ──────────────────────────────────────────
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Container(
@@ -81,7 +79,6 @@ class BuyerProfileScreen extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            // Avatar
                             CircleAvatar(
                               radius: 30,
                               backgroundColor: AppColors.primary,
@@ -130,7 +127,6 @@ class BuyerProfileScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         const Divider(height: 1),
                         const SizedBox(height: 16),
-                        // Stats row
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -150,7 +146,6 @@ class BuyerProfileScreen extends StatelessWidget {
                   ),
                 ),
 
-                // ── My Activity ────────────────────────────────────────
                 const ProfileSectionHeader(title: 'My Activity'),
                 _menuCard(
                   isDark,
@@ -178,7 +173,6 @@ class BuyerProfileScreen extends StatelessWidget {
                   ],
                 ),
 
-                // ── Account Settings ───────────────────────────────────
                 const ProfileSectionHeader(title: 'Account Settings'),
                 _menuCard(
                   isDark,

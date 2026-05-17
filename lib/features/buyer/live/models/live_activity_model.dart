@@ -9,7 +9,6 @@ class LiveActivityModel {
     required this.isBid,
   });
 
-  // Convert from JSON for future API integration
   factory LiveActivityModel.fromJson(Map<String, dynamic> json) {
     return LiveActivityModel(
       username: json['username'] ?? '',
@@ -18,7 +17,6 @@ class LiveActivityModel {
     );
   }
 
-  // Convert to JSON for API requests
   Map<String, dynamic> toJson() {
     return {
       'username': username,

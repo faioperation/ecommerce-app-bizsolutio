@@ -4,8 +4,6 @@ import '../../../../core/theme/app_colors.dart';
 import '../controllers/checkout_controller.dart';
 import '../models/address_model.dart';
 
-/// Popup dialog for adding a new delivery address.
-/// Call via: showDialog(context: context, builder: (_) => const AddAddressDialog())
 class AddAddressDialog extends StatefulWidget {
   const AddAddressDialog({super.key});
 
@@ -77,7 +75,6 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header
                 Row(
                   children: [
                     Expanded(
@@ -104,7 +101,6 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                 ),
                 const SizedBox(height: 16),
 
-                // Label selector (Home / Work / Other)
                 Text(
                   'Address Type',
                   style: TextStyle(
@@ -148,7 +144,6 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                 ),
                 const SizedBox(height: 20),
 
-                // Form fields
                 _buildField(_nameCtrl, 'Full Name', Icons.person_outline, isDark),
                 _buildField(_houseCtrl, 'House / Flat No.', Icons.home_outlined, isDark),
                 _buildField(_streetCtrl, 'Street / Area', Icons.location_on_outlined, isDark),
@@ -158,7 +153,6 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
 
                 const SizedBox(height: 24),
 
-                // Save button
                 SizedBox(
                   width: double.infinity,
                   height: 52,

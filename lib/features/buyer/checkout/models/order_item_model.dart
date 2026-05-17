@@ -15,7 +15,6 @@ class OrderItemModel {
 
   double get subtotal => price * quantity;
 
-  // API helper
   factory OrderItemModel.fromJson(Map<String, dynamic> json) {
     return OrderItemModel(
       productId: json['productId'] ?? '',

@@ -7,17 +7,14 @@ import '../models/delivery_option_model.dart';
 import '../models/order_item_model.dart';
 
 class CheckoutController extends GetxController {
-  // ─── Selected Checkout Data ───────────────────────────────────────────────
   final selectedAddressId = ''.obs;
   final selectedPaymentId = ''.obs;
   final selectedDeliveryId = ''.obs;
   final isPlacingOrder = false.obs;
 
-  // ─── Order Result ─────────────────────────────────────────────────────────
   final orderNumber = ''.obs;
   final estimatedDelivery = ''.obs;
 
-  // ─── Mock Address List (Replace with API call) ────────────────────────────
   final addresses = <AddressModel>[
     AddressModel(
       id: 'addr1',
@@ -40,7 +37,6 @@ class CheckoutController extends GetxController {
     ),
   ].obs;
 
-  // ─── Mock Payment Methods (Replace with API call) ─────────────────────────
   final paymentMethods = <PaymentMethodModel>[
     PaymentMethodModel(
       id: 'wallet',
@@ -70,7 +66,6 @@ class CheckoutController extends GetxController {
     ),
   ].obs;
 
-  // ─── Mock Delivery Options (Replace with API call) ────────────────────────
   final deliveryOptions = <DeliveryOptionModel>[
     DeliveryOptionModel(
       id: 'standard',
@@ -92,10 +87,8 @@ class CheckoutController extends GetxController {
     ),
   ].obs;
 
-  // ─── Order Items (passed from product details screen) ─────────────────────
   final orderItems = <OrderItemModel>[].obs;
 
-  // ─── Getters ──────────────────────────────────────────────────────────────
   AddressModel? get selectedAddress {
     try {
       return addresses.firstWhere((a) => a.id == selectedAddressId.value);
@@ -130,7 +123,6 @@ class CheckoutController extends GetxController {
 
   double get grandTotal => itemsTotal + deliveryFee;
 
-  // ─── Init ─────────────────────────────────────────────────────────────────
   @override
   void onInit() {
     super.onInit();
@@ -144,13 +136,11 @@ class CheckoutController extends GetxController {
     selectedDeliveryId.value = deliveryOptions.first.id;
   }
 
-  // ─── Load Product for Buy Now (Called from Product Details Screen) ─────────
   void loadBuyNowItem(OrderItemModel item) {
     orderItems.clear();
     orderItems.add(item);
   }
 
-  // ─── Address Operations ───────────────────────────────────────────────────
   void selectAddress(String id) => selectedAddressId.value = id;
 
   void addAddress(AddressModel address) {
@@ -158,7 +148,6 @@ class CheckoutController extends GetxController {
     selectedAddressId.value = address.id;
   }
 
-  // ─── Payment Operations ───────────────────────────────────────────────────
   void selectPayment(String id) => selectedPaymentId.value = id;
 
   void addCard({
@@ -179,22 +168,17 @@ class CheckoutController extends GetxController {
     ));
   }
 
-  // ─── Delivery Selection ───────────────────────────────────────────────────
   void selectDelivery(String id) => selectedDeliveryId.value = id;
 
-  // ─── Place Order ──────────────────────────────────────────────────────────
   Future<void> placeOrder(BuildContext context) async {
     if (orderItems.isEmpty) return;
 
     isPlacingOrder.value = true;
 
-    // Capture router reference BEFORE the async gap (avoids use_build_context_synchronously)
     final router = GoRouter.of(context);
 
-    // Simulate API call delay
     await Future.delayed(const Duration(milliseconds: 1200));
 
-    // Generate mock order result
     orderNumber.value =
         '#ORD-${DateTime.now().year}-${(DateTime.now().millisecondsSinceEpoch % 10000).toString().padLeft(4, '0')}';
 
@@ -210,7 +194,6 @@ class CheckoutController extends GetxController {
 
     isPlacingOrder.value = false;
 
-    // Navigate to Order Success Screen using captured GoRouter
     router.push('/checkout/success');
   }
 

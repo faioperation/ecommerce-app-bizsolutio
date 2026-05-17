@@ -30,7 +30,6 @@ class RecentSearchTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Search text
             Expanded(
               child: Text(
                 text,
@@ -42,7 +41,6 @@ class RecentSearchTile extends StatelessWidget {
                 ),
               ),
             ),
-            // Close/Delete icon
             GestureDetector(
               onTap: onDelete,
               child: Icon(

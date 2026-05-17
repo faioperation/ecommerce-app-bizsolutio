@@ -10,7 +10,6 @@ class BuyerLiveScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Retrieve or instantiate the LiveListController
     final controller = Get.put(LiveListController());
 
     return Scaffold(
@@ -18,7 +17,7 @@ class BuyerLiveScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
-        automaticallyImplyLeading: false, // Persistent tab has no back button
+        automaticallyImplyLeading: false,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

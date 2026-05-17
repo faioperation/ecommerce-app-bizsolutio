@@ -38,7 +38,6 @@ class EditProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 16),
-            // Profile Image
             GestureDetector(
               onTap: controller.pickImage,
               child: Stack(
@@ -72,7 +71,6 @@ class EditProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 40),
 
-            // Form Fields
             _buildTextField(
               controller: controller.nameController,
               label: 'Full Name',
@@ -89,7 +87,6 @@ class EditProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 40),
 
-            // Save Button
             Obx(() => SizedBox(
                   width: double.infinity,
                   height: 56,

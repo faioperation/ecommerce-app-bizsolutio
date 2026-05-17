@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/order_item_model.dart';
 
-/// Reusable row widget for each item in the order summary.
 class OrderItemRow extends StatelessWidget {
   final OrderItemModel item;
 
@@ -16,7 +15,6 @@ class OrderItemRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          // Product thumbnail
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
@@ -37,7 +35,6 @@ class OrderItemRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          // Name and quantity
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +66,6 @@ class OrderItemRow extends StatelessWidget {
               ],
             ),
           ),
-          // Price
           Text(
             '£${item.subtotal.toStringAsFixed(0)}',
             style: TextStyle(

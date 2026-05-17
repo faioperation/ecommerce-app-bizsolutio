@@ -27,7 +27,6 @@ class BuyerHomeScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          // Theme toggle moved to Settings Screen
           IconButton(
             icon: Badge(
               label: const Text('2'),

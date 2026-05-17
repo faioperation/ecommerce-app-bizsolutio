@@ -1,6 +1,6 @@
 class AddressModel {
   final String id;
-  final String label; // Home, Work, etc.
+  final String label;
   final String name;
   final String house;
   final String street;
@@ -21,7 +21,6 @@ class AddressModel {
 
   String get fullAddress => '$house, $street, $town';
 
-  // API helper
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
       id: json['id'] ?? '',

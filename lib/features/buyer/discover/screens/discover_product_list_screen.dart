@@ -13,14 +13,11 @@ class DiscoverProductListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Find already initialized controller
     final controller = Get.find<DiscoverController>();
     
-    // Default fallback category if null
     final activeCategory = category ?? controller.categories.first;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Filter products for this specific category
     final categoryProducts = controller.getProductsByCategory(activeCategory.id);
 
     return Scaffold(
@@ -55,7 +52,6 @@ class DiscoverProductListScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Subcategories header title (Screenshot 2)
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 16, bottom: 8),
               child: Text(
@@ -69,7 +65,6 @@ class DiscoverProductListScreen extends StatelessWidget {
               ),
             ),
 
-            // Products grid list (Smartphone, Headphones, Laptops, Cameras)
             Expanded(
               child: categoryProducts.isEmpty
                   ? const Center(
@@ -93,7 +88,6 @@ class DiscoverProductListScreen extends StatelessWidget {
                         return DiscoverProductCard(
                           product: product,
                           onTap: () {
-                            // Navigate to Screen 3 (Details) with product parameter passed as extra
                             context.push('/buyer/discover/details', extra: product);
                           },
                         );

@@ -1,10 +1,7 @@
 import 'package:get/get.dart';
 import '../models/profile_user_model.dart';
 
-/// Controls the main Profile screen state.
-/// Replace mock data with real API calls when ready.
 class ProfileController extends GetxController {
-  // ─── User Data ────────────────────────────────────────────────────────────
   final user = Rxn<ProfileUserModel>();
   final isLoading = false.obs;
 
@@ -14,10 +11,9 @@ class ProfileController extends GetxController {
     loadProfile();
   }
 
-  /// TODO: Replace with real API call → GET /api/buyer/profile
   Future<void> loadProfile() async {
     isLoading.value = true;
-    await Future.delayed(const Duration(milliseconds: 300)); // simulated delay
+    await Future.delayed(const Duration(milliseconds: 300));
 
     user.value = ProfileUserModel(
       id: 'usr_001',

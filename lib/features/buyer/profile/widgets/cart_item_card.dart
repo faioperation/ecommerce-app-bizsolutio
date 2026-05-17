@@ -4,7 +4,6 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../routes/app_routes.dart';
 import '../models/cart_item_model.dart';
 
-/// Reusable card widget for a single cart item on the Shopping Cart screen.
 class CartItemCard extends StatelessWidget {
   final CartItemModel item;
   final VoidCallback onIncrement;
@@ -43,7 +42,6 @@ class CartItemCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Product image
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Image.network(
@@ -65,7 +63,6 @@ class CartItemCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Name + remove icon
                 Row(
                   children: [
                     Expanded(
@@ -117,7 +114,6 @@ class CartItemCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                // Price + quantity stepper
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -130,7 +126,6 @@ class CartItemCard extends StatelessWidget {
                         fontFamily: 'Inter',
                       ),
                     ),
-                    // Quantity stepper
                     Row(
                       children: [
                         _stepperButton(

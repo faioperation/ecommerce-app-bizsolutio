@@ -70,7 +70,6 @@ class ShopProfileDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Profile Pic, Name, Follow, Message
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -91,7 +90,6 @@ class ShopProfileDetails extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                // Follow Button
                 Obx(() => ElevatedButton(
                   onPressed: controller.toggleFollow,
                   style: ElevatedButton.styleFrom(
@@ -115,7 +113,6 @@ class ShopProfileDetails extends StatelessWidget {
                   ),
                 )),
                 const SizedBox(width: 12),
-                // Message Button
                 Container(
                   width: 36,
                   height: 36,
@@ -134,7 +131,6 @@ class ShopProfileDetails extends StatelessWidget {
                         name: shop.name,
                         profileImage: shop.profileImageUrl,
                       );
-                      // ignore: use_build_context_synchronously
                       context.push(
                         AppRoutes.chatScreen,
                         extra: {
@@ -150,7 +146,6 @@ class ShopProfileDetails extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Shop Name
             Text(
               shop.name,
               style: TextStyle(
@@ -162,7 +157,6 @@ class ShopProfileDetails extends StatelessWidget {
             ),
             const SizedBox(height: 4),
 
-            // Location
             Row(
               children: [
                 Icon(Icons.location_on_outlined, color: Colors.grey[500], size: 16),
@@ -179,7 +173,6 @@ class ShopProfileDetails extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            // Stats Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

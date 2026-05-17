@@ -7,21 +7,17 @@ class LiveBiddingController extends GetxController {
   final commentController = TextEditingController();
   final scrollController = ScrollController();
 
-  // Auction State Variables
   Timer? _auctionTimer;
   final secondsRemaining = 35.obs;
   final isAuctionEnded = false.obs;
   final showEndBanner = false.obs;
 
-  // Active Bidding metrics
   final currentBid = 420.0.obs;
   final highestBidder = 'Alex'.obs;
   final totalBids = 23.obs;
 
-  // Interactive UI
   final isLiked = false.obs;
 
-  // Activities log (comments + bids)
   final activities = <LiveActivityModel>[
     LiveActivityModel(username: 'Rifat', text: 'How much? 🤔', isBid: false),
     LiveActivityModel(username: 'Alex', text: 'Start auction 🔥', isBid: false),
@@ -30,7 +26,6 @@ class LiveBiddingController extends GetxController {
     LiveActivityModel(username: 'Alex', text: 'placed £420', isBid: true),
   ].obs;
 
-  // Callback to display the Victory Dialog
   Function? onAuctionWonCallback;
 
   @override
@@ -47,7 +42,6 @@ class LiveBiddingController extends GetxController {
     super.onClose();
   }
 
-  // Starts the countdown timer
   void startTimer() {
     _auctionTimer?.cancel();
     _auctionTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -60,7 +54,6 @@ class LiveBiddingController extends GetxController {
     });
   }
 
-  // Resets the auction states to default for demo testing
   void resetAuction() {
     secondsRemaining.value = 35;
     isAuctionEnded.value = false;
@@ -69,7 +62,6 @@ class LiveBiddingController extends GetxController {
     highestBidder.value = 'Alex';
     totalBids.value = 23;
     
-    // Remove user placed activities
     activities.removeWhere((act) => act.username == 'You');
     
     startTimer();
@@ -83,21 +75,17 @@ class LiveBiddingController extends GetxController {
     );
   }
 
-  // Handle Auction ending
   void _endAuction() {
     isAuctionEnded.value = true;
     if (highestBidder.value == 'You') {
-      // Trigger Winner Dialog callback
       if (onAuctionWonCallback != null) {
         onAuctionWonCallback!();
       }
     } else {
-      // Show Auction Ended Toast Overlay
       showEndBanner.value = true;
     }
   }
 
-  // Place a custom bid amount
   void placeBid(double amount) {
     currentBid.value = amount;
     highestBidder.value = 'You';
@@ -120,7 +108,6 @@ class LiveBiddingController extends GetxController {
     _scrollFeedToBottom();
   }
 
-  // Handle typing a comment or custom bid in bottom text bar
   void addComment() {
     final text = commentController.text.trim();
     if (text.isEmpty) return;
@@ -151,7 +138,6 @@ class LiveBiddingController extends GetxController {
     });
   }
 
-  // Toggle Love react
   void toggleLike() {
     isLiked.toggle();
     Get.snackbar(

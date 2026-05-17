@@ -92,7 +92,6 @@ class CartScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Cart Items
                     ...controller.items.map(
                       (item) => CartItemCard(
                         item: item,
@@ -106,7 +105,6 @@ class CartScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
 
-                    // Coupon Section
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Container(
@@ -212,7 +210,6 @@ class CartScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
 
-                    // Order Summary Section
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Container(
@@ -292,7 +289,6 @@ class CartScreen extends StatelessWidget {
               ),
             ),
 
-            // Checkout Button Row
             Container(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
               decoration: BoxDecoration(
@@ -312,8 +308,7 @@ class CartScreen extends StatelessWidget {
                   height: 56,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Note: Assuming checkout receives products via controller normally
-                      // For this flow, we navigate to the generic checkout screen
+
                       context.push(AppRoutes.checkout);
                     },
                     style: ElevatedButton.styleFrom(

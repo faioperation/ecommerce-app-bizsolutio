@@ -15,7 +15,6 @@ class ChatModel {
     this.unreadCount = 0,
   });
 
-  // Future API integration: fromJson / toJson
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
     id: json['id'],
     name: json['name'],

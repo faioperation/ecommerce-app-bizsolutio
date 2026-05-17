@@ -43,12 +43,10 @@ class SettingsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Preferences ──────────────────────────────────────────────
             const ProfileSectionHeader(title: 'Preferences'),
             _menuCard(
               isDark,
               children: [
-                // Notifications Toggle
                 Obx(() => _switchTile(
                       isDark: isDark,
                       icon: Icons.notifications_none_outlined,
@@ -58,7 +56,6 @@ class SettingsScreen extends StatelessWidget {
                       onChanged: controller.toggleNotifications,
                     )),
                 _separator(isDark),
-                // Dark Mode Toggle
                 Obx(() => _switchTile(
                       isDark: isDark,
                       icon: Icons.dark_mode_outlined,
@@ -70,7 +67,6 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
 
-            // ── Account ──────────────────────────────────────────────────
             const ProfileSectionHeader(title: 'Account'),
             _menuCard(
               isDark,
@@ -98,7 +94,6 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
 
-            // ── About ────────────────────────────────────────────────────
             const ProfileSectionHeader(title: 'About'),
             _menuCard(
               isDark,

@@ -2,7 +2,7 @@ class DeliveryOptionModel {
   final String id;
   final String name;
   final String duration;
-  final double price; // 0.0 = FREE
+  final double price;
 
   DeliveryOptionModel({
     required this.id,
@@ -13,7 +13,6 @@ class DeliveryOptionModel {
 
   String get priceDisplay => price == 0.0 ? 'FREE' : '£${price.toStringAsFixed(2)}';
 
-  // API helper
   factory DeliveryOptionModel.fromJson(Map<String, dynamic> json) {
     return DeliveryOptionModel(
       id: json['id'] ?? '',

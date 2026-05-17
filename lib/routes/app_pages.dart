@@ -191,7 +191,6 @@ class AppPages {
         path: AppRoutes.passwordSuccess,
         builder: (context, state) => const PasswordSuccessScreen(),
       ),
-      // ── Checkout Flow (full-screen, outside shell, no bottom nav) ────────────
       GoRoute(
         path: AppRoutes.checkout,
         builder: (context, state) {
@@ -210,7 +209,6 @@ class AppPages {
         path: AppRoutes.checkoutSuccess,
         builder: (context, state) => const OrderSuccessScreen(),
       ),
-      // ── Profile Sub-screens ─────────────────────────────────────────────────
       GoRoute(
         path: AppRoutes.profileSettings,
         builder: (context, state) => const SettingsScreen(),

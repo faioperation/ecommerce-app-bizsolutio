@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/order_model.dart';
 
-/// Reusable card widget for a single order in the My Orders screen.
 class OrderCard extends StatelessWidget {
   final OrderModel order;
   final VoidCallback? onTap;
@@ -75,7 +74,6 @@ class OrderCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Order ID + Status badge row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -129,7 +127,6 @@ class OrderCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            // Product thumbnails row
             Row(
               children: [
                 ...order.productImageUrls.take(3).map(

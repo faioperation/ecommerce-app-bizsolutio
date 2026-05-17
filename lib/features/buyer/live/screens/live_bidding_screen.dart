@@ -16,7 +16,6 @@ class LiveBiddingScreen extends StatelessWidget {
 
   const LiveBiddingScreen({super.key, required this.stream});
 
-  // Displays the Congratulations Dialog when the user wins
   void _showCongratulationsDialog(BuildContext context, LiveBiddingController controller) {
     showDialog(
       context: context,
@@ -39,7 +38,6 @@ class LiveBiddingScreen extends StatelessWidget {
     );
   }
 
-  // Opens the Place Bid Bottom Sheet dialog
   void _openBidBottomSheet(BuildContext context, LiveBiddingController controller) {
     showModalBottomSheet(
       context: context,
@@ -56,17 +54,14 @@ class LiveBiddingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Instantiate or retrieve Bidding Controller
     final controller = Get.put(LiveBiddingController());
 
-    // Bind winning callback to view dialog trigger
     controller.onAuctionWonCallback = () => _showCongratulationsDialog(context, controller);
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // 1. Live stream background image (full screen)
           Positioned.fill(
             child: Image.network(
               stream.previewImageUrl,
@@ -78,7 +73,6 @@ class LiveBiddingScreen extends StatelessWidget {
             ),
           ),
 
-          // Dark overlay gradient
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -95,14 +89,12 @@ class LiveBiddingScreen extends StatelessWidget {
             ),
           ),
 
-          // 2. Safe Area Layout
           SafeArea(
             child: Padding(
               padding: AppSpacing.edgeInsetsAllLg,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // --- TOP BAR (Seller Info, Share, Close) ---
                   Row(
                     children: [
                       Container(
@@ -153,7 +145,6 @@ class LiveBiddingScreen extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      // Reset button to simplify developer / client demo testing
                       CircleAvatar(
                         backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: IconButton(
@@ -183,7 +174,6 @@ class LiveBiddingScreen extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  // --- MIDDLE PORTION (Structured Bids & Comments Feed) ---
                   Expanded(
                     child: Container(
                       width: MediaQuery.of(context).size.width * 0.8,
@@ -217,9 +207,7 @@ class LiveBiddingScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // --- LOWER PORTION (Live Auction Premium Card & Comment Field) ---
-                  
-                  // Auction Stats Card (Glowing border container)
+
                   Obx(() => AuctionStatsCard(
                     previewImageUrl: stream.previewImageUrl,
                     currentBid: controller.currentBid.value,
@@ -230,7 +218,6 @@ class LiveBiddingScreen extends StatelessWidget {
                   )),
                   const SizedBox(height: 12),
 
-                  // Bottom Comment row (High-end Glassmorphic Text input + Heart button)
                   Row(
                     children: [
                       Expanded(
@@ -300,7 +287,6 @@ class LiveBiddingScreen extends StatelessWidget {
             ),
           ),
 
-          // Small Bidding Ended Banner (Screenshot 1 black overlay banner)
           Obx(() {
             if (controller.showEndBanner.value) {
               return Positioned(

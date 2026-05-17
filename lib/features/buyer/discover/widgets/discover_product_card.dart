@@ -38,7 +38,6 @@ class DiscoverProductCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Product Image Thumbnail (Screenshot 2 style)
             Expanded(
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -57,13 +56,11 @@ class DiscoverProductCard extends StatelessWidget {
               ),
             ),
 
-            // 2. Product Details
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Subcategory tag (small text)
                   Text(
                     product.subcategory,
                     style: TextStyle(
@@ -75,7 +72,6 @@ class DiscoverProductCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
 
-                  // Product Title
                   Text(
                     product.name,
                     style: TextStyle(
@@ -89,11 +85,9 @@ class DiscoverProductCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
 
-                  // Row showing Price and Available Quantity Badge
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Price
                       Text(
                         '£${product.price.toStringAsFixed(0)}',
                         style: const TextStyle(
@@ -102,7 +96,6 @@ class DiscoverProductCard extends StatelessWidget {
                           fontSize: 15,
                         ),
                       ),
-                      // Available Quantity Badge
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(

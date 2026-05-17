@@ -11,13 +11,11 @@ class EditProfileController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // Populate with existing data if available
     try {
       final profileCtrl = Get.find<ProfileController>();
       final user = profileCtrl.user.value;
       if (user != null) {
         nameController.text = user.name;
-        // In a real app, user model might have phone. Just mock for now.
         phoneController.text = '+1 (555) 123-4567';
       }
     } catch (_) {}
@@ -31,7 +29,6 @@ class EditProfileController extends GetxController {
   }
 
   void pickImage() {
-    // TODO: Implement image picker logic
     Get.snackbar('Image Picker', 'Coming soon!');
   }
 
@@ -43,10 +40,8 @@ class EditProfileController extends GetxController {
 
     isLoading.value = true;
     
-    // TODO: Call API to update profile
     await Future.delayed(const Duration(milliseconds: 1000));
     
-    // Update local profile controller
     try {
       final profileCtrl = Get.find<ProfileController>();
       if (profileCtrl.user.value != null) {

@@ -34,7 +34,6 @@ class LiveProductCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Product image thumbnail
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
@@ -51,7 +50,6 @@ class LiveProductCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          // Title & Price
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +72,6 @@ class LiveProductCard extends StatelessWidget {
               ],
             ),
           ),
-          // Buy button
           ElevatedButton(
             onPressed: onBuyPressed,
             style: ElevatedButton.styleFrom(

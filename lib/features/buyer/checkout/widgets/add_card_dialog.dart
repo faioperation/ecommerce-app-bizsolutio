@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../controllers/checkout_controller.dart';
 
-/// Popup dialog for adding a new payment card.
 class AddCardDialog extends StatefulWidget {
   const AddCardDialog({super.key});
 
@@ -76,7 +75,6 @@ class _AddCardDialogState extends State<AddCardDialog> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header
                 Row(
                   children: [
                     Expanded(
@@ -138,7 +136,6 @@ class _AddCardDialogState extends State<AddCardDialog> {
 
                 const SizedBox(height: 8),
 
-                // Save button
                 SizedBox(
                   width: double.infinity,
                   height: 52,

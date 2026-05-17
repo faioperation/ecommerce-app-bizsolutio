@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/payment_method_model.dart';
 
-/// Reusable payment option tile for the Payment Method screen.
 class PaymentMethodTile extends StatelessWidget {
   final PaymentMethodModel method;
   final bool isSelected;
@@ -65,7 +64,6 @@ class PaymentMethodTile extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Radio indicator (not shown for wallet)
             if (!isWallet) ...[
               Container(
                 width: 20,
@@ -94,7 +92,6 @@ class PaymentMethodTile extends StatelessWidget {
               ),
               const SizedBox(width: 12),
             ],
-            // Icon
             Container(
               width: 36,
               height: 36,
@@ -181,7 +178,6 @@ class PaymentMethodTile extends StatelessWidget {
                 ],
               ),
             ),
-            // Wallet radio circle on right
             if (isWallet)
               Container(
                 width: 22,

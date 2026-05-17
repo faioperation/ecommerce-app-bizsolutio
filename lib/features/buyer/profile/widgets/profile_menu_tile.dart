@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
-/// Reusable menu option row used across all profile sub-screens.
-/// Shows an icon, label, optional subtitle, and a trailing arrow.
 class ProfileMenuTile extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -32,7 +30,6 @@ class ProfileMenuTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         child: Row(
           children: [
-            // Icon container
             Container(
               width: 38,
               height: 38,
@@ -43,7 +40,6 @@ class ProfileMenuTile extends StatelessWidget {
               child: Icon(icon, color: iconColor, size: 20),
             ),
             const SizedBox(width: 14),
-            // Title & optional subtitle
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

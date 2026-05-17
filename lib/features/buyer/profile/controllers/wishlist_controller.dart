@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import '../models/wishlist_item_model.dart';
 
-/// Controls the My Wishlist screen.
-/// Replace mock data with real API calls when ready.
 class WishlistController extends GetxController {
   final isLoading = false.obs;
   final items = <WishlistItemModel>[].obs;
@@ -13,7 +11,6 @@ class WishlistController extends GetxController {
     loadWishlist();
   }
 
-  /// TODO: Replace with real API call → GET /api/buyer/wishlist
   Future<void> loadWishlist() async {
     isLoading.value = true;
     await Future.delayed(const Duration(milliseconds: 300));
@@ -58,14 +55,12 @@ class WishlistController extends GetxController {
     return items.any((i) => i.productId == productId);
   }
 
-  /// TODO: Replace with real API call → DELETE /api/buyer/wishlist/{productId}
   void removeItem(String productId) {
     items.removeWhere((i) => i.productId == productId);
     Get.snackbar('Removed', 'Item removed from wishlist',
         duration: const Duration(seconds: 2));
   }
 
-  /// TODO: Replace with real API call → POST /api/buyer/cart
   void addToCart(WishlistItemModel item) {
     Get.snackbar('Added to Cart', '${item.name} added to your cart!',
         duration: const Duration(seconds: 2));

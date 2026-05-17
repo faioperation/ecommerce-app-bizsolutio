@@ -44,7 +44,6 @@ class SelectAddressScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Column(
                 children: [
-                  // ── Add New Address Button ───────────────────────────
                   GestureDetector(
                     onTap: () => showDialog(
                       context: context,
@@ -83,7 +82,6 @@ class SelectAddressScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
 
-                  // ── Address List ─────────────────────────────────────
                   ...controller.addresses.map((address) {
                     final isSelected =
                         controller.selectedAddressId.value == address.id;

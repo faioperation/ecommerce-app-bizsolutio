@@ -1,5 +1,4 @@
-/// Represents the logged-in buyer's profile data.
-/// Replace mock values with API response in ProfileController.
+
 class ProfileUserModel {
   final String id;
   final String name;

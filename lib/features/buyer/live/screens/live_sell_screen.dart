@@ -15,14 +15,12 @@ class LiveSellScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Instantiate or retrieve the Sell Controller
     final controller = Get.put(LiveSellController());
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // 1. Live stream background image (full screen)
           Positioned.fill(
             child: Image.network(
               stream.previewImageUrl,
@@ -34,7 +32,6 @@ class LiveSellScreen extends StatelessWidget {
             ),
           ),
 
-          // Dark overlay gradient to make floating text stand out
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -51,17 +48,14 @@ class LiveSellScreen extends StatelessWidget {
             ),
           ),
 
-          // 2. Safe Area Layout
           SafeArea(
             child: Padding(
               padding: AppSpacing.edgeInsetsAllLg,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // --- TOP BAR (Seller Info, Share, Close) ---
                   Row(
                     children: [
-                      // Profile & Stream Badge
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                         decoration: BoxDecoration(

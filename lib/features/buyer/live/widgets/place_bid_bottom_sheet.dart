@@ -61,7 +61,6 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Drag handle/Close row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -81,7 +80,6 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
           ),
           const SizedBox(height: 12),
 
-          // Bid Stats Banner (Yellow/orange background box)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
@@ -119,7 +117,6 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
           ),
           const SizedBox(height: 18),
 
-          // Bid Input Field
           Text(
             'Your Bid Amount',
             style: TextStyle(
@@ -166,7 +163,6 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
           ),
           const SizedBox(height: 14),
 
-          // Quick Increment helper chips
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [10, 20, 50, 100].map((inc) {
@@ -199,7 +195,6 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
           ),
           const SizedBox(height: 24),
 
-          // Confirm Bid Button
           Container(
             width: double.infinity,
             height: 52,
@@ -230,7 +225,6 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
                   return;
                 }
 
-                // Call confirm callback & close bottomsheet
                 widget.onBidConfirmed(_tempBidAmount);
                 Navigator.pop(context);
               },

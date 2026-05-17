@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../routes/app_routes.dart';
 
-/// Controls the Settings screen state.
 class SettingsController extends GetxController {
-  // ─── Preferences ─────────────────────────────────────────────────────────
   final notificationsEnabled = true.obs;
 
   bool get isDarkMode {
@@ -17,7 +15,6 @@ class SettingsController extends GetxController {
     }
   }
 
-  /// Sync with real API → PATCH /api/buyer/preferences
   void toggleNotifications(bool val) => notificationsEnabled.value = val;
 
   void toggleDarkMode(bool val) {
@@ -33,7 +30,6 @@ class SettingsController extends GetxController {
     }
   }
 
-  // ─── Account Actions ──────────────────────────────────────────────────────
   void editProfile() {
     Get.toNamed(AppRoutes.profileEdit);
   }

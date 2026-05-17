@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/address_model.dart';
 
-/// Reusable address tile for Select Address screen and popup.
 class AddressTile extends StatelessWidget {
   final AddressModel address;
   final bool isSelected;
@@ -50,7 +49,6 @@ class AddressTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Radio indicator
             Container(
               width: 20,
               height: 20,
@@ -81,7 +79,6 @@ class AddressTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Label row
                   Row(
                     children: [
                       Icon(_labelIcon, size: 16, color: AppColors.primary),

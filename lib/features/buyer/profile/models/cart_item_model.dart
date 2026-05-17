@@ -1,4 +1,3 @@
-/// Represents a single item in the Shopping Cart.
 class CartItemModel {
   final String productId;
   final String name;

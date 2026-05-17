@@ -47,7 +47,6 @@ class ChangePasswordScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
 
-            // Form Fields
             Obx(() => _buildPasswordField(
                   controller: controller.currentPasswordController,
                   label: 'Current Password',
@@ -73,7 +72,6 @@ class ChangePasswordScreen extends StatelessWidget {
                 )),
             const SizedBox(height: 40),
 
-            // Submit Button
             Obx(() => SizedBox(
                   width: double.infinity,
                   height: 56,

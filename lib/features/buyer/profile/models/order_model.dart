@@ -1,8 +1,7 @@
-/// Represents a single buyer order entry in My Orders screen.
 class OrderModel {
   final String orderId;
   final DateTime date;
-  final String status; // 'Delivered', 'Processing', 'Pending', 'Cancelled'
+  final String status;
   final double totalAmount;
   final int itemCount;
   final List<String> productImageUrls;

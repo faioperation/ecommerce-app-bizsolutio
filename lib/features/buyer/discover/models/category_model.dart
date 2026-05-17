@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CategoryModel {
   final String id;
   final String name;
-  final String iconEmoji; // Emojis representing the items as requested
+  final String iconEmoji;
   final Color backgroundColor;
   final Color textColor;
 
@@ -15,7 +15,6 @@ class CategoryModel {
     required this.textColor,
   });
 
-  // Ideal for API Integration
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     return CategoryModel(
       id: json['id'] ?? '',

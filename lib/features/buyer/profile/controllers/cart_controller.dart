@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/cart_item_model.dart';
 
-/// Controls the Shopping Cart screen.
-/// Replace mock data with real API calls when ready.
+
 class CartController extends GetxController {
   final isLoading = false.obs;
   final items = <CartItemModel>[].obs;
@@ -24,7 +23,6 @@ class CartController extends GetxController {
     super.onClose();
   }
 
-  /// TODO: Replace with real API call → GET /api/buyer/cart
   Future<void> loadCart() async {
     isLoading.value = true;
     await Future.delayed(const Duration(milliseconds: 300));
@@ -84,14 +82,12 @@ class CartController extends GetxController {
     }
   }
 
-  /// TODO: Replace with real API call → DELETE /api/buyer/cart/{productId}
   void removeItem(String productId) {
     items.removeWhere((i) => i.productId == productId);
     Get.snackbar('Removed', 'Item removed from cart',
         duration: const Duration(seconds: 2));
   }
 
-  /// TODO: Replace with real API call → POST /api/buyer/coupon/validate
   void applyCoupon() {
     final code = couponController.text.trim().toUpperCase();
     if (code == 'SAVE10') {

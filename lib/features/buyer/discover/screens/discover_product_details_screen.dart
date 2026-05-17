@@ -34,13 +34,11 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
       backgroundColor: isDark ? Colors.black : Colors.white,
       body: Stack(
         children: [
-          // 1. Scrollable Content
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Product Image (Screenshot 3 upper part)
                 Hero(
                   tag: 'product-img-${activeProduct.id}',
                   child: Image.network(
@@ -56,7 +54,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                   ),
                 ),
 
-                // 2. White Info Box (Curved bottom sheet style overlay)
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
@@ -70,7 +67,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Bottom sheet drag handle indicator
                       Center(
                         child: Container(
                           width: 40,
@@ -83,7 +79,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                         ),
                       ),
 
-                      // Product Title
                       Text(
                         activeProduct.name,
                         style: TextStyle(
@@ -95,7 +90,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       ),
                       const SizedBox(height: 10),
 
-                      // Rating & review row (Screenshot 3)
                       Row(
                         children: [
                           const Icon(Icons.star_rounded, color: Colors.orangeAccent, size: 20),
@@ -123,7 +117,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       ),
                       const SizedBox(height: 18),
 
-                      // Price Section with Crossed Price and Discount Badge (Screenshot 3)
                       Row(
                         children: [
                           Text(
@@ -149,7 +142,7 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFFF7ED), // Soft Peach bg
+                              color: const Color(0xFFFFF7ED),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -166,7 +159,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       ),
                       const SizedBox(height: 24),
 
-                      // Seller Section with Profile Card and Follow Button (Screenshot 3)
                       GestureDetector(
                         onTap: () {
                           context.push(
@@ -221,7 +213,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                                 ],
                               ),
                             ),
-                            // Purple Follow button
                             ElevatedButton(
                               onPressed: () {
                                 setState(() {
@@ -251,7 +242,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       ),
                       const SizedBox(height: 24),
 
-                      // Delivery & Return highlights row (Screenshot 3 Icons)
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -262,7 +252,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       ),
                       const SizedBox(height: 24),
 
-                      // Description Header
                       Text(
                         'Description',
                         style: TextStyle(
@@ -273,7 +262,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                         ),
                       ),
                       const SizedBox(height: 8),
-                      // Description Text
                       Text(
                         activeProduct.description,
                         style: TextStyle(
@@ -283,7 +271,7 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                           fontFamily: 'Inter',
                         ),
                       ),
-                      const SizedBox(height: 100), // Spacing for bottom navbar
+                      const SizedBox(height: 100),
                     ],
                   ),
                 ),
@@ -291,7 +279,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
             ),
           ),
 
-          // 3. Floating Overlay Top Buttons (Screenshot 3 style)
           Positioned(
             top: MediaQuery.of(context).padding.top + 10,
             left: 20,
@@ -299,7 +286,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Circular Back Button
                 GestureDetector(
                   onTap: () => context.pop(),
                   child: Container(
@@ -314,7 +300,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                 ),
                 Row(
                   children: [
-                    // Share Button
                     Container(
                       height: 40,
                       width: 40,
@@ -328,7 +313,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       ),
                     ),
                     const SizedBox(width: 12),
-                    // Favorite Heart Button
                     Obx(() {
                       final wishlistCtrl = Get.put(WishlistController());
                       final bool isLiked = wishlistCtrl.isItemInWishlist(activeProduct.id);
@@ -379,7 +363,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
             ),
           ),
 
-          // 4. Fixed Bottom Action Row (Add to Cart & Buy Now Buttons)
           Positioned(
             bottom: 0,
             left: 0,
@@ -405,7 +388,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                 top: false,
                 child: Row(
                   children: [
-                    // Add To Cart Button (White bg, purple border/text)
                     Expanded(
                       child: Container(
                         height: 52,
@@ -454,7 +436,6 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       ),
                     ),
                     const SizedBox(width: 16),
-                    // Buy Now Button (Purple background, white text)
                     Expanded(
                       child: Container(
                         height: 52,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/wishlist_item_model.dart';
 
-/// Reusable card widget for a single wishlist item.
 class WishlistItemCard extends StatelessWidget {
   final WishlistItemModel item;
   final VoidCallback onRemove;
@@ -42,7 +41,6 @@ class WishlistItemCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Product image
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
@@ -114,7 +112,6 @@ class WishlistItemCard extends StatelessWidget {
                   ],
                 ),
               ),
-              // Remove button
               IconButton(
                 onPressed: onRemove,
                 icon: Icon(Icons.delete_outline_rounded,
@@ -128,7 +125,6 @@ class WishlistItemCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          // Add to Cart / Out of Stock button
           item.isInStock
               ? SizedBox(
                   width: double.infinity,

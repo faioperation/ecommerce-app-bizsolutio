@@ -6,14 +6,12 @@ class LiveSellController extends GetxController {
   final commentController = TextEditingController();
   final scrollController = ScrollController();
 
-  // Reactive list of live stream comments
   final comments = <LiveActivityModel>[
     LiveActivityModel(username: 'user123', text: 'This looks amazing! 😍', isBid: false),
     LiveActivityModel(username: 'shopper456', text: "What's the price?", isBid: false),
     LiveActivityModel(username: 'buyer789', text: 'Just ordered one!', isBid: false),
   ].obs;
 
-  // Reactive love toggle state
   final isLiked = false.obs;
 
   @override
@@ -23,7 +21,6 @@ class LiveSellController extends GetxController {
     super.onClose();
   }
 
-  // Handle adding a new comment
   void addComment() {
     final text = commentController.text.trim();
     if (text.isEmpty) return;
@@ -35,7 +32,6 @@ class LiveSellController extends GetxController {
     ));
     commentController.clear();
 
-    // Auto-scroll to the bottom of the feed
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scrollController.hasClients) {
         scrollController.animateTo(
@@ -47,7 +43,6 @@ class LiveSellController extends GetxController {
     });
   }
 
-  // Toggle Love react
   void toggleLike() {
     isLiked.toggle();
     Get.snackbar(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 
-/// Reusable section header used to group items in profile-related screens.
 class ProfileSectionHeader extends StatelessWidget {
   final String title;
 

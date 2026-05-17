@@ -4,18 +4,15 @@ import '../models/category_model.dart';
 import '../models/discover_product_model.dart';
 
 class DiscoverController extends GetxController {
-  // Search text input
   final searchController = TextEditingController();
   final searchQuery = ''.obs;
 
-  // Recent Searches (Screenshot 1 list)
   final recentSearches = <String>[
     'wireless headphones',
     'smart watch',
     'summer dress',
   ].obs;
 
-  // Trending Searches (Screenshot 1 chips)
   final trendingSearches = <String>[
     'iPhone 15 Pro',
     'Nike Air Max',
@@ -24,53 +21,51 @@ class DiscoverController extends GetxController {
     'Yoga mat',
   ];
 
-  // Categories list (Screenshot 1 Grid)
   final categories = <CategoryModel>[
     CategoryModel(
       id: 'electronics',
       name: 'Electronics',
       iconEmoji: '📱',
-      backgroundColor: const Color(0xFFEFF6FF), // Light Blue
+      backgroundColor: const Color(0xFFEFF6FF),
       textColor: const Color(0xFF2563EB),
     ),
     CategoryModel(
       id: 'fashion',
       name: 'Fashion',
       iconEmoji: '👕',
-      backgroundColor: const Color(0xFFFDF2F8), // Light Pink
+      backgroundColor: const Color(0xFFFDF2F8),
       textColor: const Color(0xFFDB2777),
     ),
     CategoryModel(
       id: 'home',
       name: 'Home',
       iconEmoji: '🏠',
-      backgroundColor: const Color(0xFFECFDF5), // Light Green
+      backgroundColor: const Color(0xFFECFDF5),
       textColor: const Color(0xFF059669),
     ),
     CategoryModel(
       id: 'beauty',
       name: 'Beauty',
       iconEmoji: '💄',
-      backgroundColor: const Color(0xFFF5F3FF), // Light Purple
+      backgroundColor: const Color(0xFFF5F3FF),
       textColor: const Color(0xFF7C3AED),
     ),
     CategoryModel(
       id: 'sports',
       name: 'Sports',
       iconEmoji: '⚽',
-      backgroundColor: const Color(0xFFFFF7ED), // Light Orange
+      backgroundColor: const Color(0xFFFFF7ED),
       textColor: const Color(0xFFEA580C),
     ),
     CategoryModel(
       id: 'books',
       name: 'Books',
       iconEmoji: '📚',
-      backgroundColor: const Color(0xFFFEFCE8), // Light Yellow
+      backgroundColor: const Color(0xFFFEFCE8),
       textColor: const Color(0xFFCA8A04),
     ),
   ];
 
-  // Master product database (perfectly mapped to Screenshots 2 and 3)
   final products = <DiscoverProductModel>[
     DiscoverProductModel(
       id: 'prod1',
@@ -78,7 +73,7 @@ class DiscoverController extends GetxController {
       price: 299.0,
       originalPrice: 399.0,
       availableQuantity: 14,
-      imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600', // Yellow bg headphones as in Screenshot 2 and 3
+      imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600',
       categoryId: 'electronics',
       rating: 4.8,
       reviewCount: 1234,
@@ -156,17 +151,14 @@ class DiscoverController extends GetxController {
     super.onClose();
   }
 
-  // Get active products in a specific category
   List<DiscoverProductModel> getProductsByCategory(String categoryId) {
     return products.where((p) => p.categoryId == categoryId).toList();
   }
 
-  // Subcategory lists counts
   int getProductCountBySubcategory(String subcategoryName) {
     return products.where((p) => p.subcategory == subcategoryName).length;
   }
 
-  // Perform search submission
   void performSearch(String query) {
     final trimmed = query.trim();
     if (trimmed.isEmpty) return;
@@ -180,12 +172,10 @@ class DiscoverController extends GetxController {
     searchQuery.value = trimmed;
   }
 
-  // Remove search history
   void removeRecentSearch(String search) {
     recentSearches.remove(search);
   }
 
-  // Cart operations
   void addToCart(DiscoverProductModel product) {
     Get.snackbar(
       'Added to Cart', 

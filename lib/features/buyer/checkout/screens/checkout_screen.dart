@@ -8,7 +8,6 @@ import '../widgets/checkout_section_card.dart';
 import '../widgets/order_item_row.dart';
 
 class CheckoutScreen extends StatelessWidget {
-  /// Pass the product to buy directly. In a full cart flow, pass multiple items.
   final OrderItemModel? buyNowItem;
 
   const CheckoutScreen({super.key, this.buyNowItem});
@@ -18,7 +17,6 @@ class CheckoutScreen extends StatelessWidget {
     final controller = Get.put(CheckoutController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Load buy-now item if passed
     if (buyNowItem != null) {
       controller.loadBuyNowItem(buyNowItem!);
     }
@@ -61,7 +59,6 @@ class CheckoutScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // ── Delivery Address ───────────────────────────────
                     CheckoutSectionCard(
                       title: 'Delivery Address',
                       titleIcon: Icons.location_on_outlined,
@@ -73,7 +70,6 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
 
-                    // ── Payment Method ─────────────────────────────────
                     CheckoutSectionCard(
                       title: 'Payment Method',
                       titleIcon: Icons.credit_card_rounded,
@@ -85,7 +81,6 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
 
-                    // ── Delivery Options (Dropdown) ────────────────────
                     CheckoutSectionCard(
                       title: 'Delivery Options',
                       titleIcon: Icons.local_shipping_outlined,
@@ -154,7 +149,6 @@ class CheckoutScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
 
-                    // ── Order Items ────────────────────────────────────
                     CheckoutSectionCard(
                       title: 'Order Items',
                       titleIcon: Icons.shopping_bag_outlined,
@@ -166,7 +160,6 @@ class CheckoutScreen extends StatelessWidget {
                                   (item) => OrderItemRow(item: item),
                                 ),
                                 const Divider(height: 24),
-                                // Delivery fee row
                                 if (delivery != null && delivery.price > 0) ...[
                                   Row(
                                     mainAxisAlignment:
@@ -196,7 +189,6 @@ class CheckoutScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 8),
                                 ],
-                                // Grand Total
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -232,7 +224,6 @@ class CheckoutScreen extends StatelessWidget {
               ),
             ),
 
-            // ── Place Order Button ───────────────────────────────────────
             _buildPlaceOrderButton(context, controller, isDark),
           ],
         );

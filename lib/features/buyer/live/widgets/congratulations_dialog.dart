@@ -27,7 +27,6 @@ class CongratulationsDialog extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Confetti popper emoji circle
                 Container(
                   height: 72,
                   width: 72,
@@ -43,7 +42,6 @@ class CongratulationsDialog extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 18),
-                // Heading
                 Text(
                   'Congratulations!',
                   style: TextStyle(
@@ -62,7 +60,6 @@ class CongratulationsDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
 
-                // Won product info card
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
@@ -120,14 +117,12 @@ class CongratulationsDialog extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                // Timer urgency notice
                 const Text(
                   'Payment required within 24 hours',
                   style: TextStyle(color: Colors.orangeAccent, fontSize: 12, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 24),
 
-                // Button Actions
                 SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -157,7 +152,6 @@ class CongratulationsDialog extends StatelessWidget {
               ],
             ),
           ),
-          // Top right close button to dismiss dialog
           Positioned(
             right: 12,
             top: 12,

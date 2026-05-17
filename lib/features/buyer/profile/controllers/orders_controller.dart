@@ -1,12 +1,9 @@
 import 'package:get/get.dart';
 import '../models/order_model.dart';
 
-/// Controls the My Orders screen.
-/// Replace mock data with real API calls when ready.
 class OrdersController extends GetxController {
   final isLoading = false.obs;
 
-  /// Filter tab: 'All', 'Pending', 'Delivered'
   final selectedFilter = 'All'.obs;
 
   final allOrders = <OrderModel>[].obs;
@@ -26,7 +23,6 @@ class OrdersController extends GetxController {
     loadOrders();
   }
 
-  /// TODO: Replace with real API call → GET /api/buyer/orders
   Future<void> loadOrders() async {
     isLoading.value = true;
     await Future.delayed(const Duration(milliseconds: 300));

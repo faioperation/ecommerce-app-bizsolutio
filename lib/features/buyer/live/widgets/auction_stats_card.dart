@@ -42,7 +42,6 @@ class AuctionStatsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Card Header (AUCTION indicator & Time countdown)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -84,7 +83,6 @@ class AuctionStatsCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          // Product Thumbnail & Price details
           Row(
             children: [
               ClipRRect(
@@ -139,7 +137,6 @@ class AuctionStatsCard extends StatelessWidget {
           const Divider(color: Colors.white24, height: 1),
           const SizedBox(height: 12),
 
-          // Stats metrics
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -151,7 +148,6 @@ class AuctionStatsCard extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          // Place Bid Premium Gradient Button
           Container(
             width: double.infinity,
             height: 52,

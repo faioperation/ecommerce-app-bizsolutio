@@ -38,7 +38,6 @@ class PaymentMethodScreen extends StatelessWidget {
         centerTitle: false,
       ),
       body: Obx(() {
-        // Separate payment types for structured display
         final wallet = controller.paymentMethods
             .firstWhereOrNull((p) => p.type == 'wallet');
         final cards = controller.paymentMethods
@@ -53,7 +52,6 @@ class PaymentMethodScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── Add New Card Button ────────────────────────────────────
               GestureDetector(
                 onTap: () => showDialog(
                   context: context,
@@ -91,7 +89,6 @@ class PaymentMethodScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // ── Vango Wallet ───────────────────────────────────────────
               if (wallet != null) ...[
                 PaymentMethodTile(
                   method: wallet,
@@ -105,7 +102,6 @@ class PaymentMethodScreen extends StatelessWidget {
                 const SizedBox(height: 8),
               ],
 
-              // ── Saved Cards header ─────────────────────────────────────
               if (cards.isNotEmpty) ...[
                 Text(
                   'Saved Cards',
@@ -130,7 +126,6 @@ class PaymentMethodScreen extends StatelessWidget {
                 )),
               ],
 
-              // ── Cash on Delivery ───────────────────────────────────────
               if (cashOpt != null) ...[
                 const SizedBox(height: 8),
                 _buildCashOnDelivery(context, controller, cashOpt, isDark),

@@ -1,4 +1,3 @@
-/// Represents a single wishlist item in My Wishlist screen.
 class WishlistItemModel {
   final String productId;
   final String name;

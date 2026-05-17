@@ -1,7 +1,7 @@
 class PaymentMethodModel {
   final String id;
-  final String type; // 'card', 'wallet', 'cash'
-  final String label; // 'Visa', 'Mastercard', 'Vango Wallet', 'Cash on Delivery'
+  final String type;
+  final String label;
   final String? last4;
   final String? expiry;
   final double? walletBalance;
@@ -23,7 +23,6 @@ class PaymentMethodModel {
     return '$label •••• $last4 | Exp: $expiry';
   }
 
-  // API helper
   factory PaymentMethodModel.fromJson(Map<String, dynamic> json) {
     return PaymentMethodModel(
       id: json['id'] ?? '',
