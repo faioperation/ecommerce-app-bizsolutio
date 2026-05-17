@@ -18,7 +18,7 @@ class SellerRegistrationScreen1 extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: Theme.of(context).brightness == Brightness.dark
-                      ? [const Color(0xFF1F1D2B), const Color(0xFF111019)]
+                      ? [AppColors.sellerGradStart, AppColors.sellerGradEnd]
                       : [AppColors.primary, const Color(0xFF4F46E5)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -35,32 +35,35 @@ class SellerRegistrationScreen1 extends StatelessWidget {
                 children: [
                   const BackButton(color: Colors.white),
                   const SizedBox(height: 40),
-                  const Text(
-                    'Sell on ShopLive',
+                  Text(
+                    'Sell on Vango Live',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: AppColors.darkBodyTitle,
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 12),
-                  const Text(
+                  Text(
                     'Join thousands of successful sellers and grow your business with live commerce.',
-                    style: TextStyle(color: Colors.white70, fontSize: 16),
+                    style: TextStyle(color: AppColors.darkDescription, fontSize: 16),
                   ),
                   const SizedBox(height: 60),
 
                   _buildBenefitItem(
+                    context,
                     icon: Icons.videocam_outlined,
                     title: 'Go Live',
                     description: 'Sell your products in real-time through engaging live streams.',
                   ),
                   _buildBenefitItem(
+                    context,
                     icon: Icons.groups_outlined,
                     title: 'Build Audience',
                     description: 'Connect directly with your customers and build a loyal community.',
                   ),
                   _buildBenefitItem(
+                    context,
                     icon: Icons.payments_outlined,
                     title: 'Earn Money',
                     description: 'Get paid instantly and track your business growth with ease.',
@@ -95,7 +98,12 @@ class SellerRegistrationScreen1 extends StatelessWidget {
     );
   }
 
-  Widget _buildBenefitItem({required IconData icon, required String title, required String description}) {
+  Widget _buildBenefitItem(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String description,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 32),
       child: Row(
@@ -104,10 +112,19 @@ class SellerRegistrationScreen1 extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.15),
+              color: (Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.sellerIcon
+                      : Colors.white)
+                  .withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: Colors.white, size: 28),
+            child: Icon(
+              icon,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.sellerIcon
+                  : Colors.white,
+              size: 28,
+            ),
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -116,12 +133,23 @@ class SellerRegistrationScreen1 extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.darkBodyTitle
+                        : Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: const TextStyle(color: Colors.white70, fontSize: 14),
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.darkDescription
+                        : Colors.white70,
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),

@@ -14,7 +14,13 @@ class SellerRegistrationScreen5 extends StatelessWidget {
     final controller = Get.find<SellerRegistrationController>();
 
     return Scaffold(
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.sellerBackground
+          : Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.sellerBackground
+            : Theme.of(context).appBarTheme.backgroundColor,
         title: const Text('Payment Setup'),
         leading: const BackButton(),
         actions: [
@@ -29,22 +35,33 @@ class SellerRegistrationScreen5 extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Get Paid',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Connect your payment methods to receive earnings from your sales.',
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkDescription
+                    : AppColors.lightTextSecondary,
+              ),
             ),
             const SizedBox(height: 32),
             
             _buildPaymentOption(
+              context,
               title: 'Connect Your Account',
               subtitle: 'Recommended for fast & secure payouts',
               icon: Icons.account_balance_outlined,
-              color: const Color(0xFF635BFF),
+              color: AppColors.sellerIcon,
               onTap: () {},
             ),
             const SizedBox(height: 16),
@@ -85,7 +102,8 @@ class SellerRegistrationScreen5 extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentOption({
+  Widget _buildPaymentOption(
+    BuildContext context, {
     required String title,
     required String subtitle,
     required IconData icon,
@@ -110,8 +128,25 @@ class SellerRegistrationScreen5 extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                  Text(subtitle, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.darkBodyTitle
+                          : AppColors.lightTextPrimary,
+                    ),
+                  ),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.darkDescription
+                          : AppColors.lightTextSecondary,
+                      fontSize: 12,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -133,15 +168,25 @@ class SellerRegistrationScreen5 extends StatelessWidget {
           children: [
             const Icon(Icons.check_circle_outline, color: AppColors.success, size: 80),
             const SizedBox(height: 24),
-            const Text(
+            Text(
               'Registration Done!',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
             ),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Your seller account has been created. You can now start adding products and go live!',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkDescription
+                    : AppColors.lightTextSecondary,
+              ),
             ),
             const SizedBox(height: 32),
             SizedBox(

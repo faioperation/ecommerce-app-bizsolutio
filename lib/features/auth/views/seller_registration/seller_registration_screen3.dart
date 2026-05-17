@@ -14,7 +14,13 @@ class SellerRegistrationScreen3 extends StatelessWidget {
     final controller = Get.find<SellerRegistrationController>();
 
     return Scaffold(
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.sellerBackground
+          : Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.sellerBackground
+            : Theme.of(context).appBarTheme.backgroundColor,
         title: const Text('Identity Verification'),
         leading: const BackButton(),
       ),
@@ -23,14 +29,24 @@ class SellerRegistrationScreen3 extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Verify Identity',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'We need to verify your identity to ensure security on the platform.',
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkDescription
+                    : AppColors.lightTextSecondary,
+              ),
             ),
             const SizedBox(height: 32),
             
@@ -95,18 +111,37 @@ class SellerRegistrationScreen3 extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.1),
+              color: AppColors.sellerIcon.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: AppColors.primary),
+            child: Icon(icon, color: AppColors.sellerIcon),
           ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(subtitle, style: const TextStyle(color: Colors.grey, fontSize: 12), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.darkBodyTitle
+                        : AppColors.lightTextPrimary,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.darkDescription
+                        : AppColors.lightTextSecondary,
+                    fontSize: 12,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
             ),
           ),

@@ -70,32 +70,32 @@ class AppTextStyles {
         displayLarge: _baseFont.copyWith(
           fontSize: 32,
           fontWeight: FontWeight.bold,
-          color: AppColors.darkTextPrimary,
+          color: AppColors.darkHeading,
         ),
         displayMedium: _baseFont.copyWith(
           fontSize: 28,
           fontWeight: FontWeight.bold,
-          color: AppColors.darkTextPrimary,
+          color: AppColors.darkHeading,
         ),
         displaySmall: _baseFont.copyWith(
           fontSize: 24,
           fontWeight: FontWeight.bold,
-          color: AppColors.darkTextPrimary,
+          color: AppColors.darkHeading,
         ),
         headlineLarge: _baseFont.copyWith(
           fontSize: 20,
           fontWeight: FontWeight.w700,
-          color: AppColors.darkTextPrimary,
+          color: AppColors.darkHeading,
         ),
         headlineMedium: _baseFont.copyWith(
           fontSize: 18,
           fontWeight: FontWeight.w600,
-          color: AppColors.darkTextPrimary,
+          color: AppColors.darkHeading,
         ),
         titleLarge: _baseFont.copyWith(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: AppColors.darkTextPrimary,
+          color: AppColors.darkTitle,
         ),
         bodyLarge: _baseFont.copyWith(
           fontSize: 16,

@@ -125,16 +125,17 @@ class AppTheme {
         error: AppColors.error,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
-        onSurface: AppColors.darkTextPrimary,
+        onSurface: AppColors.darkHeading,
         onError: Colors.white,
       ),
       textTheme: AppTextStyles.darkTextTheme,
+      iconTheme: const IconThemeData(color: AppColors.darkIcon),
 
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.darkBackground,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.darkTextPrimary),
+        iconTheme: const IconThemeData(color: AppColors.darkHeading),
         titleTextStyle: AppTextStyles.darkTextTheme.titleLarge,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(

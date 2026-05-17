@@ -97,12 +97,12 @@ class TrendingProductCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Text(
-                        '\$${product.currentPrice.toInt()}',
+                        '£${product.currentPrice.toInt()}',
                         style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 16),
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        '\$${product.originalPrice.toInt()}',
+                        '£${product.originalPrice.toInt()}',
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
                           fontSize: 12,

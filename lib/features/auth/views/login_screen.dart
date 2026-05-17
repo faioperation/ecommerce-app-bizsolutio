@@ -32,10 +32,29 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   Image.asset(AppImages.logo, height: 100),
                   const SizedBox(height: 32),
-                  Text(
-                    'Welcome Back!',
-                    style: Theme.of(context).textTheme.displaySmall,
+                  RichText(
                     textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: Theme.of(context).textTheme.displaySmall,
+                      children: [
+                        TextSpan(
+                          text: 'Welcome ',
+                          style: TextStyle(
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.darkHeading
+                                : AppColors.lightTextPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Back!',
+                          style: TextStyle(
+                            color: role == UserRole.buyer ? AppColors.primary : AppColors.accentPink,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 32),
 

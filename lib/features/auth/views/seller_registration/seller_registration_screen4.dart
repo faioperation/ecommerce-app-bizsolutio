@@ -15,7 +15,13 @@ class SellerRegistrationScreen4 extends StatelessWidget {
     final controller = Get.find<SellerRegistrationController>();
 
     return Scaffold(
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.sellerBackground
+          : Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.sellerBackground
+            : Theme.of(context).appBarTheme.backgroundColor,
         title: const Text('Store Branding'),
         leading: const BackButton(),
       ),
@@ -24,18 +30,36 @@ class SellerRegistrationScreen4 extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Style your Store',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Add a logo and banner to make your shop stand out.',
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkDescription
+                    : AppColors.lightTextSecondary,
+              ),
             ),
             const SizedBox(height: 32),
             
-            const Text('Shop Logo', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              'Shop Logo',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
+            ),
             const SizedBox(height: 12),
             Center(
               child: GestureDetector(
@@ -63,7 +87,15 @@ class SellerRegistrationScreen4 extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             
-            const Text('Shop Banner', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              'Shop Banner',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
+            ),
             const SizedBox(height: 12),
             GestureDetector(
               onTap: () => controller.showImageSourceDialog(context, (path) => controller.bannerPath.value = path),
@@ -79,12 +111,20 @@ class SellerRegistrationScreen4 extends StatelessWidget {
                       : null,
                 ),
                 child: controller.bannerPath.value.isEmpty 
-                  ? const Column(
+                  ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.add_photo_alternate_outlined, size: 40, color: Colors.grey),
-                        SizedBox(height: 8),
-                        Text('Upload Banner (1200 x 400)', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                        const Icon(Icons.add_photo_alternate_outlined, size: 40, color: Colors.grey),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Upload Banner (1200 x 400)',
+                          style: TextStyle(
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.darkDescription
+                                : AppColors.lightTextSecondary,
+                            fontSize: 12,
+                          ),
+                        ),
                       ],
                     )
                   : null,
@@ -92,7 +132,15 @@ class SellerRegistrationScreen4 extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             
-            const Text('Shop Description', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              'Shop Description',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
+            ),
             const SizedBox(height: 12),
             TextFormField(
               maxLines: 4,

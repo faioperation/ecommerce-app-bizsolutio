@@ -14,7 +14,13 @@ class SellerRegistrationScreen2 extends StatelessWidget {
     final controller = Get.find<SellerRegistrationController>();
 
     return Scaffold(
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? AppColors.sellerBackground
+          : Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? AppColors.sellerBackground
+            : Theme.of(context).appBarTheme.backgroundColor,
         title: const Text('Business Info'),
         leading: const BackButton(),
       ),
@@ -23,31 +29,51 @@ class SellerRegistrationScreen2 extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Tell us about your shop',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Provide your business details to get started.',
-              style: TextStyle(color: Colors.grey),
+              style: TextStyle(
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkDescription
+                    : AppColors.lightTextSecondary,
+              ),
             ),
             const SizedBox(height: 32),
             
             TextFormField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Shop Name',
                 hintText: 'Enter your shop name',
-                prefixIcon: Icon(Icons.store_outlined),
+                prefixIcon: Icon(
+                  Icons.store_outlined,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.sellerIcon
+                      : null,
+                ),
               ),
               onChanged: controller.updateShopName,
             ),
             const SizedBox(height: 20),
             
             DropdownButtonFormField<String>(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Business Type',
-                prefixIcon: Icon(Icons.business_outlined),
+                prefixIcon: Icon(
+                  Icons.business_outlined,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.sellerIcon
+                      : null,
+                ),
               ),
               items: ['Individual', 'Company', 'Brand'].map((e) {
                 return DropdownMenuItem(value: e, child: Text(e));
@@ -57,18 +83,29 @@ class SellerRegistrationScreen2 extends StatelessWidget {
             const SizedBox(height: 20),
             
             TextFormField(
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Country',
                 hintText: 'Your business country',
-                prefixIcon: Icon(Icons.public_outlined),
+                prefixIcon: Icon(
+                  Icons.public_outlined,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.sellerIcon
+                      : null,
+                ),
               ),
               onChanged: controller.updateCountry,
             ),
             const SizedBox(height: 32),
             
-            const Text(
+            Text(
               'Select Categories',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? AppColors.darkBodyTitle
+                    : AppColors.lightTextPrimary,
+              ),
             ),
             const SizedBox(height: 12),
             Wrap(

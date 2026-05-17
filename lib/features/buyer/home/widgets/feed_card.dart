@@ -90,7 +90,7 @@ class FeedCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '\$${item.price.toStringAsFixed(2)}',
+                  '£${item.price.toStringAsFixed(2)}',
                   style: const TextStyle(color: AppColors.accentPink, fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ],
