@@ -36,7 +36,15 @@ import '../features/buyer/live/screens/live_screen.dart';
 import '../features/buyer/live/screens/live_sell_screen.dart';
 import '../features/buyer/live/screens/live_bidding_screen.dart';
 import '../features/buyer/inbox/inbox_screen.dart';
-import '../features/buyer/profile/profile_screen.dart';
+import '../features/buyer/profile/screens/profile_screen.dart';
+import '../features/buyer/checkout/screens/checkout_screen.dart';
+import '../features/buyer/checkout/screens/select_address_screen.dart';
+import '../features/buyer/checkout/screens/payment_method_screen.dart';
+import '../features/buyer/checkout/screens/order_success_screen.dart';
+import '../features/buyer/profile/screens/my_orders_screen.dart';
+import '../features/buyer/profile/screens/wishlist_screen.dart';
+import '../features/buyer/profile/screens/cart_screen.dart';
+import '../features/buyer/profile/screens/settings_screen.dart';
 import '../features/seller/dashboard/dashboard_screen.dart';
 import '../features/seller/products/products_screen.dart';
 import '../features/seller/live/live_screen.dart';
@@ -174,6 +182,42 @@ class AppPages {
       GoRoute(
         path: AppRoutes.passwordSuccess,
         builder: (context, state) => const PasswordSuccessScreen(),
+      ),
+      // ── Checkout Flow (full-screen, outside shell, no bottom nav) ────────────
+      GoRoute(
+        path: AppRoutes.checkout,
+        builder: (context, state) {
+          return const CheckoutScreen();
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.checkoutAddress,
+        builder: (context, state) => const SelectAddressScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.checkoutPayment,
+        builder: (context, state) => const PaymentMethodScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.checkoutSuccess,
+        builder: (context, state) => const OrderSuccessScreen(),
+      ),
+      // ── Profile Sub-screens ─────────────────────────────────────────────────
+      GoRoute(
+        path: AppRoutes.profileSettings,
+        builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileOrders,
+        builder: (context, state) => const MyOrdersScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileWishlist,
+        builder: (context, state) => const WishlistScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileCart,
+        builder: (context, state) => const CartScreen(),
       ),
       GoRoute(
         path: AppRoutes.buyerLiveSell,

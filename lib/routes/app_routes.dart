@@ -35,4 +35,16 @@ class AppRoutes {
   static const String trending = '/buyer/home/trending';
   static const String following = '/buyer/home/following';
   static const String liveNow = '/buyer/home/live-now';
+
+  // Checkout flow (uses MaterialPageRoute, registered for named route access)
+  static const String checkout = '/checkout';
+  static const String checkoutAddress = '/checkout/address';
+  static const String checkoutPayment = '/checkout/payment';
+  static const String checkoutSuccess = '/checkout/success';
+
+  // Profile Sub-screens
+  static const String profileOrders = '/buyer/profile/orders';
+  static const String profileWishlist = '/buyer/profile/wishlist';
+  static const String profileCart = '/buyer/profile/cart';
+  static const String profileSettings = '/buyer/profile/settings';
 }

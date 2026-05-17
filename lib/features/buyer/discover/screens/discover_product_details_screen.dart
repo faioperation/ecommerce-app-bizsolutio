@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import '../controllers/discover_controller.dart';
 import '../models/discover_product_model.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
+import '../../checkout/screens/checkout_screen.dart';
+import '../../checkout/models/order_item_model.dart';
 
 class DiscoverProductDetailsScreen extends StatefulWidget {
   final DiscoverProductModel? product;
@@ -418,7 +419,22 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                           ],
                         ),
                         child: ElevatedButton(
-                          onPressed: () => controller.buyNow(activeProduct),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => CheckoutScreen(
+                                  buyNowItem: OrderItemModel(
+                                    productId: activeProduct.id,
+                                    name: activeProduct.name,
+                                    imageUrl: activeProduct.imageUrl,
+                                    price: activeProduct.price,
+                                    quantity: 1,
+                                  ),
+                                ),
+                                settings: const RouteSettings(name: '/checkout'),
+                              ),
+                            );
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
