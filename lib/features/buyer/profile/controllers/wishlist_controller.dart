@@ -19,7 +19,8 @@ class WishlistController extends GetxController {
       WishlistItemModel(
         productId: 'prod1',
         name: 'Smart Watch Ultra',
-        imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200',
+        imageUrl:
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200',
         price: 299.0,
         originalPrice: 399.0,
         isInStock: true,
@@ -27,7 +28,8 @@ class WishlistController extends GetxController {
       WishlistItemModel(
         productId: 'prod5',
         name: 'Wireless Headphones Pro',
-        imageUrl: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=200',
+        imageUrl:
+            'https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=200',
         price: 99.0,
         originalPrice: 149.0,
         isInStock: true,
@@ -35,7 +37,8 @@ class WishlistController extends GetxController {
       WishlistItemModel(
         productId: 'prod6',
         name: 'Designer Sunglasses',
-        imageUrl: 'https://images.unsplash.com/photo-1508296695146-257a814070b4?q=80&w=200',
+        imageUrl:
+            'https://images.unsplash.com/photo-1508296695146-257a814070b4?q=80&w=200',
         price: 79.0,
         originalPrice: 129.0,
         isInStock: false,
@@ -57,12 +60,18 @@ class WishlistController extends GetxController {
 
   void removeItem(String productId) {
     items.removeWhere((i) => i.productId == productId);
-    Get.snackbar('Removed', 'Item removed from wishlist',
-        duration: const Duration(seconds: 2));
+    Get.snackbar(
+      'Removed',
+      'Item removed from wishlist',
+      duration: const Duration(seconds: 2),
+    );
   }
 
   void addToCart(WishlistItemModel item) {
-    Get.snackbar('Added to Cart', '${item.name} added to your cart!',
-        duration: const Duration(seconds: 2));
+    Get.snackbar(
+      'Added to Cart',
+      '${item.name} added to your cart!',
+      duration: const Duration(seconds: 2),
+    );
   }
 }

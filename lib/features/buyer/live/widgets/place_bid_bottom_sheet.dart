@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import 'package:get/get.dart';
 
 class PlaceBidBottomSheet extends StatefulWidget {
@@ -23,7 +24,9 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
   void initState() {
     super.initState();
     _tempBidAmount = widget.currentBid + 10.0;
-    _textController = TextEditingController(text: _tempBidAmount.toStringAsFixed(0));
+    _textController = TextEditingController(
+      text: _tempBidAmount.toStringAsFixed(0),
+    );
   }
 
   @override
@@ -38,9 +41,9 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
 
     return Container(
       padding: EdgeInsets.only(
-        top: 20, 
-        left: 20, 
-        right: 20, 
+        top: 20,
+        left: 20,
+        right: 20,
         bottom: MediaQuery.of(context).viewInsets.bottom + 24,
       ),
       decoration: BoxDecoration(
@@ -67,13 +70,16 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
               Text(
                 'Place Your Bid',
                 style: TextStyle(
-                  fontSize: 20, 
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: isDark ? Colors.white : Colors.black87,
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.keyboard_arrow_down_rounded, color: isDark ? Colors.white60 : Colors.grey),
+                icon: Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: isDark ? Colors.white60 : Colors.grey,
+                ),
                 onPressed: () => Navigator.pop(context),
               ),
             ],
@@ -93,22 +99,46 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Current Bid', style: TextStyle(color: Colors.grey, fontSize: 12, fontFamily: 'Inter')),
+                    const Text(
+                      'Current Bid',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                        fontFamily: 'Inter',
+                      ),
+                    ),
                     const SizedBox(height: 4),
-                    Text('Minimum Next Bid', style: TextStyle(color: Colors.grey[700], fontSize: 11, fontFamily: 'Inter')),
+                    Text(
+                      'Minimum Next Bid',
+                      style: TextStyle(
+                        color: Colors.grey[700],
+                        fontSize: 11,
+                        fontFamily: 'Inter',
+                      ),
+                    ),
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '£${widget.currentBid.toStringAsFixed(0)}',
-                      style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Inter'),
+                      '${AppConstants.currencySymbol}${widget.currentBid.toStringAsFixed(0)}',
+                      style: const TextStyle(
+                        color: Colors.orange,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontFamily: 'Inter',
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '£${(widget.currentBid + 10).toStringAsFixed(0)}',
-                      style: TextStyle(color: Colors.grey[900], fontWeight: FontWeight.bold, fontSize: 12, fontFamily: 'Inter'),
+                      '${AppConstants.currencySymbol}${(widget.currentBid + 10).toStringAsFixed(0)}',
+                      style: TextStyle(
+                        color: Colors.grey[900],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        fontFamily: 'Inter',
+                      ),
                     ),
                   ],
                 ),
@@ -120,8 +150,8 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
           Text(
             'Your Bid Amount',
             style: TextStyle(
-              color: isDark ? Colors.white70 : Colors.grey[700], 
-              fontSize: 12, 
+              color: isDark ? Colors.white70 : Colors.grey[700],
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               fontFamily: 'Inter',
             ),
@@ -131,29 +161,39 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             height: 54,
             decoration: BoxDecoration(
-              color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100],
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.grey[100],
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: Colors.grey[300]!, width: 1.0),
             ),
             child: Row(
               children: [
                 const Text(
-                  '£ ',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
+                  '${AppConstants.currencySymbol} ',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                  ),
                 ),
                 Expanded(
                   child: TextField(
                     controller: _textController,
                     keyboardType: TextInputType.number,
                     style: TextStyle(
-                      fontSize: 18, 
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: isDark ? Colors.white : Colors.black87,
                     ),
-                    decoration: const InputDecoration(border: InputBorder.none, isDense: true),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      isDense: true,
+                    ),
                     onChanged: (val) {
                       setState(() {
-                        _tempBidAmount = double.tryParse(val) ?? (widget.currentBid + 10);
+                        _tempBidAmount =
+                            double.tryParse(val) ?? (widget.currentBid + 10);
                       });
                     },
                   ),
@@ -169,22 +209,29 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
               return InkWell(
                 onTap: () {
                   setState(() {
-                    double cur = double.tryParse(_textController.text) ?? (widget.currentBid + 10);
+                    double cur =
+                        double.tryParse(_textController.text) ??
+                        (widget.currentBid + 10);
                     cur += inc;
                     _textController.text = cur.toStringAsFixed(0);
                     _tempBidAmount = cur;
                   });
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white.withValues(alpha: 0.08) : Colors.grey[200],
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.08)
+                        : Colors.grey[200],
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    '+£$inc',
+                    '+${AppConstants.currencySymbol}$inc',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold, 
+                      fontWeight: FontWeight.bold,
                       fontSize: 12,
                       color: isDark ? Colors.white : Colors.black87,
                     ),
@@ -217,8 +264,8 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
               onPressed: () {
                 if (_tempBidAmount < (widget.currentBid + 10)) {
                   Get.snackbar(
-                    'Invalid Bid', 
-                    'Minimum bid must be at least £${(widget.currentBid + 10).toStringAsFixed(0)}',
+                    'Invalid Bid',
+                    'Minimum bid must be at least ${AppConstants.currencySymbol}${(widget.currentBid + 10).toStringAsFixed(0)}',
                     backgroundColor: Colors.redAccent,
                     colorText: Colors.white,
                   );
@@ -231,11 +278,17 @@ class _PlaceBidBottomSheetState extends State<PlaceBidBottomSheet> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
               child: Text(
-                'Confirm Bid £${_tempBidAmount.toStringAsFixed(0)}',
-                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                'Confirm Bid ${AppConstants.currencySymbol}${_tempBidAmount.toStringAsFixed(0)}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ),
           ),

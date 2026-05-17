@@ -15,7 +15,9 @@ class ProfileSectionHeader extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+          color: isDark
+              ? AppColors.darkTextPrimary
+              : AppColors.lightTextPrimary,
           fontWeight: FontWeight.bold,
           fontSize: 15,
           fontFamily: 'Inter',

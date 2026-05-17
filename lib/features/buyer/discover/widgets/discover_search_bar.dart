@@ -20,7 +20,9 @@ class DiscoverSearchBar extends StatelessWidget {
         color: isDark ? const Color(0xFF1E1A29) : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!,
+          color: isDark
+              ? Colors.white.withValues(alpha: 0.1)
+              : Colors.grey[200]!,
           width: 1.0,
         ),
         boxShadow: [
@@ -48,7 +50,7 @@ class DiscoverSearchBar extends StatelessWidget {
             fontFamily: 'Inter',
           ),
           prefixIcon: Icon(
-            Icons.search_rounded, 
+            Icons.search_rounded,
             color: isDark ? Colors.white54 : Colors.grey[400],
             size: 22,
           ),
@@ -59,7 +61,10 @@ class DiscoverSearchBar extends StatelessWidget {
             builder: (context, value, child) {
               return value.text.isNotEmpty
                   ? IconButton(
-                      icon: Icon(Icons.clear_rounded, color: isDark ? Colors.white54 : Colors.grey),
+                      icon: Icon(
+                        Icons.clear_rounded,
+                        color: isDark ? Colors.white54 : Colors.grey,
+                      ),
                       onPressed: () {
                         controller.clear();
                         onSubmitted('');

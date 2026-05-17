@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/wishlist_item_model.dart';
 
@@ -52,8 +53,11 @@ class WishlistItemCard extends StatelessWidget {
                     width: 70,
                     height: 70,
                     color: Colors.grey[200],
-                    child: const Icon(Icons.image_not_supported,
-                        color: Colors.grey, size: 28),
+                    child: const Icon(
+                      Icons.image_not_supported,
+                      color: Colors.grey,
+                      size: 28,
+                    ),
                   ),
                 ),
               ),
@@ -79,7 +83,7 @@ class WishlistItemCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '£${item.price.toStringAsFixed(0)}',
+                          '${AppConstants.currencySymbol}${item.price.toStringAsFixed(0)}',
                           style: const TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -89,7 +93,7 @@ class WishlistItemCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          '£${item.originalPrice.toStringAsFixed(0)}',
+                          '${AppConstants.currencySymbol}${item.originalPrice.toStringAsFixed(0)}',
                           style: TextStyle(
                             color: Colors.grey[400],
                             decoration: TextDecoration.lineThrough,
@@ -114,11 +118,13 @@ class WishlistItemCard extends StatelessWidget {
               ),
               IconButton(
                 onPressed: onRemove,
-                icon: Icon(Icons.delete_outline_rounded,
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : Colors.grey[400],
-                    size: 20),
+                icon: Icon(
+                  Icons.delete_outline_rounded,
+                  color: isDark
+                      ? AppColors.darkTextSecondary
+                      : Colors.grey[400],
+                  size: 20,
+                ),
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(),
               ),
@@ -131,8 +137,11 @@ class WishlistItemCard extends StatelessWidget {
                   height: 44,
                   child: ElevatedButton.icon(
                     onPressed: onAddToCart,
-                    icon: const Icon(Icons.shopping_cart_outlined,
-                        size: 18, color: Colors.white),
+                    icon: const Icon(
+                      Icons.shopping_cart_outlined,
+                      size: 18,
+                      color: Colors.white,
+                    ),
                     label: const Text(
                       'Add to Cart',
                       style: TextStyle(
@@ -145,18 +154,21 @@ class WishlistItemCard extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                       elevation: 0,
                     ),
                   ),
                 )
               : Row(
                   children: [
-                    Icon(Icons.shopping_cart_outlined,
-                        color: isDark
-                            ? AppColors.darkTextSecondary
-                            : Colors.grey[400],
-                        size: 16),
+                    Icon(
+                      Icons.shopping_cart_outlined,
+                      color: isDark
+                          ? AppColors.darkTextSecondary
+                          : Colors.grey[400],
+                      size: 16,
+                    ),
                     const SizedBox(width: 6),
                     Text(
                       'Out of Stock',

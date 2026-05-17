@@ -5,11 +5,7 @@ class CategoryCard extends StatelessWidget {
   final CategoryModel category;
   final VoidCallback onTap;
 
-  const CategoryCard({
-    super.key,
-    required this.category,
-    required this.onTap,
-  });
+  const CategoryCard({super.key, required this.category, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +20,7 @@ class CategoryCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              category.iconEmoji,
-              style: const TextStyle(fontSize: 32),
-            ),
+            Text(category.iconEmoji, style: const TextStyle(fontSize: 32)),
             const SizedBox(height: 10),
             Text(
               category.name,

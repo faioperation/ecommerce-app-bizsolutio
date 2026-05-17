@@ -25,34 +25,53 @@ class SellerRegisterScreen extends StatelessWidget {
               children: [
                 Image.asset(AppImages.logo, height: 80),
                 const SizedBox(height: 24),
-                Text('Create Your Shop', style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
+                Text(
+                  'Create Your Shop',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                  textAlign: TextAlign.center,
+                ),
                 const SizedBox(height: 24),
 
                 TextFormField(
                   controller: controller.shopNameController,
-                  decoration: const InputDecoration(labelText: 'Shop Name', prefixIcon: Icon(Icons.store)),
+                  decoration: const InputDecoration(
+                    labelText: 'Shop Name',
+                    prefixIcon: Icon(Icons.store),
+                  ),
                   validator: (v) => v!.isEmpty ? 'Shop Name is required' : null,
                 ),
                 const SizedBox(height: 16),
 
                 TextFormField(
                   controller: controller.productTypeController,
-                  decoration: const InputDecoration(labelText: 'Product Type (e.g., Electronics)', prefixIcon: Icon(Icons.category_outlined)),
-                  validator: (v) => v!.isEmpty ? 'Product Type is required' : null,
+                  decoration: const InputDecoration(
+                    labelText: 'Product Type (e.g., Electronics)',
+                    prefixIcon: Icon(Icons.category_outlined),
+                  ),
+                  validator: (v) =>
+                      v!.isEmpty ? 'Product Type is required' : null,
                 ),
                 const SizedBox(height: 16),
 
                 TextFormField(
                   controller: controller.emailController,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(Icons.email_outlined)),
-                  validator: (v) => !GetUtils.isEmail(v ?? '') ? 'Valid email required' : null,
+                  decoration: const InputDecoration(
+                    labelText: 'Email',
+                    prefixIcon: Icon(Icons.email_outlined),
+                  ),
+                  validator: (v) => !GetUtils.isEmail(v ?? '')
+                      ? 'Valid email required'
+                      : null,
                 ),
                 const SizedBox(height: 16),
 
                 TextFormField(
                   controller: controller.addressController,
-                  decoration: const InputDecoration(labelText: 'Business Address', prefixIcon: Icon(Icons.location_on_outlined)),
+                  decoration: const InputDecoration(
+                    labelText: 'Business Address',
+                    prefixIcon: Icon(Icons.location_on_outlined),
+                  ),
                   validator: (v) => v!.isEmpty ? 'Address is required' : null,
                 ),
                 const SizedBox(height: 16),
@@ -65,15 +84,20 @@ class SellerRegisterScreen extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.badge_outlined, color: AppColors.lightTextSecondary),
+                      const Icon(
+                        Icons.badge_outlined,
+                        color: AppColors.lightTextSecondary,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: Obx(() => Text(
-                          controller.idCardImagePath.value.isEmpty 
-                              ? 'Upload ID Card Image' 
-                              : controller.idCardImagePath.value,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        )),
+                        child: Obx(
+                          () => Text(
+                            controller.idCardImagePath.value.isEmpty
+                                ? 'Upload ID Card Image'
+                                : controller.idCardImagePath.value,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ),
                       ),
                       TextButton(
                         onPressed: () {
@@ -86,32 +110,46 @@ class SellerRegisterScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
 
-                Obx(() => TextFormField(
-                  controller: controller.passwordController,
-                  obscureText: !controller.isPasswordVisible.value,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    suffixIcon: IconButton(
-                      icon: Icon(controller.isPasswordVisible.value ? Icons.visibility_off : Icons.visibility),
-                      onPressed: controller.togglePasswordVisibility,
+                Obx(
+                  () => TextFormField(
+                    controller: controller.passwordController,
+                    obscureText: !controller.isPasswordVisible.value,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          controller.isPasswordVisible.value
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: controller.togglePasswordVisibility,
+                      ),
                     ),
+                    validator: (v) =>
+                        v!.length < 6 ? 'Min 6 chars required' : null,
                   ),
-                  validator: (v) => v!.length < 6 ? 'Min 6 chars required' : null,
-                )),
-                
+                ),
+
                 const SizedBox(height: 32),
 
-                Obx(() => ElevatedButton(
-                  onPressed: controller.isLoading.value ? null : () => controller.registerSeller(context),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    backgroundColor: AppColors.accentPink,
+                Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.registerSeller(context),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: AppColors.accentPink,
+                    ),
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text(
+                            'Register Shop',
+                            style: TextStyle(fontSize: 16),
+                          ),
                   ),
-                  child: controller.isLoading.value
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text('Register Shop', style: TextStyle(fontSize: 16)),
-                )),
+                ),
               ],
             ),
           ),
@@ -120,7 +158,10 @@ class SellerRegisterScreen extends StatelessWidget {
     );
   }
 
-  void _showImageSourceDialog(BuildContext context, RegisterController controller) {
+  void _showImageSourceDialog(
+    BuildContext context,
+    RegisterController controller,
+  ) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -134,7 +175,9 @@ class SellerRegisterScreen extends StatelessWidget {
             children: [
               Text(
                 'Select Image Source',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 24),
               Row(

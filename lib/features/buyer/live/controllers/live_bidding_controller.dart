@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/live_activity_model.dart';
@@ -21,9 +22,21 @@ class LiveBiddingController extends GetxController {
   final activities = <LiveActivityModel>[
     LiveActivityModel(username: 'Rifat', text: 'How much? 🤔', isBid: false),
     LiveActivityModel(username: 'Alex', text: 'Start auction 🔥', isBid: false),
-    LiveActivityModel(username: 'Nayeem', text: 'placed £400', isBid: true),
-    LiveActivityModel(username: 'Sarah', text: 'This is amazing!', isBid: false),
-    LiveActivityModel(username: 'Alex', text: 'placed £420', isBid: true),
+    LiveActivityModel(
+      username: 'Nayeem',
+      text: 'placed ${AppConstants.currencySymbol}400',
+      isBid: true,
+    ),
+    LiveActivityModel(
+      username: 'Sarah',
+      text: 'This is amazing!',
+      isBid: false,
+    ),
+    LiveActivityModel(
+      username: 'Alex',
+      text: 'placed ${AppConstants.currencySymbol}420',
+      isBid: true,
+    ),
   ].obs;
 
   Function? onAuctionWonCallback;
@@ -61,13 +74,13 @@ class LiveBiddingController extends GetxController {
     currentBid.value = 420.0;
     highestBidder.value = 'Alex';
     totalBids.value = 23;
-    
+
     activities.removeWhere((act) => act.username == 'You');
-    
+
     startTimer();
-    
+
     Get.snackbar(
-      'Auction Reset', 
+      'Auction Reset',
       'The live auction has restarted! Place your bid to test the winning flow.',
       backgroundColor: Colors.blueAccent.withValues(alpha: 0.9),
       colorText: Colors.white,
@@ -90,16 +103,19 @@ class LiveBiddingController extends GetxController {
     currentBid.value = amount;
     highestBidder.value = 'You';
     totalBids.value++;
-    
-    activities.add(LiveActivityModel(
-      username: 'You',
-      text: 'placed £${amount.toStringAsFixed(0)}',
-      isBid: true,
-    ));
+
+    activities.add(
+      LiveActivityModel(
+        username: 'You',
+        text:
+            'placed ${AppConstants.currencySymbol}${amount.toStringAsFixed(0)}',
+        isBid: true,
+      ),
+    );
 
     Get.snackbar(
-      'Bid Placed!', 
-      'You are now the highest bidder at £${amount.toStringAsFixed(0)}!',
+      'Bid Placed!',
+      'You are now the highest bidder at ${AppConstants.currencySymbol}${amount.toStringAsFixed(0)}!',
       backgroundColor: Colors.pinkAccent.withValues(alpha: 0.9),
       colorText: Colors.white,
       duration: const Duration(seconds: 2),
@@ -112,15 +128,18 @@ class LiveBiddingController extends GetxController {
     final text = commentController.text.trim();
     if (text.isEmpty) return;
 
-    bool isBid = text.toLowerCase().contains('placed') || 
-                 text.toLowerCase().contains('£') || 
-                 RegExp(r'\d+').hasMatch(text);
+    bool isBid =
+        text.toLowerCase().contains('placed') ||
+        text.toLowerCase().contains('${AppConstants.currencySymbol}') ||
+        RegExp(r'\d+').hasMatch(text);
 
-    activities.add(LiveActivityModel(
-      username: 'You',
-      text: isBid ? 'placed $text' : text,
-      isBid: isBid,
-    ));
+    activities.add(
+      LiveActivityModel(
+        username: 'You',
+        text: isBid ? 'placed $text' : text,
+        isBid: isBid,
+      ),
+    );
     commentController.clear();
 
     _scrollFeedToBottom();
@@ -141,11 +160,11 @@ class LiveBiddingController extends GetxController {
   void toggleLike() {
     isLiked.toggle();
     Get.snackbar(
-      isLiked.value ? 'Loved!' : 'Unloved', 
+      isLiked.value ? 'Loved!' : 'Unloved',
       isLiked.value ? 'You liked the live stream!' : 'You removed your like.',
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: isLiked.value 
-          ? Colors.pink.withValues(alpha: 0.8) 
+      backgroundColor: isLiked.value
+          ? Colors.pink.withValues(alpha: 0.8)
           : Colors.black87.withValues(alpha: 0.8),
       colorText: Colors.white,
       duration: const Duration(seconds: 1),

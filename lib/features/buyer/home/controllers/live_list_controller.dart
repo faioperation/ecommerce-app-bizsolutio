@@ -19,7 +19,8 @@ class LiveListController extends GetxController {
         title: 'Summer Fashion Sale 🔥',
         sellerName: 'FashionHub',
         sellerProfileImage: 'https://i.pravatar.cc/150?u=fashion',
-        previewImageUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80',
+        previewImageUrl:
+            'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80',
         viewerCount: '8.2K',
         productCount: 15,
         isAuction: false,
@@ -29,7 +30,8 @@ class LiveListController extends GetxController {
         title: 'iPhone 15 Pro Max Auction 📱',
         sellerName: 'TechStore',
         sellerProfileImage: 'https://i.pravatar.cc/150?u=tech',
-        previewImageUrl: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
+        previewImageUrl:
+            'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
         viewerCount: '5.6K',
         productCount: 1,
         isAuction: true,
@@ -39,7 +41,8 @@ class LiveListController extends GetxController {
         title: 'Minimalist Home Decor Live',
         sellerName: 'HomeDecor',
         sellerProfileImage: 'https://i.pravatar.cc/150?u=home',
-        previewImageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80',
+        previewImageUrl:
+            'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80',
         viewerCount: '3.1K',
         productCount: 12,
         isAuction: false,

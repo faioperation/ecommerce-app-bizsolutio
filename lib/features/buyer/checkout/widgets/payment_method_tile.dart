@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/payment_method_model.dart';
 
@@ -48,8 +49,8 @@ class PaymentMethodTile extends StatelessWidget {
           color: isWallet
               ? null
               : isDark
-                  ? const Color(0xFF1A1625)
-                  : Colors.white,
+              ? const Color(0xFF1A1625)
+              : Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: isWallet
               ? null
@@ -57,8 +58,8 @@ class PaymentMethodTile extends StatelessWidget {
                   color: isSelected
                       ? AppColors.primary
                       : isDark
-                          ? const Color(0xFF2A2535)
-                          : AppColors.lightBorder,
+                      ? const Color(0xFF2A2535)
+                      : AppColors.lightBorder,
                   width: isSelected ? 2 : 1,
                 ),
         ),
@@ -120,8 +121,8 @@ class PaymentMethodTile extends StatelessWidget {
                           color: isWallet
                               ? Colors.white
                               : isDark
-                                  ? AppColors.darkTextPrimary
-                                  : AppColors.lightTextPrimary,
+                              ? AppColors.darkTextPrimary
+                              : AppColors.lightTextPrimary,
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
                           fontFamily: 'Inter',
@@ -131,7 +132,9 @@ class PaymentMethodTile extends StatelessWidget {
                         const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(20),
@@ -157,8 +160,8 @@ class PaymentMethodTile extends StatelessWidget {
                       color: isWallet
                           ? Colors.white.withValues(alpha: 0.8)
                           : isDark
-                              ? AppColors.darkTextSecondary
-                              : AppColors.lightTextSecondary,
+                          ? AppColors.darkTextSecondary
+                          : AppColors.lightTextSecondary,
                       fontSize: 12,
                       fontFamily: 'Inter',
                     ),
@@ -166,7 +169,7 @@ class PaymentMethodTile extends StatelessWidget {
                   if (isWallet) ...[
                     const SizedBox(height: 4),
                     Text(
-                      '£${method.walletBalance?.toStringAsFixed(2)}',
+                      '${AppConstants.currencySymbol}${method.walletBalance?.toStringAsFixed(2)}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,

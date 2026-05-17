@@ -18,8 +18,11 @@ class MyOrdersScreen extends StatelessWidget {
         backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,
-              color: isDark ? Colors.white : Colors.black87, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black87,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -36,7 +39,8 @@ class MyOrdersScreen extends StatelessWidget {
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
-              child: CircularProgressIndicator(color: AppColors.primary));
+            child: CircularProgressIndicator(color: AppColors.primary),
+          );
         }
 
         return Column(
@@ -55,20 +59,22 @@ class MyOrdersScreen extends StatelessWidget {
                       duration: const Duration(milliseconds: 200),
                       margin: const EdgeInsets.only(right: 12),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary
                             : isDark
-                                ? const Color(0xFF1A1625)
-                                : Colors.white,
+                            ? const Color(0xFF1A1625)
+                            : Colors.white,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: isSelected
                               ? AppColors.primary
                               : isDark
-                                  ? const Color(0xFF2A2535)
-                                  : AppColors.lightBorder,
+                              ? const Color(0xFF2A2535)
+                              : AppColors.lightBorder,
                         ),
                       ),
                       child: Text(
@@ -77,8 +83,8 @@ class MyOrdersScreen extends StatelessWidget {
                           color: isSelected
                               ? Colors.white
                               : isDark
-                                  ? AppColors.darkTextPrimary
-                                  : AppColors.lightTextPrimary,
+                              ? AppColors.darkTextPrimary
+                              : AppColors.lightTextPrimary,
                           fontWeight: FontWeight.bold,
                           fontSize: 13,
                           fontFamily: 'Inter',
@@ -97,11 +103,13 @@ class MyOrdersScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.receipt_long_outlined,
-                              size: 64,
-                              color: isDark
-                                  ? AppColors.darkTextSecondary
-                                  : AppColors.lightTextSecondary),
+                          Icon(
+                            Icons.receipt_long_outlined,
+                            size: 64,
+                            color: isDark
+                                ? AppColors.darkTextSecondary
+                                : AppColors.lightTextSecondary,
+                          ),
                           const SizedBox(height: 16),
                           Text(
                             'No orders found',

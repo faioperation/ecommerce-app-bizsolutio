@@ -41,8 +41,8 @@ class AddressTile extends StatelessWidget {
             color: isSelected
                 ? AppColors.primary
                 : isDark
-                    ? const Color(0xFF2A2535)
-                    : AppColors.lightBorder,
+                ? const Color(0xFF2A2535)
+                : AppColors.lightBorder,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -56,8 +56,7 @@ class AddressTile extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color:
-                      isSelected ? AppColors.primary : Colors.grey.shade400,
+                  color: isSelected ? AppColors.primary : Colors.grey.shade400,
                   width: 2,
                 ),
               ),
@@ -98,7 +97,9 @@ class AddressTile extends StatelessWidget {
                         const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 2),
+                            horizontal: 8,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.primary.withValues(alpha: 0.12),
                             borderRadius: BorderRadius.circular(20),

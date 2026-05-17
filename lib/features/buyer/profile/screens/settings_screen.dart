@@ -23,8 +23,11 @@ class SettingsScreen extends StatelessWidget {
         backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,
-              color: isDark ? Colors.white : Colors.black87, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black87,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -47,23 +50,27 @@ class SettingsScreen extends StatelessWidget {
             _menuCard(
               isDark,
               children: [
-                Obx(() => _switchTile(
-                      isDark: isDark,
-                      icon: Icons.notifications_none_outlined,
-                      iconColor: AppColors.primary,
-                      title: 'Notifications',
-                      value: controller.notificationsEnabled.value,
-                      onChanged: controller.toggleNotifications,
-                    )),
+                Obx(
+                  () => _switchTile(
+                    isDark: isDark,
+                    icon: Icons.notifications_none_outlined,
+                    iconColor: AppColors.primary,
+                    title: 'Notifications',
+                    value: controller.notificationsEnabled.value,
+                    onChanged: controller.toggleNotifications,
+                  ),
+                ),
                 _separator(isDark),
-                Obx(() => _switchTile(
-                      isDark: isDark,
-                      icon: Icons.dark_mode_outlined,
-                      iconColor: isDark ? Colors.white : Colors.black87,
-                      title: 'Dark Mode',
-                      value: themeController.themeMode.value == ThemeMode.dark,
-                      onChanged: controller.toggleDarkMode,
-                    )),
+                Obx(
+                  () => _switchTile(
+                    isDark: isDark,
+                    icon: Icons.dark_mode_outlined,
+                    iconColor: isDark ? Colors.white : Colors.black87,
+                    title: 'Dark Mode',
+                    value: themeController.themeMode.value == ThemeMode.dark,
+                    onChanged: controller.toggleDarkMode,
+                  ),
+                ),
               ],
             ),
 
@@ -113,8 +120,10 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 _separator(isDark),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
                   child: Row(
                     children: [
                       Container(
@@ -124,9 +133,11 @@ class SettingsScreen extends StatelessWidget {
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Icon(Icons.info_outline_rounded,
-                            color: isDark ? Colors.white54 : Colors.grey[400],
-                            size: 20),
+                        child: Icon(
+                          Icons.info_outline_rounded,
+                          color: isDark ? Colors.white54 : Colors.grey[400],
+                          size: 20,
+                        ),
                       ),
                       const SizedBox(width: 14),
                       Text(

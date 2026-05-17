@@ -65,7 +65,11 @@ class DiscoverScreen extends StatelessWidget {
 
               Row(
                 children: [
-                  const Icon(Icons.access_time_rounded, color: Colors.grey, size: 20),
+                  const Icon(
+                    Icons.access_time_rounded,
+                    color: Colors.grey,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     'Recent Searches',
@@ -103,7 +107,11 @@ class DiscoverScreen extends StatelessWidget {
 
               Row(
                 children: [
-                  const Icon(Icons.trending_up_rounded, color: Color(0xFF7C3AED), size: 20),
+                  const Icon(
+                    Icons.trending_up_rounded,
+                    color: Color(0xFF7C3AED),
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     'Trending Searches',
@@ -128,7 +136,10 @@ class DiscoverScreen extends StatelessWidget {
                     },
                     borderRadius: BorderRadius.circular(20),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: const Color(0xFFEEF2FF),
                         borderRadius: BorderRadius.circular(20),

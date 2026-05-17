@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../controllers/discover_controller.dart';
@@ -18,10 +19,12 @@ class DiscoverProductDetailsScreen extends StatefulWidget {
   const DiscoverProductDetailsScreen({super.key, this.product});
 
   @override
-  State<DiscoverProductDetailsScreen> createState() => _DiscoverProductDetailsScreenState();
+  State<DiscoverProductDetailsScreen> createState() =>
+      _DiscoverProductDetailsScreenState();
 }
 
-class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScreen> {
+class _DiscoverProductDetailsScreenState
+    extends State<DiscoverProductDetailsScreen> {
   bool _isFollowing = false;
 
   @override
@@ -49,14 +52,21 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                     errorBuilder: (context, error, stackTrace) => Container(
                       height: 380,
                       color: Colors.grey[200],
-                      child: const Icon(Icons.shopping_bag_outlined, color: Colors.grey, size: 80),
+                      child: const Icon(
+                        Icons.shopping_bag_outlined,
+                        color: Colors.grey,
+                        size: 80,
+                      ),
                     ),
                   ),
                 ),
 
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 24,
+                  ),
                   decoration: BoxDecoration(
                     color: isDark ? const Color(0xFF13101E) : Colors.white,
                     borderRadius: const BorderRadius.only(
@@ -92,7 +102,11 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
 
                       Row(
                         children: [
-                          const Icon(Icons.star_rounded, color: Colors.orangeAccent, size: 20),
+                          const Icon(
+                            Icons.star_rounded,
+                            color: Colors.orangeAccent,
+                            size: 20,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             '${activeProduct.rating}',
@@ -120,7 +134,7 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       Row(
                         children: [
                           Text(
-                            '£${activeProduct.price.toStringAsFixed(0)}',
+                            '${AppConstants.currencySymbol}${activeProduct.price.toStringAsFixed(0)}',
                             style: const TextStyle(
                               color: AppColors.primary,
                               fontWeight: FontWeight.w900,
@@ -130,7 +144,7 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                           ),
                           const SizedBox(width: 10),
                           Text(
-                            '£${activeProduct.originalPrice.toStringAsFixed(0)}',
+                            '${AppConstants.currencySymbol}${activeProduct.originalPrice.toStringAsFixed(0)}',
                             style: TextStyle(
                               color: Colors.grey[400],
                               decoration: TextDecoration.lineThrough,
@@ -140,7 +154,10 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                           ),
                           const SizedBox(width: 12),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
                             decoration: BoxDecoration(
                               color: const Color(0xFFFFF7ED),
                               borderRadius: BorderRadius.circular(8),
@@ -165,89 +182,133 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                             AppRoutes.shopProfile,
                             extra: {
                               'sellerName': activeProduct.sellerName,
-                              'profileImageUrl': activeProduct.sellerProfileImage,
+                              'profileImageUrl':
+                                  activeProduct.sellerProfileImage,
                             },
                           );
                         },
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.grey[50],
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.03)
+                                : Colors.grey[50],
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[200]!,
+                              color: isDark
+                                  ? Colors.white.withValues(alpha: 0.05)
+                                  : Colors.grey[200]!,
                             ),
                           ),
                           child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              backgroundImage: NetworkImage(activeProduct.sellerProfileImage),
-                              onBackgroundImageError: (e, s) => const Icon(Icons.person),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    activeProduct.sellerName,
-                                    style: TextStyle(
-                                      color: isDark ? Colors.white : Colors.black87,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Row(
-                                    children: [
-                                      const Icon(Icons.star_rounded, color: Colors.orangeAccent, size: 14),
-                                      const SizedBox(width: 4),
-                                      Text(
-                                        '${activeProduct.sellerRating} rating',
-                                        style: TextStyle(color: Colors.grey[600], fontSize: 11),
+                            children: [
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundImage: NetworkImage(
+                                  activeProduct.sellerProfileImage,
+                                ),
+                                onBackgroundImageError: (e, s) =>
+                                    const Icon(Icons.person),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      activeProduct.sellerName,
+                                      style: TextStyle(
+                                        color: isDark
+                                            ? Colors.white
+                                            : Colors.black87,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        fontFamily: 'Inter',
                                       ),
-                                    ],
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.star_rounded,
+                                          color: Colors.orangeAccent,
+                                          size: 14,
+                                        ),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          '${activeProduct.sellerRating} rating',
+                                          style: TextStyle(
+                                            color: Colors.grey[600],
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _isFollowing = !_isFollowing;
+                                  });
+                                  Get.snackbar(
+                                    _isFollowing
+                                        ? 'Following Shop'
+                                        : 'Unfollowed Shop',
+                                    _isFollowing
+                                        ? 'You are now following ${activeProduct.sellerName}!'
+                                        : 'You unfollowed.',
+                                    backgroundColor: const Color(0xFF6C4DFF),
+                                    colorText: Colors.white,
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: _isFollowing
+                                      ? Colors.grey[400]
+                                      : const Color(0xFF6C4DFF),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                ],
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 8,
+                                  ),
+                                  minimumSize: Size.zero,
+                                ),
+                                child: Text(
+                                  _isFollowing ? 'Following' : 'Follow',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
+                                ),
                               ),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  _isFollowing = !_isFollowing;
-                                });
-                                Get.snackbar(
-                                  _isFollowing ? 'Following Shop' : 'Unfollowed Shop', 
-                                  _isFollowing ? 'You are now following ${activeProduct.sellerName}!' : 'You unfollowed.',
-                                  backgroundColor: const Color(0xFF6C4DFF),
-                                  colorText: Colors.white,
-                                );
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: _isFollowing ? Colors.grey[400] : const Color(0xFF6C4DFF),
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                                minimumSize: Size.zero,
-                              ),
-                              child: Text(
-                                _isFollowing ? 'Following' : 'Follow',
-                                style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
                       ),
                       const SizedBox(height: 24),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _buildHighlightItem(Icons.local_shipping_outlined, 'Free Shipping', isDark),
-                          _buildHighlightItem(Icons.shield_outlined, 'Warranty', isDark),
-                          _buildHighlightItem(Icons.replay_circle_filled_rounded, '30-Day Return', isDark),
+                          _buildHighlightItem(
+                            Icons.local_shipping_outlined,
+                            'Free Shipping',
+                            isDark,
+                          ),
+                          _buildHighlightItem(
+                            Icons.shield_outlined,
+                            'Warranty',
+                            isDark,
+                          ),
+                          _buildHighlightItem(
+                            Icons.replay_circle_filled_rounded,
+                            '30-Day Return',
+                            isDark,
+                          ),
                         ],
                       ),
                       const SizedBox(height: 24),
@@ -255,7 +316,9 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       Text(
                         'Description',
                         style: TextStyle(
-                          color: isDark ? Colors.white : const Color(0xFF111827),
+                          color: isDark
+                              ? Colors.white
+                              : const Color(0xFF111827),
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                           fontFamily: 'Inter',
@@ -295,7 +358,11 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black87, size: 18),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: Colors.black87,
+                      size: 18,
+                    ),
                   ),
                 ),
                 Row(
@@ -308,15 +375,21 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                         shape: BoxShape.circle,
                       ),
                       child: IconButton(
-                        icon: const Icon(Icons.share_outlined, color: Colors.black87, size: 18),
+                        icon: const Icon(
+                          Icons.share_outlined,
+                          color: Colors.black87,
+                          size: 18,
+                        ),
                         onPressed: () {},
                       ),
                     ),
                     const SizedBox(width: 12),
                     Obx(() {
                       final wishlistCtrl = Get.put(WishlistController());
-                      final bool isLiked = wishlistCtrl.isItemInWishlist(activeProduct.id);
-                      
+                      final bool isLiked = wishlistCtrl.isItemInWishlist(
+                        activeProduct.id,
+                      );
+
                       return GestureDetector(
                         onTap: () {
                           if (isLiked) {
@@ -333,7 +406,7 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                               ),
                             );
                             Get.snackbar(
-                              'Added to Wishlist', 
+                              'Added to Wishlist',
                               '${activeProduct.name} added to your wishlist.',
                               backgroundColor: Colors.pinkAccent,
                               colorText: Colors.white,
@@ -350,8 +423,10 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
-                            isLiked ? Icons.favorite : Icons.favorite_border_rounded, 
-                            color: isLiked ? Colors.pink : Colors.black87, 
+                            isLiked
+                                ? Icons.favorite
+                                : Icons.favorite_border_rounded,
+                            color: isLiked ? Colors.pink : Colors.black87,
                             size: 18,
                           ),
                         ),
@@ -380,7 +455,9 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                 ],
                 border: Border(
                   top: BorderSide(
-                    color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[200]!,
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.05)
+                        : Colors.grey[200]!,
                   ),
                 ),
               ),
@@ -394,7 +471,10 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: const Color(0xFF6C4DFF), width: 1.5),
+                          border: Border.all(
+                            color: const Color(0xFF6C4DFF),
+                            width: 1.5,
+                          ),
                         ),
                         child: ElevatedButton(
                           onPressed: () {
@@ -410,9 +490,11 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                               ),
                             );
                             Get.snackbar(
-                              'Added to Cart', 
+                              'Added to Cart',
                               '${activeProduct.name} successfully added to your shopping cart!',
-                              backgroundColor: Colors.green.withValues(alpha: 0.9),
+                              backgroundColor: Colors.green.withValues(
+                                alpha: 0.9,
+                              ),
                               colorText: Colors.white,
                               duration: const Duration(seconds: 2),
                             );
@@ -421,7 +503,9 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
                           ),
                           child: const Text(
                             'Add to Cart',
@@ -446,7 +530,9 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF6C4DFF).withValues(alpha: 0.3),
+                              color: const Color(
+                                0xFF6C4DFF,
+                              ).withValues(alpha: 0.3),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
@@ -465,14 +551,18 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                                     quantity: 1,
                                   ),
                                 ),
-                                settings: const RouteSettings(name: '/checkout'),
+                                settings: const RouteSettings(
+                                  name: '/checkout',
+                                ),
                               ),
                             );
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
                           ),
                           child: const Text(
                             'Buy Now',
@@ -502,7 +592,9 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: isDark ? Colors.white.withValues(alpha: 0.05) : const Color(0xFFF3F4F6),
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : const Color(0xFFF3F4F6),
             shape: BoxShape.circle,
           ),
           child: Icon(icon, color: const Color(0xFF6C4DFF), size: 20),

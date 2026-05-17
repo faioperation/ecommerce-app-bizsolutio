@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/cart_item_model.dart';
 
-
 class CartController extends GetxController {
   final isLoading = false.obs;
   final items = <CartItemModel>[].obs;
@@ -32,7 +31,8 @@ class CartController extends GetxController {
         productId: 'prod1',
         name: 'Smart Watch Ultra',
         sellerName: 'TechStore',
-        imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200',
+        imageUrl:
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200',
         price: 299.0,
         quantity: 1,
       ),
@@ -40,7 +40,8 @@ class CartController extends GetxController {
         productId: 'prod5',
         name: 'Wireless Headphones Pro',
         sellerName: 'AudioHub',
-        imageUrl: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=200',
+        imageUrl:
+            'https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=200',
         price: 99.0,
         quantity: 2,
       ),
@@ -84,8 +85,11 @@ class CartController extends GetxController {
 
   void removeItem(String productId) {
     items.removeWhere((i) => i.productId == productId);
-    Get.snackbar('Removed', 'Item removed from cart',
-        duration: const Duration(seconds: 2));
+    Get.snackbar(
+      'Removed',
+      'Item removed from cart',
+      duration: const Duration(seconds: 2),
+    );
   }
 
   void applyCoupon() {
@@ -93,13 +97,19 @@ class CartController extends GetxController {
     if (code == 'SAVE10') {
       appliedCoupon.value = code;
       couponDiscount.value = subtotal * 0.10;
-      Get.snackbar('Coupon Applied', '10% discount applied!',
-          duration: const Duration(seconds: 2));
+      Get.snackbar(
+        'Coupon Applied',
+        '10% discount applied!',
+        duration: const Duration(seconds: 2),
+      );
     } else {
       appliedCoupon.value = null;
       couponDiscount.value = 0;
-      Get.snackbar('Invalid Coupon', 'Coupon code not found.',
-          duration: const Duration(seconds: 2));
+      Get.snackbar(
+        'Invalid Coupon',
+        'Coupon code not found.',
+        duration: const Duration(seconds: 2),
+      );
     }
   }
 }

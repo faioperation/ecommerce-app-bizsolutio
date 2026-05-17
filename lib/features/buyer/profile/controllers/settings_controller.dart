@@ -37,5 +37,4 @@ class SettingsController extends GetxController {
   void changePassword() {
     Get.toNamed(AppRoutes.profileChangePassword);
   }
-
 }

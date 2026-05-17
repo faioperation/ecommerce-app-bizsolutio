@@ -92,22 +92,28 @@ class _AddCardDialogState extends State<AddCardDialog> {
                     ),
                     IconButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.close_rounded,
-                          color: isDark
-                              ? AppColors.darkTextSecondary
-                              : Colors.grey),
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : Colors.grey,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
 
                 _buildField(
-                  _nameCtrl, 'Cardholder Name',
-                  Icons.person_outline, isDark,
+                  _nameCtrl,
+                  'Cardholder Name',
+                  Icons.person_outline,
+                  isDark,
                 ),
                 _buildField(
-                  _cardNumberCtrl, 'Card Number',
-                  Icons.credit_card_rounded, isDark,
+                  _cardNumberCtrl,
+                  'Card Number',
+                  Icons.credit_card_rounded,
+                  isDark,
                   keyboardType: TextInputType.number,
                   maxLength: 19,
                 ),
@@ -115,8 +121,10 @@ class _AddCardDialogState extends State<AddCardDialog> {
                   children: [
                     Expanded(
                       child: _buildField(
-                        _expiryCtrl, 'MM/YY',
-                        Icons.calendar_month_outlined, isDark,
+                        _expiryCtrl,
+                        'MM/YY',
+                        Icons.calendar_month_outlined,
+                        isDark,
                         keyboardType: TextInputType.datetime,
                         maxLength: 5,
                       ),
@@ -124,8 +132,10 @@ class _AddCardDialogState extends State<AddCardDialog> {
                     const SizedBox(width: 12),
                     Expanded(
                       child: _buildField(
-                        _cvvCtrl, 'CVV',
-                        Icons.lock_outline_rounded, isDark,
+                        _cvvCtrl,
+                        'CVV',
+                        Icons.lock_outline_rounded,
+                        isDark,
                         keyboardType: TextInputType.number,
                         maxLength: 3,
                         obscureText: true,
@@ -144,7 +154,8 @@ class _AddCardDialogState extends State<AddCardDialog> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
                     child: const Text(
                       'Save Card',
@@ -182,7 +193,9 @@ class _AddCardDialogState extends State<AddCardDialog> {
         maxLength: maxLength,
         obscureText: obscureText,
         style: TextStyle(
-          color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+          color: isDark
+              ? AppColors.darkTextPrimary
+              : AppColors.lightTextPrimary,
           fontSize: 14,
           fontFamily: 'Inter',
         ),
@@ -209,8 +222,10 @@ class _AddCardDialogState extends State<AddCardDialog> {
             borderRadius: BorderRadius.circular(14),
             borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
           ),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 14,
+            horizontal: 16,
+          ),
         ),
         validator: (val) =>
             (val == null || val.trim().isEmpty) ? 'Required' : null,

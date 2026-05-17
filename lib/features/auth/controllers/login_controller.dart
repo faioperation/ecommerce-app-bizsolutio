@@ -8,7 +8,7 @@ class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  
+
   final RxBool isPasswordVisible = false.obs;
   final RxBool isLoading = false.obs;
 
@@ -21,7 +21,7 @@ class LoginController extends GetxController {
       isLoading.value = true;
 
       await Future.delayed(const Duration(seconds: 2));
-      
+
       isLoading.value = false;
 
       if (!context.mounted) return;

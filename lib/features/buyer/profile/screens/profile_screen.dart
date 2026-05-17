@@ -21,7 +21,8 @@ class BuyerProfileScreen extends StatelessWidget {
         child: Obx(() {
           if (controller.isLoading.value) {
             return const Center(
-                child: CircularProgressIndicator(color: AppColors.primary));
+              child: CircularProgressIndicator(color: AppColors.primary),
+            );
           }
           final user = controller.user.value;
           if (user == null) return const SizedBox.shrink();
@@ -32,8 +33,10 @@ class BuyerProfileScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -133,12 +136,16 @@ class BuyerProfileScreen extends StatelessWidget {
                             _statItem('${user.ordersCount}', 'Orders', isDark),
                             _divider(isDark),
                             _statItem(
-                                '${user.wishlistCount}', 'Wishlist', isDark),
+                              '${user.wishlistCount}',
+                              'Wishlist',
+                              isDark,
+                            ),
                             _divider(isDark),
                             _statItem(
-                                '${(user.loyaltyPoints / 1000).toStringAsFixed(1)}K',
-                                'Points',
-                                isDark),
+                              '${(user.loyaltyPoints / 1000).toStringAsFixed(1)}K',
+                              'Points',
+                              isDark,
+                            ),
                           ],
                         ),
                       ],
@@ -208,7 +215,9 @@ class BuyerProfileScreen extends StatelessWidget {
         Text(
           value,
           style: TextStyle(
-            color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            color: isDark
+                ? AppColors.darkTextPrimary
+                : AppColors.lightTextPrimary,
             fontWeight: FontWeight.bold,
             fontSize: 18,
             fontFamily: 'Inter',

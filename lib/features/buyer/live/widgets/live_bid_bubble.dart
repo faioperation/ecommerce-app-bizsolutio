@@ -19,20 +19,26 @@ class LiveBidBubble extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          color: isBid 
-              ? Colors.orange.withValues(alpha: 0.8) 
+          color: isBid
+              ? Colors.orange.withValues(alpha: 0.8)
               : Colors.black.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(20),
-          border: isBid ? Border.all(color: Colors.amberAccent, width: 1.0) : null,
+          border: isBid
+              ? Border.all(color: Colors.amberAccent, width: 1.0)
+              : null,
         ),
         child: RichText(
           text: TextSpan(
-            style: const TextStyle(fontSize: 12, color: Colors.white, fontFamily: 'Inter'),
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.white,
+              fontFamily: 'Inter',
+            ),
             children: [
               TextSpan(
                 text: '$username ',
                 style: TextStyle(
-                  color: isBid ? Colors.white : Colors.orangeAccent, 
+                  color: isBid ? Colors.white : Colors.orangeAccent,
                   fontWeight: FontWeight.bold,
                 ),
               ),

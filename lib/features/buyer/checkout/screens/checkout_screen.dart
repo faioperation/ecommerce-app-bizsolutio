@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -22,15 +23,16 @@ class CheckoutScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      backgroundColor:
-          isDark ? Colors.black : const Color(0xFFF8F9FC),
+      backgroundColor: isDark ? Colors.black : const Color(0xFFF8F9FC),
       appBar: AppBar(
-        backgroundColor:
-            isDark ? Colors.black : Colors.white,
+        backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,
-              color: isDark ? Colors.white : Colors.black87, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black87,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -55,7 +57,9 @@ class CheckoutScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 16, vertical: 12),
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -88,8 +92,10 @@ class CheckoutScreen extends StatelessWidget {
                         child: DropdownButton<String>(
                           value: controller.selectedDeliveryId.value,
                           isExpanded: true,
-                          icon: Icon(Icons.keyboard_arrow_down_rounded,
-                              color: AppColors.primary),
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: AppColors.primary,
+                          ),
                           dropdownColor: isDark
                               ? const Color(0xFF1A1625)
                               : Colors.white,
@@ -176,7 +182,7 @@ class CheckoutScreen extends StatelessWidget {
                                         ),
                                       ),
                                       Text(
-                                        '£${delivery.price.toStringAsFixed(2)}',
+                                        '${AppConstants.currencySymbol}${delivery.price.toStringAsFixed(2)}',
                                         style: TextStyle(
                                           color: isDark
                                               ? AppColors.darkTextPrimary
@@ -205,7 +211,7 @@ class CheckoutScreen extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      '£${controller.grandTotal.toStringAsFixed(0)}',
+                                      '${AppConstants.currencySymbol}${controller.grandTotal.toStringAsFixed(0)}',
                                       style: const TextStyle(
                                         color: AppColors.primary,
                                         fontWeight: FontWeight.w900,
@@ -276,7 +282,10 @@ class CheckoutScreen extends StatelessWidget {
   }
 
   Widget _buildPlaceOrderButton(
-      BuildContext context, CheckoutController controller, bool isDark) {
+    BuildContext context,
+    CheckoutController controller,
+    bool isDark,
+  ) {
     return Container(
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
       decoration: BoxDecoration(
@@ -291,38 +300,47 @@ class CheckoutScreen extends StatelessWidget {
       ),
       child: SafeArea(
         top: false,
-        child: Obx(() => SizedBox(
-          width: double.infinity,
-          height: 56,
-          child: ElevatedButton(
-            onPressed: controller.isPlacingOrder.value
-                ? null
-                : () => controller.placeOrder(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.6),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18)),
-              elevation: 0,
-            ),
-            child: controller.isPlacingOrder.value
-                ? const SizedBox(
-                    width: 22,
-                    height: 22,
-                    child: CircularProgressIndicator(
-                        strokeWidth: 2.5, color: Colors.white),
-                  )
-                : Obx(() => Text(
-                      'Place Order • £${controller.grandTotal.toStringAsFixed(0)}',
-                      style: const TextStyle(
+        child: Obx(
+          () => SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: ElevatedButton(
+              onPressed: controller.isPlacingOrder.value
+                  ? null
+                  : () => controller.placeOrder(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                disabledBackgroundColor: AppColors.primary.withValues(
+                  alpha: 0.6,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                elevation: 0,
+              ),
+              child: controller.isPlacingOrder.value
+                  ? const SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        fontFamily: 'Inter',
                       ),
-                    )),
+                    )
+                  : Obx(
+                      () => Text(
+                        'Place Order • ${AppConstants.currencySymbol}${controller.grandTotal.toStringAsFixed(0)}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          fontFamily: 'Inter',
+                        ),
+                      ),
+                    ),
+            ),
           ),
-        )),
+        ),
       ),
     );
   }

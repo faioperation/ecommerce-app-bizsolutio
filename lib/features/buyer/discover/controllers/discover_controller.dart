@@ -73,15 +73,18 @@ class DiscoverController extends GetxController {
       price: 299.0,
       originalPrice: 399.0,
       availableQuantity: 14,
-      imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600',
+      imageUrl:
+          'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600',
       categoryId: 'electronics',
       rating: 4.8,
       reviewCount: 1234,
       soldCount: 2300,
       sellerName: 'TechStore',
-      sellerProfileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
+      sellerProfileImage:
+          'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
       sellerRating: 4.9,
-      description: 'Experience pure acoustic bliss with our Smart Watch Ultra headphones. Features Hybrid Active Noise Cancellation, high-fidelity wireless audio playback, ultra-premium memory foam ear cups, and up to 40 hours of uninterrupted listening pleasure.',
+      description:
+          'Experience pure acoustic bliss with our Smart Watch Ultra headphones. Features Hybrid Active Noise Cancellation, high-fidelity wireless audio playback, ultra-premium memory foam ear cups, and up to 40 hours of uninterrupted listening pleasure.',
       subcategory: 'Headphones',
     ),
     DiscoverProductModel(
@@ -90,15 +93,18 @@ class DiscoverController extends GetxController {
       price: 999.0,
       originalPrice: 1199.0,
       availableQuantity: 8,
-      imageUrl: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600',
+      imageUrl:
+          'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600',
       categoryId: 'electronics',
       rating: 4.9,
       reviewCount: 923,
       soldCount: 1500,
       sellerName: 'TechStore',
-      sellerProfileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
+      sellerProfileImage:
+          'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
       sellerRating: 4.9,
-      description: 'The ultimate iPhone featuring a titanium design, advanced camera system, and the powerful A17 Pro chip.',
+      description:
+          'The ultimate iPhone featuring a titanium design, advanced camera system, and the powerful A17 Pro chip.',
       subcategory: 'Smartphones',
     ),
     DiscoverProductModel(
@@ -107,15 +113,18 @@ class DiscoverController extends GetxController {
       price: 1099.0,
       originalPrice: 1299.0,
       availableQuantity: 5,
-      imageUrl: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=600',
+      imageUrl:
+          'https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=600',
       categoryId: 'electronics',
       rating: 4.7,
       reviewCount: 546,
       soldCount: 890,
       sellerName: 'TechStore',
-      sellerProfileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
+      sellerProfileImage:
+          'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
       sellerRating: 4.9,
-      description: 'Unleash your creativity with this high-performance computing beast, built for multitasking and long battery life.',
+      description:
+          'Unleash your creativity with this high-performance computing beast, built for multitasking and long battery life.',
       subcategory: 'Laptops',
     ),
     DiscoverProductModel(
@@ -124,15 +133,18 @@ class DiscoverController extends GetxController {
       price: 129.0,
       originalPrice: 159.0,
       availableQuantity: 18,
-      imageUrl: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=600',
+      imageUrl:
+          'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=600',
       categoryId: 'electronics',
       rating: 4.6,
       reviewCount: 345,
       soldCount: 620,
       sellerName: 'TechStore',
-      sellerProfileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
+      sellerProfileImage:
+          'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
       sellerRating: 4.9,
-      description: 'Capture moments instantly with this vintage-inspired analog instant camera, perfect for daily photography.',
+      description:
+          'Capture moments instantly with this vintage-inspired analog instant camera, perfect for daily photography.',
       subcategory: 'Cameras',
     ),
   ];
@@ -178,7 +190,7 @@ class DiscoverController extends GetxController {
 
   void addToCart(DiscoverProductModel product) {
     Get.snackbar(
-      'Added to Cart', 
+      'Added to Cart',
       '${product.name} successfully added to your shopping cart!',
       backgroundColor: Colors.green.withValues(alpha: 0.9),
       colorText: Colors.white,
@@ -188,7 +200,7 @@ class DiscoverController extends GetxController {
 
   void buyNow(DiscoverProductModel product) {
     Get.snackbar(
-      'Initiating Checkout', 
+      'Initiating Checkout',
       'Starting express checkout for ${product.name}...',
       backgroundColor: const Color(0xFF6C4DFF),
       colorText: Colors.white,

@@ -42,10 +42,8 @@ class ThemeController extends GetxController {
     final isDarkMode = prefs.getBool(_themeKey);
 
     if (isDarkMode == null) {
-
       themeMode.value = ThemeMode.system;
     } else {
-
       themeMode.value = isDarkMode ? ThemeMode.dark : ThemeMode.light;
     }
   }

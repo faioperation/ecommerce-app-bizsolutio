@@ -18,8 +18,11 @@ class WishlistScreen extends StatelessWidget {
         backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,
-              color: isDark ? Colors.white : Colors.black87, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black87,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Column(
@@ -34,17 +37,19 @@ class WishlistScreen extends StatelessWidget {
                 fontFamily: 'Inter',
               ),
             ),
-            Obx(() => Text(
-                  '${controller.items.length} items',
-                  style: TextStyle(
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : AppColors.lightTextSecondary,
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    fontFamily: 'Inter',
-                  ),
-                )),
+            Obx(
+              () => Text(
+                '${controller.items.length} items',
+                style: TextStyle(
+                  color: isDark
+                      ? AppColors.darkTextSecondary
+                      : AppColors.lightTextSecondary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Inter',
+                ),
+              ),
+            ),
           ],
         ),
         centerTitle: false,
@@ -52,7 +57,8 @@ class WishlistScreen extends StatelessWidget {
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
-              child: CircularProgressIndicator(color: AppColors.primary));
+            child: CircularProgressIndicator(color: AppColors.primary),
+          );
         }
 
         if (controller.items.isEmpty) {
@@ -60,11 +66,13 @@ class WishlistScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.favorite_border_rounded,
-                    size: 64,
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : AppColors.lightTextSecondary),
+                Icon(
+                  Icons.favorite_border_rounded,
+                  size: 64,
+                  color: isDark
+                      ? AppColors.darkTextSecondary
+                      : AppColors.lightTextSecondary,
+                ),
                 const SizedBox(height: 16),
                 Text(
                   'Your wishlist is empty',

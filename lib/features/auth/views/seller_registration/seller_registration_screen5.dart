@@ -55,7 +55,7 @@ class SellerRegistrationScreen5 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            
+
             _buildPaymentOption(
               context,
               title: 'Connect Your Account',
@@ -65,7 +65,7 @@ class SellerRegistrationScreen5 extends StatelessWidget {
               onTap: () {},
             ),
             const SizedBox(height: 16),
-            
+
             // _buildPaymentOption(
             //   title: 'Bank Account',
             //   subtitle: 'Direct transfer to your bank',
@@ -82,9 +82,8 @@ class SellerRegistrationScreen5 extends StatelessWidget {
             //   color: AppColors.accentPink,
             //   onTap: () {},
             // ),
-            
             const SizedBox(height: 100),
-            
+
             SizedBox(
               width: double.infinity,
               height: 56,
@@ -93,7 +92,10 @@ class SellerRegistrationScreen5 extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.success,
                 ),
-                child: const Text('Complete Registration', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                child: const Text(
+                  'Complete Registration',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
               ),
             ),
           ],
@@ -157,7 +159,10 @@ class SellerRegistrationScreen5 extends StatelessWidget {
     );
   }
 
-  void _showSuccessDialog(BuildContext context, SellerRegistrationController controller) {
+  void _showSuccessDialog(
+    BuildContext context,
+    SellerRegistrationController controller,
+  ) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -166,7 +171,11 @@ class SellerRegistrationScreen5 extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.check_circle_outline, color: AppColors.success, size: 80),
+            const Icon(
+              Icons.check_circle_outline,
+              color: AppColors.success,
+              size: 80,
+            ),
             const SizedBox(height: 24),
             Text(
               'Registration Done!',

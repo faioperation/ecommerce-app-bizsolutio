@@ -20,7 +20,9 @@ class CategoryModel {
       id: json['id'] ?? '',
       name: json['name'] ?? '',
       iconEmoji: json['iconEmoji'] ?? '📦',
-      backgroundColor: Color(int.parse(json['backgroundColor'] ?? '0xFFF3F4F6')),
+      backgroundColor: Color(
+        int.parse(json['backgroundColor'] ?? '0xFFF3F4F6'),
+      ),
       textColor: Color(int.parse(json['textColor'] ?? '0xFF1F2937')),
     );
   }
@@ -30,7 +32,8 @@ class CategoryModel {
       'id': id,
       'name': name,
       'iconEmoji': iconEmoji,
-      'backgroundColor': '0x${backgroundColor.value.toRadixString(16).toUpperCase()}',
+      'backgroundColor':
+          '0x${backgroundColor.value.toRadixString(16).toUpperCase()}',
       'textColor': '0x${textColor.value.toRadixString(16).toUpperCase()}',
     };
   }

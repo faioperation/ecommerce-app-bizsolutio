@@ -1,4 +1,3 @@
-
 class ProfileUserModel {
   final String id;
   final String name;
@@ -37,12 +36,12 @@ class ProfileUserModel {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'email': email,
-        'avatarUrl': avatarUrl,
-        'ordersCount': ordersCount,
-        'wishlistCount': wishlistCount,
-        'loyaltyPoints': loyaltyPoints,
-      };
+    'id': id,
+    'name': name,
+    'email': email,
+    'avatarUrl': avatarUrl,
+    'ordersCount': ordersCount,
+    'wishlistCount': wishlistCount,
+    'loyaltyPoints': loyaltyPoints,
+  };
 }

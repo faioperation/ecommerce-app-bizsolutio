@@ -1,4 +1,3 @@
-
 class AppRoutes {
   AppRoutes._();
 
@@ -54,7 +53,7 @@ class AppRoutes {
   static const String privacyPolicy = '/buyer/profile/privacy-policy';
   static const String privacySecurity = '/buyer/profile/privacy-security';
   static const String termsOfService = '/buyer/profile/terms-of-service';
-  
+
   // ── Shop Profile ────────────────────────────────────────────────────────
   static const String shopProfile = '/buyer/shop/profile';
 

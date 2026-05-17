@@ -28,7 +28,12 @@ class ShopProfileDetails extends StatelessWidget {
     return number.toString();
   }
 
-  Widget _buildStatItem(String value, String label, {IconData? icon, Color? iconColor}) {
+  Widget _buildStatItem(
+    String value,
+    String label, {
+    IconData? icon,
+    Color? iconColor,
+  }) {
     return Column(
       children: [
         Row(
@@ -90,40 +95,52 @@ class ShopProfileDetails extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Obx(() => ElevatedButton(
-                  onPressed: controller.toggleFollow,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: controller.isFollowing.value
-                        ? (isDark ? Colors.grey[800] : Colors.grey[300])
-                        : AppColors.primary,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-                    minimumSize: const Size(0, 36),
-                  ),
-                  child: Text(
-                    controller.isFollowing.value ? 'Following' : 'Follow',
-                    style: TextStyle(
-                      color: controller.isFollowing.value
-                          ? (isDark ? Colors.white70 : Colors.black87)
-                          : Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
+                Obx(
+                  () => ElevatedButton(
+                    onPressed: controller.toggleFollow,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: controller.isFollowing.value
+                          ? (isDark ? Colors.grey[800] : Colors.grey[300])
+                          : AppColors.primary,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 0,
+                      ),
+                      minimumSize: const Size(0, 36),
+                    ),
+                    child: Text(
+                      controller.isFollowing.value ? 'Following' : 'Follow',
+                      style: TextStyle(
+                        color: controller.isFollowing.value
+                            ? (isDark ? Colors.white70 : Colors.black87)
+                            : Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
-                )),
+                ),
                 const SizedBox(width: 12),
                 Container(
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    border: Border.all(color: isDark ? Colors.grey[700]! : Colors.grey[300]!),
+                    border: Border.all(
+                      color: isDark ? Colors.grey[700]! : Colors.grey[300]!,
+                    ),
                     shape: BoxShape.circle,
                   ),
                   child: IconButton(
                     padding: EdgeInsets.zero,
-                    icon: Icon(Icons.chat_bubble_outline_rounded,
-                        color: isDark ? Colors.white : Colors.black87, size: 18),
+                    icon: Icon(
+                      Icons.chat_bubble_outline_rounded,
+                      color: isDark ? Colors.white : Colors.black87,
+                      size: 18,
+                    ),
                     onPressed: () {
                       final inboxCtrl = Get.put(InboxController());
                       inboxCtrl.openOrCreateChat(
@@ -159,7 +176,11 @@ class ShopProfileDetails extends StatelessWidget {
 
             Row(
               children: [
-                Icon(Icons.location_on_outlined, color: Colors.grey[500], size: 16),
+                Icon(
+                  Icons.location_on_outlined,
+                  color: Colors.grey[500],
+                  size: 16,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   shop.location,
@@ -177,7 +198,12 @@ class ShopProfileDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _buildStatItem(_formatNumber(shop.followersCount), 'Followers'),
-                _buildStatItem('${shop.rating}', 'Rating', icon: Icons.star_rounded, iconColor: Colors.orangeAccent),
+                _buildStatItem(
+                  '${shop.rating}',
+                  'Rating',
+                  icon: Icons.star_rounded,
+                  iconColor: Colors.orangeAccent,
+                ),
                 _buildStatItem('${shop.responseRate}%', 'Response Rate'),
               ],
             ),

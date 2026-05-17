@@ -22,15 +22,18 @@ class BuyerHomeScreen extends StatelessWidget {
         title: Text(
           'Vango Live',
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.onSurface
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         actions: [
           IconButton(
             icon: Badge(
               label: const Text('2'),
-              child: Icon(Icons.notifications_outlined, color: Theme.of(context).colorScheme.onSurface),
+              child: Icon(
+                Icons.notifications_outlined,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
             onPressed: () {},
           ),
@@ -46,21 +49,22 @@ class BuyerHomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 SizedBox(
                   height: 110,
-                  child: Obx(() => ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.stories.length,
-                    itemBuilder: (context, index) {
-                      final story = controller.stories[index];
-                      return StoryCard(
-                        imageUrl: story.profileImage,
-                        name: story.sellerName,
-                        isLive: story.isLive,
-                      );
-                    },
-                  )),
+                  child: Obx(
+                    () => ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.stories.length,
+                      itemBuilder: (context, index) {
+                        final story = controller.stories[index];
+                        return StoryCard(
+                          imageUrl: story.profileImage,
+                          name: story.sellerName,
+                          isLive: story.isLive,
+                        );
+                      },
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 16),
@@ -71,7 +75,10 @@ class BuyerHomeScreen extends StatelessWidget {
                       label: 'Flash Sale',
                       icon: Icons.flash_on,
                       gradient: const [Color(0xFFF59E0B), Color(0xFFD97706)],
-                      onTap: () => Get.snackbar('Info', 'Flash Sale Screen coming soon!'),
+                      onTap: () => Get.snackbar(
+                        'Info',
+                        'Flash Sale Screen coming soon!',
+                      ),
                     ),
                     const SizedBox(width: 12),
                     HomeCategoryButton(
@@ -89,7 +96,8 @@ class BuyerHomeScreen extends StatelessWidget {
                       label: 'Live Now',
                       icon: Icons.play_circle_outline,
                       gradient: const [Color(0xFFFF4D67), Color(0xFFE11D48)],
-                      onTap: () => StatefulNavigationShell.of(context).goBranch(2),
+                      onTap: () =>
+                          StatefulNavigationShell.of(context).goBranch(2),
                     ),
                     const SizedBox(width: 12),
                     HomeCategoryButton(
@@ -103,21 +111,29 @@ class BuyerHomeScreen extends StatelessWidget {
 
                 const SectionTitle(title: 'For You'),
 
-                Obx(() => ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: controller.feedItems.length,
-                  itemBuilder: (context, index) {
-                    final item = controller.feedItems[index];
-                    return FeedCard(
-                      item: item,
-                      onLike: () => controller.toggleLike(item.id),
-                      onComment: () => Get.snackbar('Info', 'Comments Screen coming soon!'),
-                      onShare: () => Get.snackbar('Info', 'Share functionality coming soon!'),
-                      onAddToCart: () => controller.addToCart(item.id),
-                    );
-                  },
-                )),
+                Obx(
+                  () => ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: controller.feedItems.length,
+                    itemBuilder: (context, index) {
+                      final item = controller.feedItems[index];
+                      return FeedCard(
+                        item: item,
+                        onLike: () => controller.toggleLike(item.id),
+                        onComment: () => Get.snackbar(
+                          'Info',
+                          'Comments Screen coming soon!',
+                        ),
+                        onShare: () => Get.snackbar(
+                          'Info',
+                          'Share functionality coming soon!',
+                        ),
+                        onAddToCart: () => controller.addToCart(item.id),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),

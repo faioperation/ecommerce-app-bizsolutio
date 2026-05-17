@@ -49,47 +49,65 @@ class SellerRegistrationScreen3 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            
-            Obx(() => _buildUploadCard(
-              context,
-              title: 'ID Card / Passport',
-              subtitle: controller.idCardPath.value.isEmpty 
-                  ? 'Upload a clear photo of your ID' 
-                  : controller.idCardPath.value.split('/').last,
-              icon: Icons.badge_outlined,
-              onTap: () => controller.showImageSourceDialog(context, (path) => controller.idCardPath.value = path),
-            )),
+
+            Obx(
+              () => _buildUploadCard(
+                context,
+                title: 'ID Card / Passport',
+                subtitle: controller.idCardPath.value.isEmpty
+                    ? 'Upload a clear photo of your ID'
+                    : controller.idCardPath.value.split('/').last,
+                icon: Icons.badge_outlined,
+                onTap: () => controller.showImageSourceDialog(
+                  context,
+                  (path) => controller.idCardPath.value = path,
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
-            
-            Obx(() => _buildUploadCard(
-              context,
-              title: 'Selfie with ID',
-              subtitle: controller.selfiePath.value.isEmpty 
-                  ? 'Hold your ID next to your face' 
-                  : controller.selfiePath.value.split('/').last,
-              icon: Icons.camera_front_outlined,
-              onTap: () => controller.showImageSourceDialog(context, (path) => controller.selfiePath.value = path),
-            )),
+
+            Obx(
+              () => _buildUploadCard(
+                context,
+                title: 'Selfie with ID',
+                subtitle: controller.selfiePath.value.isEmpty
+                    ? 'Hold your ID next to your face'
+                    : controller.selfiePath.value.split('/').last,
+                icon: Icons.camera_front_outlined,
+                onTap: () => controller.showImageSourceDialog(
+                  context,
+                  (path) => controller.selfiePath.value = path,
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
-            
-            Obx(() => _buildUploadCard(
-              context,
-              title: 'Business Document',
-              subtitle: controller.businessDocPath.value.isEmpty 
-                  ? 'Trade license or registration proof' 
-                  : controller.businessDocPath.value.split('/').last,
-              icon: Icons.description_outlined,
-              onTap: () => controller.showImageSourceDialog(context, (path) => controller.businessDocPath.value = path),
-            )),
-            
+
+            Obx(
+              () => _buildUploadCard(
+                context,
+                title: 'Business Document',
+                subtitle: controller.businessDocPath.value.isEmpty
+                    ? 'Trade license or registration proof'
+                    : controller.businessDocPath.value.split('/').last,
+                icon: Icons.description_outlined,
+                onTap: () => controller.showImageSourceDialog(
+                  context,
+                  (path) => controller.businessDocPath.value = path,
+                ),
+              ),
+            ),
+
             const SizedBox(height: 60),
-            
+
             SizedBox(
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
                 onPressed: () => context.push(AppRoutes.sellerRegStep4),
-                child: const Text('Next Step', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: const Text(
+                  'Next Step',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
@@ -98,7 +116,13 @@ class SellerRegistrationScreen3 extends StatelessWidget {
     );
   }
 
-  Widget _buildUploadCard(BuildContext context, {required String title, required String subtitle, required IconData icon, required VoidCallback onTap}) {
+  Widget _buildUploadCard(
+    BuildContext context, {
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
     return Container(
       padding: AppSpacing.edgeInsetsAllMd,
       decoration: BoxDecoration(
@@ -145,10 +169,7 @@ class SellerRegistrationScreen3 extends StatelessWidget {
               ],
             ),
           ),
-          TextButton(
-            onPressed: onTap,
-            child: const Text('Upload'),
-          ),
+          TextButton(onPressed: onTap, child: const Text('Upload')),
         ],
       ),
     );

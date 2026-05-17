@@ -45,7 +45,8 @@ class RoleSelectionScreen extends StatelessWidget {
                 description: 'Discover products, watch live streams, and shop!',
                 icon: Icons.shopping_bag_outlined,
                 color: AppColors.primary,
-                onTap: () => context.push(AppRoutes.login, extra: UserRole.buyer),
+                onTap: () =>
+                    context.push(AppRoutes.login, extra: UserRole.buyer),
               ),
               const SizedBox(height: 24),
               _buildRoleCard(
@@ -65,13 +66,13 @@ class RoleSelectionScreen extends StatelessWidget {
   }
 
   Widget _buildRoleCard(
-      BuildContext context, {
-        required String title,
-        required String description,
-        required IconData icon,
-        required Color color,
-        required VoidCallback onTap,
-      }) {
+    BuildContext context, {
+    required String title,
+    required String description,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: AppSpacing.borderRadiusLg,
@@ -97,9 +98,18 @@ class RoleSelectionScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold, color: color)),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: color,
+                    ),
+                  ),
                   const SizedBox(height: 4),
-                  Text(description, style: Theme.of(context).textTheme.bodyMedium),
+                  Text(
+                    description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ],
               ),
             ),

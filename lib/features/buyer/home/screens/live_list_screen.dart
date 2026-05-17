@@ -26,13 +26,24 @@ class LiveListScreen extends StatelessWidget {
             children: [
               Text(
                 'Live Shopping',
-                style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold, fontSize: 20),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
-              Obx(() => Text(
-                '${controller.liveStreams.length} live streams now',
-                style: TextStyle(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6), fontSize: 13),
-              )),
+              Obx(
+                () => Text(
+                  '${controller.liveStreams.length} live streams now',
+                  style: TextStyle(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withValues(alpha: 0.6),
+                    fontSize: 13,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -43,7 +54,9 @@ class LiveListScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.liveBadge.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.liveBadge.withValues(alpha: 0.5)),
+              border: Border.all(
+                color: AppColors.liveBadge.withValues(alpha: 0.5),
+              ),
             ),
             child: const Row(
               children: [
@@ -51,7 +64,11 @@ class LiveListScreen extends StatelessWidget {
                 SizedBox(width: 6),
                 Text(
                   'LIVE',
-                  style: TextStyle(color: AppColors.liveBadge, fontSize: 12, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: AppColors.liveBadge,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

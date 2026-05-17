@@ -1,3 +1,5 @@
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
+
 class PaymentMethodModel {
   final String id;
   final String type;
@@ -18,7 +20,8 @@ class PaymentMethodModel {
   });
 
   String get displayText {
-    if (type == 'wallet') return 'Vango Wallet • £${walletBalance?.toStringAsFixed(2)}';
+    if (type == 'wallet')
+      return 'Vango Wallet • ${AppConstants.currencySymbol}${walletBalance?.toStringAsFixed(2)}';
     if (type == 'cash') return 'Cash on Delivery';
     return '$label •••• $last4 | Exp: $expiry';
   }

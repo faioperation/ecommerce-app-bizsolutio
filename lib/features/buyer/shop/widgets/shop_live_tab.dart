@@ -4,11 +4,7 @@ class ShopLiveTab extends StatelessWidget {
   final bool isLive;
   final bool isDark;
 
-  const ShopLiveTab({
-    super.key,
-    required this.isLive,
-    required this.isDark,
-  });
+  const ShopLiveTab({super.key, required this.isLive, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +13,11 @@ class ShopLiveTab extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.videocam_off_outlined,
-                size: 64, color: isDark ? Colors.grey[800] : Colors.grey[300]),
+            Icon(
+              Icons.videocam_off_outlined,
+              size: 64,
+              color: isDark ? Colors.grey[800] : Colors.grey[300],
+            ),
             const SizedBox(height: 16),
             Text(
               'No active live streams',

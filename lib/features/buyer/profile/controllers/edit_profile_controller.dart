@@ -7,7 +7,7 @@ class EditProfileController extends GetxController {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final isLoading = false.obs;
-  
+
   @override
   void onInit() {
     super.onInit();
@@ -34,14 +34,19 @@ class EditProfileController extends GetxController {
 
   Future<void> saveProfile() async {
     if (nameController.text.trim().isEmpty) {
-      Get.snackbar('Error', 'Name cannot be empty', backgroundColor: Colors.redAccent, colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Name cannot be empty',
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
       return;
     }
 
     isLoading.value = true;
-    
+
     await Future.delayed(const Duration(milliseconds: 1000));
-    
+
     try {
       final profileCtrl = Get.find<ProfileController>();
       if (profileCtrl.user.value != null) {
@@ -60,6 +65,11 @@ class EditProfileController extends GetxController {
 
     isLoading.value = false;
     Get.back();
-    Get.snackbar('Success', 'Profile updated successfully!', backgroundColor: Colors.green, colorText: Colors.white);
+    Get.snackbar(
+      'Success',
+      'Profile updated successfully!',
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+    );
   }
 }

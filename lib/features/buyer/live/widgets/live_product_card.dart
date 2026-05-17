@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 
@@ -45,7 +46,10 @@ class LiveProductCard extends StatelessWidget {
                 height: 60,
                 width: 60,
                 color: Colors.grey[300],
-                child: const Icon(Icons.shopping_bag_outlined, color: Colors.grey),
+                child: const Icon(
+                  Icons.shopping_bag_outlined,
+                  color: Colors.grey,
+                ),
               ),
             ),
           ),
@@ -56,13 +60,17 @@ class LiveProductCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 15),
+                  style: const TextStyle(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '£${price.toStringAsFixed(0)}',
+                  '${AppConstants.currencySymbol}${price.toStringAsFixed(0)}',
                   style: const TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w800,
@@ -77,10 +85,15 @@ class LiveProductCard extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
-            child: const Text('Buy', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+            child: const Text(
+              'Buy',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            ),
           ),
         ],
       ),

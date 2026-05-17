@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -20,8 +21,11 @@ class CartScreen extends StatelessWidget {
         backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,
-              color: isDark ? Colors.white : Colors.black87, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black87,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Column(
@@ -36,17 +40,19 @@ class CartScreen extends StatelessWidget {
                 fontFamily: 'Inter',
               ),
             ),
-            Obx(() => Text(
-                  '${controller.items.length} items',
-                  style: TextStyle(
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : AppColors.lightTextSecondary,
-                    fontSize: 12,
-                    fontWeight: FontWeight.normal,
-                    fontFamily: 'Inter',
-                  ),
-                )),
+            Obx(
+              () => Text(
+                '${controller.items.length} items',
+                style: TextStyle(
+                  color: isDark
+                      ? AppColors.darkTextSecondary
+                      : AppColors.lightTextSecondary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  fontFamily: 'Inter',
+                ),
+              ),
+            ),
           ],
         ),
         centerTitle: false,
@@ -54,7 +60,8 @@ class CartScreen extends StatelessWidget {
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
-              child: CircularProgressIndicator(color: AppColors.primary));
+            child: CircularProgressIndicator(color: AppColors.primary),
+          );
         }
 
         if (controller.items.isEmpty) {
@@ -62,11 +69,13 @@ class CartScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.shopping_cart_outlined,
-                    size: 64,
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : AppColors.lightTextSecondary),
+                Icon(
+                  Icons.shopping_cart_outlined,
+                  size: 64,
+                  color: isDark
+                      ? AppColors.darkTextSecondary
+                      : AppColors.lightTextSecondary,
+                ),
                 const SizedBox(height: 16),
                 Text(
                   'Your cart is empty',
@@ -99,8 +108,7 @@ class CartScreen extends StatelessWidget {
                             controller.incrementQuantity(item.productId),
                         onDecrement: () =>
                             controller.decrementQuantity(item.productId),
-                        onRemove: () =>
-                            controller.removeItem(item.productId),
+                        onRemove: () => controller.removeItem(item.productId),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -110,7 +118,9 @@ class CartScreen extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: isDark ? const Color(0xFF1A1625) : Colors.white,
+                          color: isDark
+                              ? const Color(0xFF1A1625)
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isDark
@@ -123,8 +133,11 @@ class CartScreen extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const Icon(Icons.local_offer_outlined,
-                                    color: AppColors.primary, size: 18),
+                                const Icon(
+                                  Icons.local_offer_outlined,
+                                  color: AppColors.primary,
+                                  size: 18,
+                                ),
                                 const SizedBox(width: 8),
                                 Text(
                                   'Apply Coupon',
@@ -161,8 +174,11 @@ class CartScreen extends StatelessWidget {
                                         fontSize: 13,
                                         fontFamily: 'Inter',
                                       ),
-                                      contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 16, vertical: 0),
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                            horizontal: 16,
+                                            vertical: 0,
+                                          ),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
                                         borderSide: BorderSide(
@@ -189,7 +205,9 @@ class CartScreen extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 14),
+                                      horizontal: 20,
+                                      vertical: 14,
+                                    ),
                                     elevation: 0,
                                   ),
                                   child: const Text(
@@ -215,7 +233,9 @@ class CartScreen extends StatelessWidget {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: isDark ? const Color(0xFF1A1625) : Colors.white,
+                          color: isDark
+                              ? const Color(0xFF1A1625)
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
                             color: isDark
@@ -238,17 +258,25 @@ class CartScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            _summaryRow('Subtotal', controller.subtotal, isDark),
+                            _summaryRow(
+                              'Subtotal',
+                              controller.subtotal,
+                              isDark,
+                            ),
                             const SizedBox(height: 10),
-                            _summaryRow('Shipping', controller.shippingFee.value,
-                                isDark),
+                            _summaryRow(
+                              'Shipping',
+                              controller.shippingFee.value,
+                              isDark,
+                            ),
                             if (controller.couponDiscount.value > 0) ...[
                               const SizedBox(height: 10),
                               _summaryRow(
-                                  'Discount (${controller.appliedCoupon.value})',
-                                  -controller.couponDiscount.value,
-                                  isDark,
-                                  isDiscount: true),
+                                'Discount (${controller.appliedCoupon.value})',
+                                -controller.couponDiscount.value,
+                                isDark,
+                                isDiscount: true,
+                              ),
                             ],
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 12),
@@ -269,7 +297,7 @@ class CartScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '£${controller.grandTotal.toStringAsFixed(0)}',
+                                  '${AppConstants.currencySymbol}${controller.grandTotal.toStringAsFixed(0)}',
                                   style: const TextStyle(
                                     color: AppColors.primary,
                                     fontWeight: FontWeight.w900,
@@ -308,13 +336,13 @@ class CartScreen extends StatelessWidget {
                   height: 56,
                   child: ElevatedButton(
                     onPressed: () {
-
                       context.push(AppRoutes.checkout);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18)),
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                       elevation: 0,
                     ),
                     child: const Text(
@@ -336,8 +364,12 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _summaryRow(String label, double amount, bool isDark,
-      {bool isDiscount = false}) {
+  Widget _summaryRow(
+    String label,
+    double amount,
+    bool isDark, {
+    bool isDiscount = false,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -352,13 +384,13 @@ class CartScreen extends StatelessWidget {
           ),
         ),
         Text(
-          '${amount < 0 ? '-' : ''}£${amount.abs().toStringAsFixed(0)}',
+          '${amount < 0 ? '-' : ''}${AppConstants.currencySymbol}${amount.abs().toStringAsFixed(0)}',
           style: TextStyle(
             color: isDiscount
                 ? AppColors.success
                 : isDark
-                    ? AppColors.darkTextPrimary
-                    : AppColors.lightTextPrimary,
+                ? AppColors.darkTextPrimary
+                : AppColors.lightTextPrimary,
             fontWeight: FontWeight.w600,
             fontSize: 13,
           ),

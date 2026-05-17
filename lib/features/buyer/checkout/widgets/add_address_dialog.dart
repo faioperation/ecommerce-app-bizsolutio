@@ -92,10 +92,12 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                     ),
                     IconButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      icon: Icon(Icons.close_rounded,
-                          color: isDark
-                              ? AppColors.darkTextSecondary
-                              : Colors.grey),
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : Colors.grey,
+                      ),
                     ),
                   ],
                 ),
@@ -122,7 +124,9 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                         duration: const Duration(milliseconds: 180),
                         margin: const EdgeInsets.only(right: 8),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: selected
                               ? AppColors.primary
@@ -144,12 +148,37 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                 ),
                 const SizedBox(height: 20),
 
-                _buildField(_nameCtrl, 'Full Name', Icons.person_outline, isDark),
-                _buildField(_houseCtrl, 'House / Flat No.', Icons.home_outlined, isDark),
-                _buildField(_streetCtrl, 'Street / Area', Icons.location_on_outlined, isDark),
-                _buildField(_townCtrl, 'Town / City & Postcode', Icons.location_city_outlined, isDark),
-                _buildField(_phoneCtrl, 'Phone Number', Icons.phone_outlined, isDark,
-                    keyboardType: TextInputType.phone),
+                _buildField(
+                  _nameCtrl,
+                  'Full Name',
+                  Icons.person_outline,
+                  isDark,
+                ),
+                _buildField(
+                  _houseCtrl,
+                  'House / Flat No.',
+                  Icons.home_outlined,
+                  isDark,
+                ),
+                _buildField(
+                  _streetCtrl,
+                  'Street / Area',
+                  Icons.location_on_outlined,
+                  isDark,
+                ),
+                _buildField(
+                  _townCtrl,
+                  'Town / City & Postcode',
+                  Icons.location_city_outlined,
+                  isDark,
+                ),
+                _buildField(
+                  _phoneCtrl,
+                  'Phone Number',
+                  Icons.phone_outlined,
+                  isDark,
+                  keyboardType: TextInputType.phone,
+                ),
 
                 const SizedBox(height: 24),
 
@@ -161,7 +190,8 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16)),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
                     child: const Text(
                       'Save Address',
@@ -195,7 +225,9 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
         controller: ctrl,
         keyboardType: keyboardType,
         style: TextStyle(
-          color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+          color: isDark
+              ? AppColors.darkTextPrimary
+              : AppColors.lightTextPrimary,
           fontSize: 14,
           fontFamily: 'Inter',
         ),
@@ -219,11 +251,12 @@ class _AddAddressDialogState extends State<AddAddressDialog> {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide:
-                const BorderSide(color: AppColors.primary, width: 1.5),
+            borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
           ),
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 14,
+            horizontal: 16,
+          ),
         ),
         validator: (val) =>
             (val == null || val.trim().isEmpty) ? 'Required' : null,

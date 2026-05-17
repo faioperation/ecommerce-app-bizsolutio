@@ -15,15 +15,16 @@ class PaymentMethodScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor:
-          isDark ? Colors.black : const Color(0xFFF8F9FC),
+      backgroundColor: isDark ? Colors.black : const Color(0xFFF8F9FC),
       appBar: AppBar(
-        backgroundColor:
-            isDark ? Colors.black : Colors.white,
+        backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,
-              color: isDark ? Colors.white : Colors.black87, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black87,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -38,13 +39,15 @@ class PaymentMethodScreen extends StatelessWidget {
         centerTitle: false,
       ),
       body: Obx(() {
-        final wallet = controller.paymentMethods
-            .firstWhereOrNull((p) => p.type == 'wallet');
+        final wallet = controller.paymentMethods.firstWhereOrNull(
+          (p) => p.type == 'wallet',
+        );
         final cards = controller.paymentMethods
             .where((p) => p.type == 'card')
             .toList();
-        final cashOpt = controller.paymentMethods
-            .firstWhereOrNull((p) => p.type == 'cash');
+        final cashOpt = controller.paymentMethods.firstWhereOrNull(
+          (p) => p.type == 'cash',
+        );
 
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -63,16 +66,16 @@ class PaymentMethodScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-                      color: AppColors.primary,
-                      width: 1.5,
-                    ),
+                    border: Border.all(color: AppColors.primary, width: 1.5),
                   ),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.add_rounded,
-                          color: AppColors.primary, size: 20),
+                      Icon(
+                        Icons.add_rounded,
+                        color: AppColors.primary,
+                        size: 20,
+                      ),
                       SizedBox(width: 8),
                       Text(
                         'Add New Card',
@@ -92,8 +95,7 @@ class PaymentMethodScreen extends StatelessWidget {
               if (wallet != null) ...[
                 PaymentMethodTile(
                   method: wallet,
-                  isSelected:
-                      controller.selectedPaymentId.value == wallet.id,
+                  isSelected: controller.selectedPaymentId.value == wallet.id,
                   onTap: () {
                     controller.selectPayment(wallet.id);
                     Navigator.of(context).pop();
@@ -115,15 +117,16 @@ class PaymentMethodScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                ...cards.map((card) => PaymentMethodTile(
-                  method: card,
-                  isSelected:
-                      controller.selectedPaymentId.value == card.id,
-                  onTap: () {
-                    controller.selectPayment(card.id);
-                    Navigator.of(context).pop();
-                  },
-                )),
+                ...cards.map(
+                  (card) => PaymentMethodTile(
+                    method: card,
+                    isSelected: controller.selectedPaymentId.value == card.id,
+                    onTap: () {
+                      controller.selectPayment(card.id);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ),
               ],
 
               if (cashOpt != null) ...[
@@ -162,8 +165,8 @@ class PaymentMethodScreen extends StatelessWidget {
             color: isSelected
                 ? AppColors.primary
                 : isDark
-                    ? const Color(0xFF2A2535)
-                    : AppColors.lightBorder,
+                ? const Color(0xFF2A2535)
+                : AppColors.lightBorder,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -200,8 +203,11 @@ class PaymentMethodScreen extends StatelessWidget {
                 color: AppColors.success.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(Icons.payments_outlined,
-                  color: AppColors.success, size: 20),
+              child: const Icon(
+                Icons.payments_outlined,
+                color: AppColors.success,
+                size: 20,
+              ),
             ),
             const SizedBox(width: 12),
             Text(

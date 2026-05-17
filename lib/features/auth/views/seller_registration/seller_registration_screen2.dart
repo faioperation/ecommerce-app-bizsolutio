@@ -49,7 +49,7 @@ class SellerRegistrationScreen2 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            
+
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Shop Name',
@@ -64,7 +64,7 @@ class SellerRegistrationScreen2 extends StatelessWidget {
               onChanged: controller.updateShopName,
             ),
             const SizedBox(height: 20),
-            
+
             DropdownButtonFormField<String>(
               decoration: InputDecoration(
                 labelText: 'Business Type',
@@ -81,7 +81,7 @@ class SellerRegistrationScreen2 extends StatelessWidget {
               onChanged: (val) => controller.updateBusinessType(val ?? ''),
             ),
             const SizedBox(height: 20),
-            
+
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Country',
@@ -96,7 +96,7 @@ class SellerRegistrationScreen2 extends StatelessWidget {
               onChanged: controller.updateCountry,
             ),
             const SizedBox(height: 32),
-            
+
             Text(
               'Select Categories',
               style: TextStyle(
@@ -111,28 +111,39 @@ class SellerRegistrationScreen2 extends StatelessWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: ['Fashion', 'Electronics', 'Beauty', 'Home', 'Food', 'Art'].map((cat) {
-                return Obx(() {
-                  final isSelected = controller.categories.contains(cat);
-                  return FilterChip(
-                    label: Text(cat),
-                    selected: isSelected,
-                    onSelected: (_) => controller.toggleCategory(cat),
-                    selectedColor: AppColors.primary.withValues(alpha: 0.2),
-                    checkmarkColor: AppColors.primary,
-                  );
-                });
-              }).toList(),
+              children:
+                  [
+                    'Fashion',
+                    'Electronics',
+                    'Beauty',
+                    'Home',
+                    'Food',
+                    'Art',
+                  ].map((cat) {
+                    return Obx(() {
+                      final isSelected = controller.categories.contains(cat);
+                      return FilterChip(
+                        label: Text(cat),
+                        selected: isSelected,
+                        onSelected: (_) => controller.toggleCategory(cat),
+                        selectedColor: AppColors.primary.withValues(alpha: 0.2),
+                        checkmarkColor: AppColors.primary,
+                      );
+                    });
+                  }).toList(),
             ),
-            
+
             const SizedBox(height: 40),
-            
+
             SizedBox(
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
                 onPressed: () => context.push(AppRoutes.sellerRegStep3),
-                child: const Text('Next Step', style: TextStyle(fontWeight: FontWeight.bold)),
+                child: const Text(
+                  'Next Step',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],

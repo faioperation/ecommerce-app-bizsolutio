@@ -23,7 +23,8 @@ class ShopProfileScreen extends StatefulWidget {
   State<ShopProfileScreen> createState() => _ShopProfileScreenState();
 }
 
-class _ShopProfileScreenState extends State<ShopProfileScreen> with SingleTickerProviderStateMixin {
+class _ShopProfileScreenState extends State<ShopProfileScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final ShopController controller = Get.put(ShopController());
 
@@ -48,7 +49,9 @@ class _ShopProfileScreenState extends State<ShopProfileScreen> with SingleTicker
       backgroundColor: isDark ? Colors.black : const Color(0xFFF8F9FC),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.primary),
+          );
         }
 
         final shop = controller.shop.value;
@@ -72,11 +75,19 @@ class _ShopProfileScreenState extends State<ShopProfileScreen> with SingleTicker
                   TabBar(
                     controller: _tabController,
                     labelColor: AppColors.primary,
-                    unselectedLabelColor: isDark ? Colors.grey[500] : Colors.grey[400],
+                    unselectedLabelColor: isDark
+                        ? Colors.grey[500]
+                        : Colors.grey[400],
                     indicatorColor: AppColors.primary,
                     indicatorWeight: 3,
-                    labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Inter'),
-                    unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontFamily: 'Inter'),
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Inter',
+                    ),
+                    unselectedLabelStyle: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontFamily: 'Inter',
+                    ),
                     tabs: const [
                       Tab(text: 'Products'),
                       Tab(text: 'Live'),

@@ -16,11 +16,36 @@ class HomeController extends GetxController {
     isLoading.value = true;
 
     stories.assignAll([
-      StoryModel(id: '1', sellerName: 'TechStore', profileImage: 'https://i.pravatar.cc/150?u=1', isLive: true),
-      StoryModel(id: '2', sellerName: 'FashionHub', profileImage: 'https://i.pravatar.cc/150?u=2', isLive: true),
-      StoryModel(id: '3', sellerName: 'HomeDecor', profileImage: 'https://i.pravatar.cc/150?u=3', isLive: false),
-      StoryModel(id: '4', sellerName: 'BeautyBox', profileImage: 'https://i.pravatar.cc/150?u=4', isLive: true),
-      StoryModel(id: '5', sellerName: 'GadgetZ', profileImage: 'https://i.pravatar.cc/150?u=5', isLive: false),
+      StoryModel(
+        id: '1',
+        sellerName: 'TechStore',
+        profileImage: 'https://i.pravatar.cc/150?u=1',
+        isLive: true,
+      ),
+      StoryModel(
+        id: '2',
+        sellerName: 'FashionHub',
+        profileImage: 'https://i.pravatar.cc/150?u=2',
+        isLive: true,
+      ),
+      StoryModel(
+        id: '3',
+        sellerName: 'HomeDecor',
+        profileImage: 'https://i.pravatar.cc/150?u=3',
+        isLive: false,
+      ),
+      StoryModel(
+        id: '4',
+        sellerName: 'BeautyBox',
+        profileImage: 'https://i.pravatar.cc/150?u=4',
+        isLive: true,
+      ),
+      StoryModel(
+        id: '5',
+        sellerName: 'GadgetZ',
+        profileImage: 'https://i.pravatar.cc/150?u=5',
+        isLive: false,
+      ),
     ]);
 
     feedItems.assignAll([
@@ -29,7 +54,8 @@ class HomeController extends GetxController {
         sellerName: 'TechStore',
         title: 'Wireless Headphones Ultra',
         price: 99.00,
-        imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80',
+        imageUrl:
+            'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80',
         type: FeedType.post,
         likes: 12500,
         comments: 432,
@@ -39,7 +65,8 @@ class HomeController extends GetxController {
         sellerName: 'FashionHub',
         title: 'Summer Collection Live Sale',
         price: 45.00,
-        imageUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80',
+        imageUrl:
+            'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80',
         type: FeedType.live,
         likes: 8900,
         comments: 215,
@@ -49,7 +76,8 @@ class HomeController extends GetxController {
         sellerName: 'HomeDecor',
         title: 'Modern Minimalist Lamp',
         price: 120.00,
-        imageUrl: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80',
+        imageUrl:
+            'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=800&q=80',
         type: FeedType.post,
         likes: 3400,
         comments: 89,
@@ -78,7 +106,10 @@ class HomeController extends GetxController {
   }
 
   void addToCart(String id) {
-
-    Get.snackbar('Success', 'Added to cart!', snackPosition: SnackPosition.BOTTOM);
+    Get.snackbar(
+      'Success',
+      'Added to cart!',
+      snackPosition: SnackPosition.BOTTOM,
+    );
   }
 }

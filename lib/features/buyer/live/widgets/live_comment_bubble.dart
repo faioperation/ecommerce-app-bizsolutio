@@ -26,7 +26,10 @@ class LiveCommentBubble extends StatelessWidget {
             children: [
               TextSpan(
                 text: '$username: ',
-                style: const TextStyle(color: Colors.orangeAccent, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  color: Colors.orangeAccent,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               TextSpan(
                 text: comment,

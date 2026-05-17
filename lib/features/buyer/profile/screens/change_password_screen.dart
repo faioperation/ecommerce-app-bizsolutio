@@ -17,8 +17,11 @@ class ChangePasswordScreen extends StatelessWidget {
         backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,
-              color: isDark ? Colors.white : Colors.black87, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black87,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -40,67 +43,82 @@ class ChangePasswordScreen extends StatelessWidget {
             Text(
               'Create a new password that is strong and secure.',
               style: TextStyle(
-                color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                color: isDark
+                    ? AppColors.darkTextSecondary
+                    : AppColors.lightTextSecondary,
                 fontSize: 14,
                 fontFamily: 'Inter',
               ),
             ),
             const SizedBox(height: 32),
 
-            Obx(() => _buildPasswordField(
-                  controller: controller.currentPasswordController,
-                  label: 'Current Password',
-                  isDark: isDark,
-                  obscureText: controller.obscureCurrent.value,
-                  onToggleVisibility: controller.toggleCurrentObscure,
-                )),
+            Obx(
+              () => _buildPasswordField(
+                controller: controller.currentPasswordController,
+                label: 'Current Password',
+                isDark: isDark,
+                obscureText: controller.obscureCurrent.value,
+                onToggleVisibility: controller.toggleCurrentObscure,
+              ),
+            ),
             const SizedBox(height: 20),
-            Obx(() => _buildPasswordField(
-                  controller: controller.newPasswordController,
-                  label: 'New Password',
-                  isDark: isDark,
-                  obscureText: controller.obscureNew.value,
-                  onToggleVisibility: controller.toggleNewObscure,
-                )),
+            Obx(
+              () => _buildPasswordField(
+                controller: controller.newPasswordController,
+                label: 'New Password',
+                isDark: isDark,
+                obscureText: controller.obscureNew.value,
+                onToggleVisibility: controller.toggleNewObscure,
+              ),
+            ),
             const SizedBox(height: 20),
-            Obx(() => _buildPasswordField(
-                  controller: controller.confirmPasswordController,
-                  label: 'Confirm New Password',
-                  isDark: isDark,
-                  obscureText: controller.obscureConfirm.value,
-                  onToggleVisibility: controller.toggleConfirmObscure,
-                )),
+            Obx(
+              () => _buildPasswordField(
+                controller: controller.confirmPasswordController,
+                label: 'Confirm New Password',
+                isDark: isDark,
+                obscureText: controller.obscureConfirm.value,
+                onToggleVisibility: controller.toggleConfirmObscure,
+              ),
+            ),
             const SizedBox(height: 40),
 
-            Obx(() => SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: controller.isLoading.value ? null : controller.submit,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      elevation: 0,
+            Obx(
+              () => SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: controller.isLoading.value
+                      ? null
+                      : controller.submit,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    child: controller.isLoading.value
-                        ? const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
-                          )
-                        : const Text(
-                            'Update Password',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                            ),
-                          ),
+                    elevation: 0,
                   ),
-                )),
+                  child: controller.isLoading.value
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text(
+                          'Update Password',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            fontFamily: 'Inter',
+                          ),
+                        ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -120,7 +138,9 @@ class ChangePasswordScreen extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+            color: isDark
+                ? AppColors.darkTextSecondary
+                : AppColors.lightTextSecondary,
             fontSize: 14,
             fontWeight: FontWeight.w500,
             fontFamily: 'Inter',
@@ -131,15 +151,24 @@ class ChangePasswordScreen extends StatelessWidget {
           controller: controller,
           obscureText: obscureText,
           style: TextStyle(
-            color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            color: isDark
+                ? AppColors.darkTextPrimary
+                : AppColors.lightTextPrimary,
             fontFamily: 'Inter',
           ),
           decoration: InputDecoration(
-            prefixIcon: const Icon(Icons.lock_outline_rounded, color: AppColors.primary),
+            prefixIcon: const Icon(
+              Icons.lock_outline_rounded,
+              color: AppColors.primary,
+            ),
             suffixIcon: IconButton(
               icon: Icon(
-                obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                obscureText
+                    ? Icons.visibility_off_outlined
+                    : Icons.visibility_outlined,
+                color: isDark
+                    ? AppColors.darkTextSecondary
+                    : AppColors.lightTextSecondary,
               ),
               onPressed: onToggleVisibility,
             ),

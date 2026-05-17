@@ -27,11 +27,11 @@ class OrderModel {
   }
 
   Map<String, dynamic> toJson() => {
-        'orderId': orderId,
-        'date': date.toIso8601String(),
-        'status': status,
-        'totalAmount': totalAmount,
-        'itemCount': itemCount,
-        'productImageUrls': productImageUrls,
-      };
+    'orderId': orderId,
+    'date': date.toIso8601String(),
+    'status': status,
+    'totalAmount': totalAmount,
+    'itemCount': itemCount,
+    'productImageUrls': productImageUrls,
+  };
 }

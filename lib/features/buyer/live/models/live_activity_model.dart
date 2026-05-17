@@ -18,10 +18,6 @@ class LiveActivityModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'username': username,
-      'text': text,
-      'isBid': isBid,
-    };
+    return {'username': username, 'text': text, 'isBid': isBid};
   }
 }

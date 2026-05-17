@@ -7,9 +7,21 @@ class LiveSellController extends GetxController {
   final scrollController = ScrollController();
 
   final comments = <LiveActivityModel>[
-    LiveActivityModel(username: 'user123', text: 'This looks amazing! 😍', isBid: false),
-    LiveActivityModel(username: 'shopper456', text: "What's the price?", isBid: false),
-    LiveActivityModel(username: 'buyer789', text: 'Just ordered one!', isBid: false),
+    LiveActivityModel(
+      username: 'user123',
+      text: 'This looks amazing! 😍',
+      isBid: false,
+    ),
+    LiveActivityModel(
+      username: 'shopper456',
+      text: "What's the price?",
+      isBid: false,
+    ),
+    LiveActivityModel(
+      username: 'buyer789',
+      text: 'Just ordered one!',
+      isBid: false,
+    ),
   ].obs;
 
   final isLiked = false.obs;
@@ -25,11 +37,7 @@ class LiveSellController extends GetxController {
     final text = commentController.text.trim();
     if (text.isEmpty) return;
 
-    comments.add(LiveActivityModel(
-      username: 'You',
-      text: text,
-      isBid: false,
-    ));
+    comments.add(LiveActivityModel(username: 'You', text: text, isBid: false));
     commentController.clear();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -46,11 +54,11 @@ class LiveSellController extends GetxController {
   void toggleLike() {
     isLiked.toggle();
     Get.snackbar(
-      isLiked.value ? 'Loved!' : 'Unloved', 
+      isLiked.value ? 'Loved!' : 'Unloved',
       isLiked.value ? 'You liked the live stream!' : 'You removed your like.',
       snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: isLiked.value 
-          ? Colors.pink.withValues(alpha: 0.8) 
+      backgroundColor: isLiked.value
+          ? Colors.pink.withValues(alpha: 0.8)
           : Colors.black87.withValues(alpha: 0.8),
       colorText: Colors.white,
       duration: const Duration(seconds: 1),

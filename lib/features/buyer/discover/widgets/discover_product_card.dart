@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../models/discover_product_model.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -31,7 +32,9 @@ class DiscoverProductCard extends StatelessWidget {
             ),
           ],
           border: Border.all(
-            color: isDark ? Colors.white.withValues(alpha: 0.08) : Colors.grey[150]!,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.08)
+                : Colors.grey[150]!,
             width: 1.0,
           ),
         ),
@@ -50,7 +53,10 @@ class DiscoverProductCard extends StatelessWidget {
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
                     color: Colors.grey[200],
-                    child: const Icon(Icons.shopping_bag_outlined, color: Colors.grey),
+                    child: const Icon(
+                      Icons.shopping_bag_outlined,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ),
@@ -89,7 +95,7 @@ class DiscoverProductCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '£${product.price.toStringAsFixed(0)}',
+                        '${AppConstants.currencySymbol}${product.price.toStringAsFixed(0)}',
                         style: const TextStyle(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
@@ -97,7 +103,10 @@ class DiscoverProductCard extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.red[50],
                           borderRadius: BorderRadius.circular(8),

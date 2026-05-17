@@ -4,7 +4,6 @@ import 'app_spacing.dart';
 import 'app_text_styles.dart';
 
 class AppTheme {
-
   AppTheme._();
 
   static ThemeData get lightTheme {
@@ -107,7 +106,8 @@ class AppTheme {
         elevation: 8,
       ),
       actionIconTheme: ActionIconThemeData(
-        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new_rounded),
+        backButtonIconBuilder: (BuildContext context) =>
+            const Icon(Icons.arrow_back_ios_new_rounded),
       ),
     );
   }
@@ -213,7 +213,8 @@ class AppTheme {
         elevation: 8,
       ),
       actionIconTheme: ActionIconThemeData(
-        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new_rounded),
+        backButtonIconBuilder: (BuildContext context) =>
+            const Icon(Icons.arrow_back_ios_new_rounded),
       ),
     );
   }

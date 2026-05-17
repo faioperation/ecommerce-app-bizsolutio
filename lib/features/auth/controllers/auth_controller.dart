@@ -6,7 +6,6 @@ import '../../../routes/app_routes.dart';
 enum UserRole { buyer, seller, guest }
 
 class AuthController extends GetxController {
-
   final RxBool isAuthenticated = false.obs;
   final Rx<UserRole> userRole = UserRole.guest.obs;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../routes/app_routes.dart';
@@ -53,8 +54,11 @@ class CartItemCard extends StatelessWidget {
                 width: 70,
                 height: 70,
                 color: Colors.grey[200],
-                child: const Icon(Icons.image_not_supported,
-                    color: Colors.grey, size: 28),
+                child: const Icon(
+                  Icons.image_not_supported,
+                  color: Colors.grey,
+                  size: 28,
+                ),
               ),
             ),
           ),
@@ -82,11 +86,13 @@ class CartItemCard extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: onRemove,
-                      icon: Icon(Icons.delete_outline_rounded,
-                          color: isDark
-                              ? AppColors.darkTextSecondary
-                              : Colors.grey[400],
-                          size: 20),
+                      icon: Icon(
+                        Icons.delete_outline_rounded,
+                        color: isDark
+                            ? AppColors.darkTextSecondary
+                            : Colors.grey[400],
+                        size: 20,
+                      ),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
                     ),
@@ -98,7 +104,8 @@ class CartItemCard extends StatelessWidget {
                       AppRoutes.shopProfile,
                       extra: {
                         'sellerName': item.sellerName,
-                        'profileImageUrl': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200', // Mock image
+                        'profileImageUrl':
+                            'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200', // Mock image
                       },
                     );
                   },
@@ -118,7 +125,7 @@ class CartItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '£${item.price.toStringAsFixed(0)}',
+                      '${AppConstants.currencySymbol}${item.price.toStringAsFixed(0)}',
                       style: const TextStyle(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
@@ -159,7 +166,7 @@ class CartItemCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'Subtotal: £${item.subtotal.toStringAsFixed(0)}',
+                  'Subtotal: ${AppConstants.currencySymbol}${item.subtotal.toStringAsFixed(0)}',
                   style: TextStyle(
                     color: isDark
                         ? AppColors.darkTextSecondary
@@ -191,12 +198,15 @@ class CartItemCard extends StatelessWidget {
           color: isAdd
               ? AppColors.primary
               : isDark
-                  ? const Color(0xFF2A2535)
-                  : Colors.grey[100],
+              ? const Color(0xFF2A2535)
+              : Colors.grey[100],
           borderRadius: BorderRadius.circular(8),
         ),
-        child: Icon(icon,
-            size: 16, color: isAdd ? Colors.white : AppColors.primary),
+        child: Icon(
+          icon,
+          size: 16,
+          color: isAdd ? Colors.white : AppColors.primary,
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 
@@ -30,7 +31,10 @@ class AuctionStatsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF1E1A29).withValues(alpha: 0.95),
         borderRadius: AppSpacing.borderRadiusLg,
-        border: Border.all(color: AppColors.accentPink.withValues(alpha: 0.6), width: 1.5),
+        border: Border.all(
+          color: AppColors.accentPink.withValues(alpha: 0.6),
+          width: 1.5,
+        ),
         boxShadow: [
           BoxShadow(
             color: AppColors.accentPink.withValues(alpha: 0.25),
@@ -47,7 +51,11 @@ class AuctionStatsCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.local_fire_department, color: Colors.orangeAccent, size: 18),
+                  const Icon(
+                    Icons.local_fire_department,
+                    color: Colors.orangeAccent,
+                    size: 18,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     'LIVE AUCTION',
@@ -68,13 +76,21 @@ class AuctionStatsCard extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.access_time_filled, color: Colors.redAccent, size: 12),
+                    const Icon(
+                      Icons.access_time_filled,
+                      color: Colors.redAccent,
+                      size: 12,
+                    ),
                     const SizedBox(width: 4),
                     Text(
-                      !isAuctionEnded 
-                          ? '00:${secondsRemaining.toString().padLeft(2, '0')}' 
+                      !isAuctionEnded
+                          ? '00:${secondsRemaining.toString().padLeft(2, '0')}'
                           : 'ENDED',
-                      style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -96,7 +112,10 @@ class AuctionStatsCard extends StatelessWidget {
                     height: 50,
                     width: 50,
                     color: Colors.grey[800],
-                    child: const Icon(Icons.phone_iphone, color: Colors.white60),
+                    child: const Icon(
+                      Icons.phone_iphone,
+                      color: Colors.white60,
+                    ),
                   ),
                 ),
               ),
@@ -107,7 +126,11 @@ class AuctionStatsCard extends StatelessWidget {
                   children: [
                     const Text(
                       'iPhone 15 Pro Max 256GB',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -115,12 +138,19 @@ class AuctionStatsCard extends StatelessWidget {
                     RichText(
                       text: TextSpan(
                         children: [
-                          const TextSpan(text: 'Current Bid: ', style: TextStyle(color: Colors.white70, fontSize: 12)),
+                          const TextSpan(
+                            text: 'Current Bid: ',
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                            ),
+                          ),
                           TextSpan(
-                            text: '£${currentBid.toStringAsFixed(0)}',
+                            text:
+                                '${AppConstants.currencySymbol}${currentBid.toStringAsFixed(0)}',
                             style: const TextStyle(
-                              color: Colors.orangeAccent, 
-                              fontWeight: FontWeight.w900, 
+                              color: Colors.orangeAccent,
+                              fontWeight: FontWeight.w900,
                               fontSize: 16,
                             ),
                           ),
@@ -142,7 +172,10 @@ class AuctionStatsCard extends StatelessWidget {
             children: [
               _buildStatColumn('Highest Bidder', highestBidder),
               _buildStatColumn('Total Bids', '$totalBids'),
-              _buildStatColumn('Starting Price', '£350'),
+              _buildStatColumn(
+                'Starting Price',
+                '${AppConstants.currencySymbol}350',
+              ),
             ],
           ),
 
@@ -171,7 +204,9 @@ class AuctionStatsCard extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -179,8 +214,12 @@ class AuctionStatsCard extends StatelessWidget {
                   const Icon(Icons.trending_up, color: Colors.white, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    isAuctionEnded ? 'Auction Ended' : 'Place Bid', 
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                    isAuctionEnded ? 'Auction Ended' : 'Place Bid',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ],
               ),
@@ -201,7 +240,11 @@ class AuctionStatsCard extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
+          ),
         ),
       ],
     );

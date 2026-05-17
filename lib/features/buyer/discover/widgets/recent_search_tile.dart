@@ -25,7 +25,9 @@ class RecentSearchTile extends StatelessWidget {
           color: isDark ? const Color(0xFF1E1A29) : Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[100]!,
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.grey[100]!,
           ),
         ),
         child: Row(

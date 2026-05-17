@@ -23,7 +23,11 @@ class ShopCoverHeader extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white, size: 20),
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.white,
+            size: 20,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -35,7 +39,11 @@ class ShopCoverHeader extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            icon: const Icon(Icons.share_outlined, color: Colors.white, size: 20),
+            icon: const Icon(
+              Icons.share_outlined,
+              color: Colors.white,
+              size: 20,
+            ),
             onPressed: () {},
           ),
         ),

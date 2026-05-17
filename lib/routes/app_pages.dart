@@ -63,7 +63,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
     notifyListeners();
     _subscription = stream.asBroadcastStream().listen(
-          (dynamic _) => notifyListeners(),
+      (dynamic _) => notifyListeners(),
     );
   }
   late final StreamSubscription<dynamic> _subscription;
@@ -97,12 +97,18 @@ class AppPages {
       final isRoleSelection = state.matchedLocation == AppRoutes.roleSelection;
       final isLogin = state.matchedLocation == AppRoutes.login;
       final isRegister = state.matchedLocation.startsWith('/register');
-      final isForgotPassword = state.matchedLocation == AppRoutes.forgotPassword ||
+      final isForgotPassword =
+          state.matchedLocation == AppRoutes.forgotPassword ||
           state.matchedLocation == AppRoutes.otpVerification ||
           state.matchedLocation == AppRoutes.resetPassword ||
           state.matchedLocation == AppRoutes.passwordSuccess;
 
-      final isAuthRoute = isSplash || isRoleSelection || isLogin || isRegister || isForgotPassword;
+      final isAuthRoute =
+          isSplash ||
+          isRoleSelection ||
+          isLogin ||
+          isRegister ||
+          isForgotPassword;
 
       if (!isAuth) {
         return isAuthRoute ? null : AppRoutes.splash;
@@ -120,10 +126,13 @@ class AppPages {
       final isSellerRoute = state.matchedLocation.startsWith('/seller');
 
       if (role == UserRole.buyer && isSellerRoute) return AppRoutes.buyerHome;
-      if (role == UserRole.seller && isBuyerRoute) return AppRoutes.sellerDashboard;
+      if (role == UserRole.seller && isBuyerRoute)
+        return AppRoutes.sellerDashboard;
 
       if (state.matchedLocation == '/') {
-        return (role == UserRole.seller) ? AppRoutes.sellerDashboard : AppRoutes.buyerHome;
+        return (role == UserRole.seller)
+            ? AppRoutes.sellerDashboard
+            : AppRoutes.buyerHome;
       }
 
       return null;
@@ -251,7 +260,9 @@ class AppPages {
           final args = state.extra as Map<String, dynamic>? ?? {};
           return ShopProfileScreen(
             sellerName: args['sellerName'] ?? 'Unknown Shop',
-            profileImageUrl: args['profileImageUrl'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
+            profileImageUrl:
+                args['profileImageUrl'] ??
+                'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
           );
         },
       ),

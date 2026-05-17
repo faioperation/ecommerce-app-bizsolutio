@@ -30,11 +30,11 @@ class WishlistItemModel {
   }
 
   Map<String, dynamic> toJson() => {
-        'productId': productId,
-        'name': name,
-        'imageUrl': imageUrl,
-        'price': price,
-        'originalPrice': originalPrice,
-        'isInStock': isInStock,
-      };
+    'productId': productId,
+    'name': name,
+    'imageUrl': imageUrl,
+    'price': price,
+    'originalPrice': originalPrice,
+    'isInStock': isInStock,
+  };
 }

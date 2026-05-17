@@ -16,7 +16,10 @@ class LiveBiddingScreen extends StatelessWidget {
 
   const LiveBiddingScreen({super.key, required this.stream});
 
-  void _showCongratulationsDialog(BuildContext context, LiveBiddingController controller) {
+  void _showCongratulationsDialog(
+    BuildContext context,
+    LiveBiddingController controller,
+  ) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -27,7 +30,7 @@ class LiveBiddingScreen extends StatelessWidget {
           onProceedToPayment: () {
             Navigator.of(context).pop();
             Get.snackbar(
-              'Checkout', 
+              'Checkout',
               'Redirecting to secure payment portal...',
               backgroundColor: AppColors.success,
               colorText: Colors.white,
@@ -38,7 +41,10 @@ class LiveBiddingScreen extends StatelessWidget {
     );
   }
 
-  void _openBidBottomSheet(BuildContext context, LiveBiddingController controller) {
+  void _openBidBottomSheet(
+    BuildContext context,
+    LiveBiddingController controller,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -56,7 +62,8 @@ class LiveBiddingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(LiveBiddingController());
 
-    controller.onAuctionWonCallback = () => _showCongratulationsDialog(context, controller);
+    controller.onAuctionWonCallback = () =>
+        _showCongratulationsDialog(context, controller);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -68,7 +75,11 @@ class LiveBiddingScreen extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
                 color: Colors.grey[900],
-                child: const Icon(Icons.videocam_off, color: Colors.white, size: 80),
+                child: const Icon(
+                  Icons.videocam_off,
+                  color: Colors.white,
+                  size: 80,
+                ),
               ),
             ),
           ),
@@ -98,7 +109,10 @@ class LiveBiddingScreen extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.black.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(30),
@@ -108,8 +122,11 @@ class LiveBiddingScreen extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 16,
-                              backgroundImage: NetworkImage(stream.sellerProfileImage),
-                              onBackgroundImageError: (e, s) => const Icon(Icons.person),
+                              backgroundImage: NetworkImage(
+                                stream.sellerProfileImage,
+                              ),
+                              onBackgroundImageError: (e, s) =>
+                                  const Icon(Icons.person),
                             ),
                             const SizedBox(width: 8),
                             Column(
@@ -118,24 +135,50 @@ class LiveBiddingScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   stream.sellerName,
-                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
                                 ),
                                 Row(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 1,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: AppColors.liveBadge,
                                         borderRadius: BorderRadius.circular(4),
                                       ),
-                                      child: const Text('LIVE', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold)),
+                                      child: const Text(
+                                        'LIVE',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                     const SizedBox(width: 4),
-                                    Icon(Icons.remove_red_eye_outlined, color: Colors.white.withValues(alpha: 0.8), size: 10),
+                                    Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      color: Colors.white.withValues(
+                                        alpha: 0.8,
+                                      ),
+                                      size: 10,
+                                    ),
                                     const SizedBox(width: 2),
                                     Text(
                                       stream.viewerCount,
-                                      style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 9, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.8,
+                                        ),
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -148,7 +191,11 @@ class LiveBiddingScreen extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: IconButton(
-                          icon: const Icon(Icons.refresh_rounded, color: Colors.white, size: 20),
+                          icon: const Icon(
+                            Icons.refresh_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                           tooltip: 'Reset Demo Auction',
                           onPressed: controller.resetAuction,
                         ),
@@ -157,7 +204,11 @@ class LiveBiddingScreen extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: IconButton(
-                          icon: const Icon(Icons.share_outlined, color: Colors.white, size: 20),
+                          icon: const Icon(
+                            Icons.share_outlined,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                           onPressed: () {},
                         ),
                       ),
@@ -165,7 +216,11 @@ class LiveBiddingScreen extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: IconButton(
-                          icon: const Icon(Icons.close_rounded, color: Colors.white, size: 20),
+                          icon: const Icon(
+                            Icons.close_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                           onPressed: () => context.pop(),
                         ),
                       ),
@@ -187,35 +242,39 @@ class LiveBiddingScreen extends StatelessWidget {
                           ).createShader(rect);
                         },
                         blendMode: BlendMode.dstIn,
-                        child: Obx(() => ListView.builder(
-                          controller: controller.scrollController,
-                          physics: const BouncingScrollPhysics(),
-                          itemCount: controller.activities.length,
-                          itemBuilder: (context, index) {
-                            final act = controller.activities[index];
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 8),
-                              child: LiveBidBubble(
-                                username: act.username,
-                                text: act.text,
-                                isBid: act.isBid,
-                              ),
-                            );
-                          },
-                        )),
+                        child: Obx(
+                          () => ListView.builder(
+                            controller: controller.scrollController,
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: controller.activities.length,
+                            itemBuilder: (context, index) {
+                              final act = controller.activities[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: LiveBidBubble(
+                                  username: act.username,
+                                  text: act.text,
+                                  isBid: act.isBid,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
                       ),
                     ),
                   ),
 
-
-                  Obx(() => AuctionStatsCard(
-                    previewImageUrl: stream.previewImageUrl,
-                    currentBid: controller.currentBid.value,
-                    highestBidder: controller.highestBidder.value,
-                    totalBids: controller.totalBids.value,
-                    secondsRemaining: controller.secondsRemaining.value,
-                    onPlaceBidPressed: () => _openBidBottomSheet(context, controller),
-                  )),
+                  Obx(
+                    () => AuctionStatsCard(
+                      previewImageUrl: stream.previewImageUrl,
+                      currentBid: controller.currentBid.value,
+                      highestBidder: controller.highestBidder.value,
+                      totalBids: controller.totalBids.value,
+                      secondsRemaining: controller.secondsRemaining.value,
+                      onPlaceBidPressed: () =>
+                          _openBidBottomSheet(context, controller),
+                    ),
+                  ),
                   const SizedBox(height: 12),
 
                   Row(
@@ -228,12 +287,16 @@ class LiveBiddingScreen extends StatelessWidget {
                             color: Colors.black.withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(24),
                             border: Border.all(
-                              color: AppColors.accentPink.withValues(alpha: 0.4), 
+                              color: AppColors.accentPink.withValues(
+                                alpha: 0.4,
+                              ),
                               width: 1.0,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.accentPink.withValues(alpha: 0.05),
+                                color: AppColors.accentPink.withValues(
+                                  alpha: 0.05,
+                                ),
                                 blurRadius: 8,
                                 spreadRadius: 1,
                               ),
@@ -242,25 +305,42 @@ class LiveBiddingScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               Expanded(
-                                child: Obx(() => TextField(
-                                  controller: controller.commentController,
-                                  enabled: !controller.isAuctionEnded.value,
-                                  style: const TextStyle(color: Colors.white, fontSize: 13),
-                                  onSubmitted: (_) => controller.addComment(),
-                                  decoration: const InputDecoration(
-                                    hintText: 'Add a comment or enter a bid...',
-                                    hintStyle: TextStyle(color: Colors.white54, fontSize: 13),
-                                    border: InputBorder.none,
-                                    isDense: true,
+                                child: Obx(
+                                  () => TextField(
+                                    controller: controller.commentController,
+                                    enabled: !controller.isAuctionEnded.value,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                    ),
+                                    onSubmitted: (_) => controller.addComment(),
+                                    decoration: const InputDecoration(
+                                      hintText:
+                                          'Add a comment or enter a bid...',
+                                      hintStyle: TextStyle(
+                                        color: Colors.white54,
+                                        fontSize: 13,
+                                      ),
+                                      border: InputBorder.none,
+                                      isDense: true,
+                                    ),
                                   ),
-                                )),
+                                ),
                               ),
-                              Obx(() => IconButton(
-                                icon: const Icon(Icons.send_rounded, color: AppColors.accentPink, size: 18),
-                                onPressed: controller.isAuctionEnded.value ? null : controller.addComment,
-                                constraints: const BoxConstraints(),
-                                padding: EdgeInsets.zero,
-                              )),
+                              Obx(
+                                () => IconButton(
+                                  icon: const Icon(
+                                    Icons.send_rounded,
+                                    color: AppColors.accentPink,
+                                    size: 18,
+                                  ),
+                                  onPressed: controller.isAuctionEnded.value
+                                      ? null
+                                      : controller.addComment,
+                                  constraints: const BoxConstraints(),
+                                  padding: EdgeInsets.zero,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -268,17 +348,21 @@ class LiveBiddingScreen extends StatelessWidget {
                       const SizedBox(width: 12),
                       GestureDetector(
                         onTap: controller.toggleLike,
-                        child: Obx(() => CircleAvatar(
-                          radius: 24,
-                          backgroundColor: controller.isLiked.value 
-                              ? Colors.pink.withValues(alpha: 0.9) 
-                              : Colors.black.withValues(alpha: 0.5),
-                          child: Icon(
-                            controller.isLiked.value ? Icons.favorite : Icons.favorite_border, 
-                            color: Colors.white, 
-                            size: 22,
+                        child: Obx(
+                          () => CircleAvatar(
+                            radius: 24,
+                            backgroundColor: controller.isLiked.value
+                                ? Colors.pink.withValues(alpha: 0.9)
+                                : Colors.black.withValues(alpha: 0.5),
+                            child: Icon(
+                              controller.isLiked.value
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.white,
+                              size: 22,
+                            ),
                           ),
-                        )),
+                        ),
                       ),
                     ],
                   ),

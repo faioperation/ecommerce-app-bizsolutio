@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/order_item_model.dart';
 
@@ -29,8 +30,11 @@ class OrderItemRow extends StatelessWidget {
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(Icons.shopping_bag_outlined,
-                    color: Colors.grey, size: 24),
+                child: const Icon(
+                  Icons.shopping_bag_outlined,
+                  color: Colors.grey,
+                  size: 24,
+                ),
               ),
             ),
           ),
@@ -67,7 +71,7 @@ class OrderItemRow extends StatelessWidget {
             ),
           ),
           Text(
-            '£${item.subtotal.toStringAsFixed(0)}',
+            '${AppConstants.currencySymbol}${item.subtotal.toStringAsFixed(0)}',
             style: TextStyle(
               color: isDark
                   ? AppColors.darkTextPrimary

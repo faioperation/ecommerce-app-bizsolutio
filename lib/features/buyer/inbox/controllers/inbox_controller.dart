@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import '../models/chat_model.dart';
 import '../models/message_model.dart';
 
-
 class InboxController extends GetxController {
   final chatList = <ChatModel>[].obs;
 
@@ -13,7 +12,6 @@ class InboxController extends GetxController {
     super.onInit();
     _loadMockData();
   }
-
 
   void _loadMockData() {
     chatList.assignAll([
@@ -85,7 +83,6 @@ class InboxController extends GetxController {
     ].obs;
   }
 
-
   Future<void> fetchChats() async {
     // chatList.assignAll(response.map(ChatModel.fromJson));
   }
@@ -142,7 +139,6 @@ class InboxController extends GetxController {
       final chat = chatList.removeAt(idx);
       chatList.insert(0, chat);
     }
-
   }
 
   void markAsRead(String chatId) {
@@ -152,7 +148,6 @@ class InboxController extends GetxController {
       chatList.refresh();
     }
   }
-
 
   String formatTime(DateTime time) {
     final now = DateTime.now();

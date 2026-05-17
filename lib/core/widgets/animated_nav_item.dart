@@ -21,7 +21,6 @@ class AnimatedNavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (isLiveButton) {
       return GestureDetector(
         onTap: onTap,
@@ -69,12 +68,13 @@ class AnimatedNavItem extends StatelessWidget {
             children: [
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
-                transitionBuilder: (child, anim) => ScaleTransition(scale: anim, child: child),
+                transitionBuilder: (child, anim) =>
+                    ScaleTransition(scale: anim, child: child),
                 child: Icon(
                   isSelected ? (activeIcon ?? icon) : icon,
                   key: ValueKey(isSelected),
-                  color: isSelected 
-                      ? Theme.of(context).primaryColor 
+                  color: isSelected
+                      ? Theme.of(context).primaryColor
                       : Theme.of(context).textTheme.bodySmall?.color,
                   size: isSelected ? 26 : 24,
                 ),
@@ -85,8 +85,8 @@ class AnimatedNavItem extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected 
-                      ? Theme.of(context).primaryColor 
+                  color: isSelected
+                      ? Theme.of(context).primaryColor
                       : Theme.of(context).textTheme.bodySmall?.color,
                 ),
                 child: Text(label),

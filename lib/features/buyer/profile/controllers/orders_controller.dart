@@ -13,7 +13,9 @@ class OrdersController extends GetxController {
   List<OrderModel> get filteredOrders {
     if (selectedFilter.value == 'All') return allOrders;
     return allOrders
-        .where((o) => o.status.toLowerCase() == selectedFilter.value.toLowerCase())
+        .where(
+          (o) => o.status.toLowerCase() == selectedFilter.value.toLowerCase(),
+        )
         .toList();
   }
 

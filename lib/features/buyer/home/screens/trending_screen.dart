@@ -27,7 +27,10 @@ class TrendingScreen extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Trending Now',
-                  style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -39,7 +42,6 @@ class TrendingScreen extends StatelessWidget {
         padding: AppSpacing.edgeInsetsAllLg,
         child: Column(
           children: [
-
             // Container(
             //   width: double.infinity,
             //   padding: AppSpacing.edgeInsetsAllLg,
@@ -94,23 +96,26 @@ class TrendingScreen extends StatelessWidget {
             //     ],
             //   ),
             // ),
-
             const SizedBox(height: 24),
 
-            Obx(() => GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.6,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+            Obx(
+              () => GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 0.6,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemCount: controller.trendingProducts.length,
+                itemBuilder: (context, index) {
+                  return TrendingProductCard(
+                    product: controller.trendingProducts[index],
+                  );
+                },
               ),
-              itemCount: controller.trendingProducts.length,
-              itemBuilder: (context, index) {
-                return TrendingProductCard(product: controller.trendingProducts[index]);
-              },
-            )),
+            ),
           ],
         ),
       ),
@@ -126,7 +131,11 @@ class TrendingScreen extends StatelessWidget {
       ),
       child: Text(
         time,
-        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
       ),
     );
   }

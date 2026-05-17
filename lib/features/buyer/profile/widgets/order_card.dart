@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/order_model.dart';
 
@@ -40,8 +41,19 @@ class OrderCard extends StatelessWidget {
 
   String _formatDate(DateTime date) {
     const months = [
-      '', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      '',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${months[date.month]} ${date.day}, ${date.year}';
   }
@@ -89,8 +101,10 @@ class OrderCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: statusColor.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(20),
@@ -98,8 +112,11 @@ class OrderCard extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(_statusIcon(order.status),
-                          color: statusColor, size: 13),
+                      Icon(
+                        _statusIcon(order.status),
+                        color: statusColor,
+                        size: 13,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         order.status,
@@ -129,7 +146,9 @@ class OrderCard extends StatelessWidget {
             const SizedBox(height: 12),
             Row(
               children: [
-                ...order.productImageUrls.take(3).map(
+                ...order.productImageUrls
+                    .take(3)
+                    .map(
                       (url) => Padding(
                         padding: const EdgeInsets.only(right: 8),
                         child: ClipRRect(
@@ -143,8 +162,11 @@ class OrderCard extends StatelessWidget {
                               width: 48,
                               height: 48,
                               color: Colors.grey[200],
-                              child: const Icon(Icons.image_not_supported,
-                                  color: Colors.grey, size: 20),
+                              child: const Icon(
+                                Icons.image_not_supported,
+                                color: Colors.grey,
+                                size: 20,
+                              ),
                             ),
                           ),
                         ),
@@ -188,7 +210,7 @@ class OrderCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '£${order.totalAmount.toStringAsFixed(0)}',
+                      '${AppConstants.currencySymbol}${order.totalAmount.toStringAsFixed(0)}',
                       style: const TextStyle(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,

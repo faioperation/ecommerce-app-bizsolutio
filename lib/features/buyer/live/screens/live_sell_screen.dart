@@ -27,7 +27,11 @@ class LiveSellScreen extends StatelessWidget {
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
                 color: Colors.grey[900],
-                child: const Icon(Icons.videocam_off, color: Colors.white, size: 80),
+                child: const Icon(
+                  Icons.videocam_off,
+                  color: Colors.white,
+                  size: 80,
+                ),
               ),
             ),
           ),
@@ -57,7 +61,10 @@ class LiveSellScreen extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.black.withValues(alpha: 0.5),
                           borderRadius: BorderRadius.circular(30),
@@ -67,8 +74,11 @@ class LiveSellScreen extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 16,
-                              backgroundImage: NetworkImage(stream.sellerProfileImage),
-                              onBackgroundImageError: (e, s) => const Icon(Icons.person),
+                              backgroundImage: NetworkImage(
+                                stream.sellerProfileImage,
+                              ),
+                              onBackgroundImageError: (e, s) =>
+                                  const Icon(Icons.person),
                             ),
                             const SizedBox(width: 8),
                             Column(
@@ -77,24 +87,50 @@ class LiveSellScreen extends StatelessWidget {
                               children: [
                                 Text(
                                   stream.sellerName,
-                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 13,
+                                  ),
                                 ),
                                 Row(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 1,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: AppColors.liveBadge,
                                         borderRadius: BorderRadius.circular(4),
                                       ),
-                                      child: const Text('LIVE', style: TextStyle(color: Colors.white, fontSize: 8, fontWeight: FontWeight.bold)),
+                                      child: const Text(
+                                        'LIVE',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
                                     const SizedBox(width: 4),
-                                    Icon(Icons.remove_red_eye_outlined, color: Colors.white.withValues(alpha: 0.8), size: 10),
+                                    Icon(
+                                      Icons.remove_red_eye_outlined,
+                                      color: Colors.white.withValues(
+                                        alpha: 0.8,
+                                      ),
+                                      size: 10,
+                                    ),
                                     const SizedBox(width: 2),
                                     Text(
                                       stream.viewerCount,
-                                      style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 9, fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                        color: Colors.white.withValues(
+                                          alpha: 0.8,
+                                        ),
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -108,7 +144,11 @@ class LiveSellScreen extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: IconButton(
-                          icon: const Icon(Icons.share_outlined, color: Colors.white, size: 20),
+                          icon: const Icon(
+                            Icons.share_outlined,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                           onPressed: () {},
                         ),
                       ),
@@ -116,7 +156,11 @@ class LiveSellScreen extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: IconButton(
-                          icon: const Icon(Icons.close_rounded, color: Colors.white, size: 20),
+                          icon: const Icon(
+                            Icons.close_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                           onPressed: () => context.pop(),
                         ),
                       ),
@@ -126,7 +170,7 @@ class LiveSellScreen extends StatelessWidget {
                   const Spacer(),
 
                   // --- MIDDLE-LOWER PORTION (Structured Comments, Product, Input) ---
-                  
+
                   // 1. Scrollable real-time comments section (placed above Product card)
                   Container(
                     height: 140,
@@ -142,21 +186,23 @@ class LiveSellScreen extends StatelessWidget {
                         ).createShader(rect);
                       },
                       blendMode: BlendMode.dstIn,
-                      child: Obx(() => ListView.builder(
-                        controller: controller.scrollController,
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: controller.comments.length,
-                        itemBuilder: (context, index) {
-                          final item = controller.comments[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 6),
-                            child: LiveCommentBubble(
-                              username: item.username,
-                              comment: item.text,
-                            ),
-                          );
-                        },
-                      )),
+                      child: Obx(
+                        () => ListView.builder(
+                          controller: controller.scrollController,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: controller.comments.length,
+                          itemBuilder: (context, index) {
+                            final item = controller.comments[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 6),
+                              child: LiveCommentBubble(
+                                username: item.username,
+                                comment: item.text,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
 
@@ -167,9 +213,11 @@ class LiveSellScreen extends StatelessWidget {
                     price: 89,
                     onBuyPressed: () {
                       Get.snackbar(
-                        'Success', 
+                        'Success',
                         'Summer Dress added to cart!',
-                        backgroundColor: AppColors.success.withValues(alpha: 0.9),
+                        backgroundColor: AppColors.success.withValues(
+                          alpha: 0.9,
+                        ),
                         colorText: Colors.white,
                       );
                     },
@@ -187,25 +235,38 @@ class LiveSellScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.black.withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(24),
-                            border: Border.all(color: Colors.white.withValues(alpha: 0.25), width: 1.0),
+                            border: Border.all(
+                              color: Colors.white.withValues(alpha: 0.25),
+                              width: 1.0,
+                            ),
                           ),
                           child: Row(
                             children: [
                               Expanded(
                                 child: TextField(
                                   controller: controller.commentController,
-                                  style: const TextStyle(color: Colors.white, fontSize: 13),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                  ),
                                   onSubmitted: (_) => controller.addComment(),
                                   decoration: const InputDecoration(
                                     hintText: 'Add a comment...',
-                                    hintStyle: TextStyle(color: Colors.white54, fontSize: 13),
+                                    hintStyle: TextStyle(
+                                      color: Colors.white54,
+                                      fontSize: 13,
+                                    ),
                                     border: InputBorder.none,
                                     isDense: true,
                                   ),
                                 ),
                               ),
                               IconButton(
-                                icon: const Icon(Icons.send_rounded, color: Colors.orangeAccent, size: 18),
+                                icon: const Icon(
+                                  Icons.send_rounded,
+                                  color: Colors.orangeAccent,
+                                  size: 18,
+                                ),
                                 onPressed: controller.addComment,
                                 constraints: const BoxConstraints(),
                                 padding: EdgeInsets.zero,
@@ -218,17 +279,21 @@ class LiveSellScreen extends StatelessWidget {
                       // Heart Toggle Button
                       GestureDetector(
                         onTap: controller.toggleLike,
-                        child: Obx(() => CircleAvatar(
-                          radius: 24,
-                          backgroundColor: controller.isLiked.value 
-                              ? Colors.pink.withValues(alpha: 0.9) 
-                              : Colors.black.withValues(alpha: 0.5),
-                          child: Icon(
-                            controller.isLiked.value ? Icons.favorite : Icons.favorite_border, 
-                            color: Colors.white, 
-                            size: 22,
+                        child: Obx(
+                          () => CircleAvatar(
+                            radius: 24,
+                            backgroundColor: controller.isLiked.value
+                                ? Colors.pink.withValues(alpha: 0.9)
+                                : Colors.black.withValues(alpha: 0.5),
+                            child: Icon(
+                              controller.isLiked.value
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.white,
+                              size: 22,
+                            ),
                           ),
-                        )),
+                        ),
                       ),
                     ],
                   ),

@@ -16,7 +16,11 @@ class OtpVerificationScreen extends StatelessWidget {
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
-      textStyle: const TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
+      textStyle: const TextStyle(
+        fontSize: 20,
+        color: Color.fromRGBO(30, 60, 87, 1),
+        fontWeight: FontWeight.w600,
+      ),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.lightBorder),
         borderRadius: BorderRadius.circular(12),
@@ -45,7 +49,11 @@ class OtpVerificationScreen extends StatelessWidget {
               const SizedBox(height: 32),
               Image.asset(AppImages.logo, height: 100),
               const SizedBox(height: 24),
-              Text('Enter 6-Digit OTP', style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
+              Text(
+                'Enter 6-Digit OTP',
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
               const SizedBox(height: 16),
               Text(
                 'We have sent a verification code to your email.',
@@ -53,7 +61,7 @@ class OtpVerificationScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 48),
-              
+
               Center(
                 child: Pinput(
                   length: 6,
@@ -66,25 +74,33 @@ class OtpVerificationScreen extends StatelessWidget {
                   onCompleted: (pin) => controller.verifyOtp(context),
                 ),
               ),
-              
-              const SizedBox(height: 48),
-              Obx(() => ElevatedButton(
-                onPressed: controller.isLoading.value ? null : () => controller.verifyOtp(context),
-                style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
-                child: controller.isLoading.value
-                    ? const SizedBox(
-                        height: 20, width: 20, 
-                        child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2)
-                      )
-                    : const Text('Verify OTP', style: TextStyle(fontSize: 16)),
-              )),
-              const SizedBox(height: 24),
-              TextButton(
-                onPressed: () {
 
-                },
-                child: const Text('Resend Code'),
+              const SizedBox(height: 48),
+              Obx(
+                () => ElevatedButton(
+                  onPressed: controller.isLoading.value
+                      ? null
+                      : () => controller.verifyOtp(context),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: controller.isLoading.value
+                      ? const SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : const Text(
+                          'Verify OTP',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                ),
               ),
+              const SizedBox(height: 24),
+              TextButton(onPressed: () {}, child: const Text('Resend Code')),
             ],
           ),
         ),

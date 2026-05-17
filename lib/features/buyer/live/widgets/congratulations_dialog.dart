@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 
 class CongratulationsDialog extends StatelessWidget {
   final String previewImageUrl;
@@ -35,10 +36,7 @@ class CongratulationsDialog extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: const Center(
-                    child: Text(
-                      '🎉',
-                      style: TextStyle(fontSize: 38),
-                    ),
+                    child: Text('🎉', style: TextStyle(fontSize: 38)),
                   ),
                 ),
                 const SizedBox(height: 18),
@@ -63,10 +61,14 @@ class CongratulationsDialog extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[50],
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.05)
+                        : Colors.grey[50],
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: isDark ? Colors.white.withValues(alpha: 0.1) : Colors.grey[200]!,
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.1)
+                          : Colors.grey[200]!,
                     ),
                   ),
                   child: Row(
@@ -82,7 +84,10 @@ class CongratulationsDialog extends StatelessWidget {
                             height: 54,
                             width: 54,
                             color: Colors.grey[800],
-                            child: const Icon(Icons.phone_iphone, color: Colors.white60),
+                            child: const Icon(
+                              Icons.phone_iphone,
+                              color: Colors.white60,
+                            ),
                           ),
                         ),
                       ),
@@ -103,7 +108,7 @@ class CongratulationsDialog extends StatelessWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '£${winningBid.toStringAsFixed(0)}',
+                              '${AppConstants.currencySymbol}${winningBid.toStringAsFixed(0)}',
                               style: const TextStyle(
                                 color: Colors.orangeAccent,
                                 fontWeight: FontWeight.w900,
@@ -119,7 +124,11 @@ class CongratulationsDialog extends StatelessWidget {
                 const SizedBox(height: 12),
                 const Text(
                   'Payment required within 24 hours',
-                  style: TextStyle(color: Colors.orangeAccent, fontSize: 12, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.orangeAccent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 24),
 
@@ -131,10 +140,18 @@ class CongratulationsDialog extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF6C4DFF),
                       foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                       elevation: 0,
                     ),
-                    child: const Text('Proceed to Payment', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                    child: const Text(
+                      'Proceed to Payment',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -156,7 +173,10 @@ class CongratulationsDialog extends StatelessWidget {
             right: 12,
             top: 12,
             child: IconButton(
-              icon: Icon(Icons.close_rounded, color: isDark ? Colors.white60 : Colors.grey[600]),
+              icon: Icon(
+                Icons.close_rounded,
+                color: isDark ? Colors.white60 : Colors.grey[600],
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),

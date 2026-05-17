@@ -18,7 +18,9 @@ class ShopAboutTab extends StatelessWidget {
       child: Text(
         description,
         style: TextStyle(
-          color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+          color: isDark
+              ? AppColors.darkTextSecondary
+              : AppColors.lightTextSecondary,
           fontSize: 15,
           height: 1.6,
           fontFamily: 'Inter',

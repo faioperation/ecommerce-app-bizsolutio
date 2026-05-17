@@ -25,18 +25,22 @@ class BuyerLiveScreen extends StatelessWidget {
             Text(
               'Live Streams',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface, 
-                fontWeight: FontWeight.bold, 
+                color: Theme.of(context).colorScheme.onSurface,
+                fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
-            Obx(() => Text(
-              '${controller.liveStreams.length} live channels now',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6), 
-                fontSize: 13,
+            Obx(
+              () => Text(
+                '${controller.liveStreams.length} live channels now',
+                style: TextStyle(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: 0.6),
+                  fontSize: 13,
+                ),
               ),
-            )),
+            ),
           ],
         ),
         actions: [
@@ -46,7 +50,9 @@ class BuyerLiveScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.liveBadge.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.liveBadge.withValues(alpha: 0.5)),
+              border: Border.all(
+                color: AppColors.liveBadge.withValues(alpha: 0.5),
+              ),
             ),
             child: const Row(
               children: [
@@ -54,7 +60,11 @@ class BuyerLiveScreen extends StatelessWidget {
                 SizedBox(width: 6),
                 Text(
                   'LIVE',
-                  style: TextStyle(color: AppColors.liveBadge, fontSize: 12, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: AppColors.liveBadge,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

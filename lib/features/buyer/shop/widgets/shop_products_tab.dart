@@ -8,10 +8,7 @@ import '../controllers/shop_controller.dart';
 class ShopProductsTab extends StatelessWidget {
   final ShopController controller;
 
-  const ShopProductsTab({
-    super.key,
-    required this.controller,
-  });
+  const ShopProductsTab({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +31,7 @@ class ShopProductsTab extends StatelessWidget {
           return DiscoverProductCard(
             product: product,
             onTap: () {
-              context.push(
-                AppRoutes.discoverProductDetails,
-                extra: product,
-              );
+              context.push(AppRoutes.discoverProductDetails, extra: product);
             },
           );
         },

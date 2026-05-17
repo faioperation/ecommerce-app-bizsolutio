@@ -59,11 +59,7 @@ class CheckoutController extends GetxController {
       last4: '8888',
       expiry: '06/25',
     ),
-    PaymentMethodModel(
-      id: 'cash',
-      type: 'cash',
-      label: 'Cash on Delivery',
-    ),
+    PaymentMethodModel(id: 'cash', type: 'cash', label: 'Cash on Delivery'),
   ].obs;
 
   final deliveryOptions = <DeliveryOptionModel>[
@@ -110,7 +106,9 @@ class CheckoutController extends GetxController {
 
   DeliveryOptionModel? get selectedDelivery {
     try {
-      return deliveryOptions.firstWhere((d) => d.id == selectedDeliveryId.value);
+      return deliveryOptions.firstWhere(
+        (d) => d.id == selectedDeliveryId.value,
+      );
     } catch (_) {
       return deliveryOptions.isNotEmpty ? deliveryOptions.first : null;
     }
@@ -159,13 +157,15 @@ class CheckoutController extends GetxController {
     final last4 = cardNumber.length >= 4
         ? cardNumber.substring(cardNumber.length - 4)
         : cardNumber;
-    paymentMethods.add(PaymentMethodModel(
-      id: 'card_${DateTime.now().millisecondsSinceEpoch}',
-      type: 'card',
-      label: label,
-      last4: last4,
-      expiry: expiry,
-    ));
+    paymentMethods.add(
+      PaymentMethodModel(
+        id: 'card_${DateTime.now().millisecondsSinceEpoch}',
+        type: 'card',
+        label: label,
+        last4: last4,
+        expiry: expiry,
+      ),
+    );
   }
 
   void selectDelivery(String id) => selectedDeliveryId.value = id;
@@ -185,10 +185,9 @@ class CheckoutController extends GetxController {
     final deliveryDays = selectedDelivery?.id == 'express'
         ? 2
         : selectedDelivery?.id == 'sameday'
-            ? 0
-            : 4;
-    final deliveryDate =
-        DateTime.now().add(Duration(days: deliveryDays));
+        ? 0
+        : 4;
+    final deliveryDate = DateTime.now().add(Duration(days: deliveryDays));
     estimatedDelivery.value =
         '${_monthName(deliveryDate.month)} ${deliveryDate.day}-${deliveryDate.day + 2}, ${deliveryDate.year}';
 
@@ -199,8 +198,19 @@ class CheckoutController extends GetxController {
 
   String _monthName(int month) {
     const months = [
-      '', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      '',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return months[month];
   }

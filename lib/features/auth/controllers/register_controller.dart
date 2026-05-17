@@ -11,7 +11,7 @@ class RegisterController extends GetxController {
 
   final shopNameController = TextEditingController();
   final productTypeController = TextEditingController();
-  final RxString idCardImagePath = ''.obs; 
+  final RxString idCardImagePath = ''.obs;
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -29,7 +29,7 @@ class RegisterController extends GetxController {
       isLoading.value = true;
 
       await Future.delayed(const Duration(seconds: 2));
-      
+
       isLoading.value = false;
 
       if (!context.mounted) return;
@@ -42,9 +42,9 @@ class RegisterController extends GetxController {
       isLoading.value = true;
 
       await Future.delayed(const Duration(seconds: 2));
-      
+
       isLoading.value = false;
-      
+
       if (!context.mounted) return;
       Get.find<AuthController>().login(UserRole.seller, context);
     }
@@ -54,15 +54,17 @@ class RegisterController extends GetxController {
     try {
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(source: source);
-      
+
       if (image != null) {
         idCardImagePath.value = image.name;
-
       }
     } catch (e) {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to pick image: $e'), backgroundColor: Colors.redAccent),
+          SnackBar(
+            content: Text('Failed to pick image: $e'),
+            backgroundColor: Colors.redAccent,
+          ),
         );
       }
     }

@@ -14,11 +14,13 @@ class DiscoverProductListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<DiscoverController>();
-    
+
     final activeCategory = category ?? controller.categories.first;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final categoryProducts = controller.getProductsByCategory(activeCategory.id);
+    final categoryProducts = controller.getProductsByCategory(
+      activeCategory.id,
+    );
 
     return Scaffold(
       backgroundColor: isDark ? Colors.black : const Color(0xFFF9FAFB),
@@ -26,7 +28,11 @@ class DiscoverProductListScreen extends StatelessWidget {
         backgroundColor: isDark ? Colors.black : Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded, color: isDark ? Colors.white : Colors.black87, size: 20),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: isDark ? Colors.white : Colors.black87,
+            size: 20,
+          ),
           onPressed: () => context.pop(),
         ),
         title: Row(
@@ -53,7 +59,12 @@ class DiscoverProductListScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 16, bottom: 8),
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 16,
+                bottom: 8,
+              ),
               child: Text(
                 'Subcategories',
                 style: TextStyle(
@@ -74,21 +85,28 @@ class DiscoverProductListScreen extends StatelessWidget {
                       ),
                     )
                   : GridView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      physics: const BouncingScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                        childAspectRatio: 0.76,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
                       ),
+                      physics: const BouncingScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                            childAspectRatio: 0.76,
+                          ),
                       itemCount: categoryProducts.length,
                       itemBuilder: (context, index) {
                         final product = categoryProducts[index];
                         return DiscoverProductCard(
                           product: product,
                           onTap: () {
-                            context.push('/buyer/discover/details', extra: product);
+                            context.push(
+                              '/buyer/discover/details',
+                              extra: product,
+                            );
                           },
                         );
                       },

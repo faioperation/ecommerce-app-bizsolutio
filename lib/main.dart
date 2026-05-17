@@ -7,7 +7,6 @@ import 'features/auth/controllers/auth_controller.dart';
 import 'routes/app_pages.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 
   Get.put(AuthController());
@@ -23,15 +22,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Obx(
+      () => MaterialApp.router(
+        title: 'Vango Live E-Commerce',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: themeController.themeMode.value,
 
-    return Obx(() => MaterialApp.router(
-      title: 'Vango Live E-Commerce',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: themeController.themeMode.value,
-
-      routerConfig: AppPages.router,
-    ));
+        routerConfig: AppPages.router,
+      ),
+    );
   }
 }
