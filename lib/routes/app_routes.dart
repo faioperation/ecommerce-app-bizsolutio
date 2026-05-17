@@ -21,6 +21,8 @@ class AppRoutes {
 
   static const String buyerHome = '/buyer/home';
   static const String buyerDiscover = '/buyer/discover';
+  static const String discoverProducts = '/buyer/discover/products';
+  static const String discoverProductDetails = '/buyer/discover/details';
   static const String buyerLive = '/buyer/live';
   static const String buyerLiveSell = '/buyer/live/sell';
   static const String buyerLiveBidding = '/buyer/live/bidding';
@@ -52,4 +54,7 @@ class AppRoutes {
   static const String privacyPolicy = '/buyer/profile/privacy-policy';
   static const String privacySecurity = '/buyer/profile/privacy-security';
   static const String termsOfService = '/buyer/profile/terms-of-service';
+  
+  // ── Shop Profile ────────────────────────────────────────────────────────
+  static const String shopProfile = '/buyer/shop/profile';
 }

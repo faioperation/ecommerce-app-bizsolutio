@@ -50,6 +50,7 @@ import '../features/buyer/profile/screens/change_password_screen.dart';
 import '../features/buyer/profile/screens/privacy_policy_screen.dart';
 import '../features/buyer/profile/screens/privacy_security_screen.dart';
 import '../features/buyer/profile/screens/terms_of_service_screen.dart';
+import '../features/buyer/shop/screens/shop_profile_screen.dart';
 import '../features/seller/dashboard/dashboard_screen.dart';
 import '../features/seller/products/products_screen.dart';
 import '../features/seller/live/live_screen.dart';
@@ -243,6 +244,16 @@ class AppPages {
       GoRoute(
         path: AppRoutes.termsOfService,
         builder: (context, state) => const TermsOfServiceScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.shopProfile,
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>? ?? {};
+          return ShopProfileScreen(
+            sellerName: args['sellerName'] ?? 'Unknown Shop',
+            profileImageUrl: args['profileImageUrl'] ?? 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
+          );
+        },
       ),
       GoRoute(
         path: AppRoutes.buyerLiveSell,

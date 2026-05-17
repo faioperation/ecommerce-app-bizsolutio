@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../routes/app_routes.dart';
 import '../models/cart_item_model.dart';
 
 /// Reusable card widget for a single cart item on the Shopping Cart screen.
@@ -93,14 +95,25 @@ class CartItemCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  item.sellerName,
-                  style: TextStyle(
-                    color: isDark
-                        ? AppColors.darkTextSecondary
-                        : AppColors.lightTextSecondary,
-                    fontSize: 12,
-                    fontFamily: 'Inter',
+                GestureDetector(
+                  onTap: () {
+                    context.push(
+                      AppRoutes.shopProfile,
+                      extra: {
+                        'sellerName': item.sellerName,
+                        'profileImageUrl': 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200', // Mock image
+                      },
+                    );
+                  },
+                  child: Text(
+                    item.sellerName,
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Inter',
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),

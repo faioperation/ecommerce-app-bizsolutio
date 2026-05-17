@@ -48,6 +48,16 @@ class WishlistController extends GetxController {
     isLoading.value = false;
   }
 
+  void addItem(WishlistItemModel item) {
+    if (!isItemInWishlist(item.productId)) {
+      items.add(item);
+    }
+  }
+
+  bool isItemInWishlist(String productId) {
+    return items.any((i) => i.productId == productId);
+  }
+
   /// TODO: Replace with real API call → DELETE /api/buyer/wishlist/{productId}
   void removeItem(String productId) {
     items.removeWhere((i) => i.productId == productId);

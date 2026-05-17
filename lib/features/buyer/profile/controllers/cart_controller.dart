@@ -55,6 +55,16 @@ class CartController extends GetxController {
   double get grandTotal => subtotal + shippingFee.value - couponDiscount.value;
   int get totalItemCount => items.fold(0, (sum, i) => sum + i.quantity);
 
+  void addItem(CartItemModel item) {
+    final idx = items.indexWhere((i) => i.productId == item.productId);
+    if (idx != -1) {
+      items[idx].quantity += item.quantity;
+      items.refresh();
+    } else {
+      items.add(item);
+    }
+  }
+
   /// TODO: Replace with real API call → PATCH /api/buyer/cart/{productId}
   void incrementQuantity(String productId) {
     final idx = items.indexWhere((i) => i.productId == productId);

@@ -6,6 +6,11 @@ import '../models/discover_product_model.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../checkout/screens/checkout_screen.dart';
 import '../../checkout/models/order_item_model.dart';
+import '../../profile/controllers/cart_controller.dart';
+import '../../profile/controllers/wishlist_controller.dart';
+import '../../profile/models/cart_item_model.dart';
+import '../../profile/models/wishlist_item_model.dart';
+import '../../../../routes/app_routes.dart';
 
 class DiscoverProductDetailsScreen extends StatefulWidget {
   final DiscoverProductModel? product;
@@ -17,7 +22,6 @@ class DiscoverProductDetailsScreen extends StatefulWidget {
 }
 
 class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScreen> {
-  bool _isLiked = false;
   bool _isFollowing = false;
 
   @override
@@ -163,16 +167,26 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                       const SizedBox(height: 24),
 
                       // Seller Section with Profile Card and Follow Button (Screenshot 3)
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.grey[50],
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[200]!,
+                      GestureDetector(
+                        onTap: () {
+                          context.push(
+                            AppRoutes.shopProfile,
+                            extra: {
+                              'sellerName': activeProduct.sellerName,
+                              'profileImageUrl': activeProduct.sellerProfileImage,
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: isDark ? Colors.white.withValues(alpha: 0.03) : Colors.grey[50],
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: isDark ? Colors.white.withValues(alpha: 0.05) : Colors.grey[200]!,
+                            ),
                           ),
-                        ),
-                        child: Row(
+                          child: Row(
                           children: [
                             CircleAvatar(
                               radius: 20,
@@ -233,6 +247,7 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                             ),
                           ],
                         ),
+                      ),
                       ),
                       const SizedBox(height: 24),
 
@@ -314,32 +329,50 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                     ),
                     const SizedBox(width: 12),
                     // Favorite Heart Button
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _isLiked = !_isLiked;
-                        });
-                        Get.snackbar(
-                          _isLiked ? 'Added to Wishlist' : 'Removed from Wishlist', 
-                          _isLiked ? '${activeProduct.name} added to wishlist.' : 'Removed.',
-                          backgroundColor: _isLiked ? Colors.pinkAccent : Colors.black87,
-                          colorText: Colors.white,
-                        );
-                      },
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
+                    Obx(() {
+                      final wishlistCtrl = Get.put(WishlistController());
+                      final bool isLiked = wishlistCtrl.isItemInWishlist(activeProduct.id);
+                      
+                      return GestureDetector(
+                        onTap: () {
+                          if (isLiked) {
+                            wishlistCtrl.removeItem(activeProduct.id);
+                          } else {
+                            wishlistCtrl.addItem(
+                              WishlistItemModel(
+                                productId: activeProduct.id,
+                                name: activeProduct.name,
+                                imageUrl: activeProduct.imageUrl,
+                                price: activeProduct.price,
+                                originalPrice: activeProduct.originalPrice,
+                                isInStock: activeProduct.availableQuantity > 0,
+                              ),
+                            );
+                            Get.snackbar(
+                              'Added to Wishlist', 
+                              '${activeProduct.name} added to your wishlist.',
+                              backgroundColor: Colors.pinkAccent,
+                              colorText: Colors.white,
+                              duration: const Duration(seconds: 2),
+                            );
+                            context.push(AppRoutes.profileWishlist);
+                          }
+                        },
+                        child: Container(
+                          height: 40,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            isLiked ? Icons.favorite : Icons.favorite_border_rounded, 
+                            color: isLiked ? Colors.pink : Colors.black87, 
+                            size: 18,
+                          ),
                         ),
-                        child: Icon(
-                          _isLiked ? Icons.favorite : Icons.favorite_border_rounded, 
-                          color: _isLiked ? Colors.pink : Colors.black87, 
-                          size: 18,
-                        ),
-                      ),
-                    ),
+                      );
+                    }),
                   ],
                 ),
               ],
@@ -382,7 +415,27 @@ class _DiscoverProductDetailsScreenState extends State<DiscoverProductDetailsScr
                           border: Border.all(color: const Color(0xFF6C4DFF), width: 1.5),
                         ),
                         child: ElevatedButton(
-                          onPressed: () => controller.addToCart(activeProduct),
+                          onPressed: () {
+                            final cartCtrl = Get.put(CartController());
+                            cartCtrl.addItem(
+                              CartItemModel(
+                                productId: activeProduct.id,
+                                name: activeProduct.name,
+                                sellerName: activeProduct.sellerName,
+                                imageUrl: activeProduct.imageUrl,
+                                price: activeProduct.price,
+                                quantity: 1,
+                              ),
+                            );
+                            Get.snackbar(
+                              'Added to Cart', 
+                              '${activeProduct.name} successfully added to your shopping cart!',
+                              backgroundColor: Colors.green.withValues(alpha: 0.9),
+                              colorText: Colors.white,
+                              duration: const Duration(seconds: 2),
+                            );
+                            context.push(AppRoutes.profileCart);
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shadowColor: Colors.transparent,
