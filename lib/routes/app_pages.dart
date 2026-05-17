@@ -35,7 +35,9 @@ import '../features/buyer/discover/models/discover_product_model.dart';
 import '../features/buyer/live/screens/live_screen.dart';
 import '../features/buyer/live/screens/live_sell_screen.dart';
 import '../features/buyer/live/screens/live_bidding_screen.dart';
-import '../features/buyer/inbox/inbox_screen.dart';
+import '../features/buyer/inbox/screens/inbox_list_screen.dart';
+import '../features/buyer/inbox/screens/chat_screen.dart';
+import '../features/buyer/inbox/controllers/inbox_controller.dart';
 import '../features/buyer/profile/screens/profile_screen.dart';
 import '../features/buyer/checkout/screens/checkout_screen.dart';
 import '../features/buyer/checkout/screens/select_address_screen.dart';
@@ -256,6 +258,17 @@ class AppPages {
         },
       ),
       GoRoute(
+        path: AppRoutes.chatScreen,
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>? ?? {};
+          return ChatScreen(
+            chatId: args['chatId'] ?? '',
+            shopName: args['shopName'] ?? 'Chat',
+            profileImage: args['profileImage'] ?? '',
+          );
+        },
+      ),
+      GoRoute(
         path: AppRoutes.buyerLiveSell,
         builder: (context, state) {
           final stream = state.extra as LiveStreamModel;
@@ -331,7 +344,10 @@ class AppPages {
             routes: [
               GoRoute(
                 path: AppRoutes.buyerInbox,
-                builder: (context, state) => const InboxScreen(),
+                builder: (context, state) {
+                  Get.put(InboxController());
+                  return const InboxListScreen();
+                },
               ),
             ],
           ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../routes/app_routes.dart';
+import '../../../buyer/inbox/controllers/inbox_controller.dart';
 import '../models/shop_model.dart';
 import '../controllers/shop_controller.dart';
 
@@ -124,7 +127,23 @@ class ShopProfileDetails extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     icon: Icon(Icons.chat_bubble_outline_rounded,
                         color: isDark ? Colors.white : Colors.black87, size: 18),
-                    onPressed: () {},
+                    onPressed: () {
+                      final inboxCtrl = Get.put(InboxController());
+                      inboxCtrl.openOrCreateChat(
+                        chatId: shop.id,
+                        name: shop.name,
+                        profileImage: shop.profileImageUrl,
+                      );
+                      // ignore: use_build_context_synchronously
+                      context.push(
+                        AppRoutes.chatScreen,
+                        extra: {
+                          'chatId': shop.id,
+                          'shopName': shop.name,
+                          'profileImage': shop.profileImageUrl,
+                        },
+                      );
+                    },
                   ),
                 ),
               ],

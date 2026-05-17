@@ -57,4 +57,7 @@ class AppRoutes {
   
   // ── Shop Profile ────────────────────────────────────────────────────────
   static const String shopProfile = '/buyer/shop/profile';
+
+  // ── Inbox / Messaging ────────────────────────────────────────────────────
+  static const String chatScreen = '/buyer/inbox/chat';
 }
