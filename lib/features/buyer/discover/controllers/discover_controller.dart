@@ -112,7 +112,7 @@ class DiscoverController extends GetxController {
       price: 1099.0,
       originalPrice: 1299.0,
       availableQuantity: 5,
-      imageUrl: 'https://images.unsplash.com/photo-1496181130204-7552cc14ac1b?q=80&w=600',
+      imageUrl: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=600',
       categoryId: 'electronics',
       rating: 4.7,
       reviewCount: 546,

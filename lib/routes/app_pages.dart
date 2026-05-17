@@ -28,6 +28,10 @@ import '../features/buyer/home/screens/following_screen.dart';
 import '../features/buyer/home/models/live_model.dart';
 import '../features/buyer/home/screens/live_list_screen.dart';
 import '../features/buyer/discover/screens/discover_screen.dart';
+import '../features/buyer/discover/screens/discover_product_list_screen.dart';
+import '../features/buyer/discover/screens/discover_product_details_screen.dart';
+import '../features/buyer/discover/models/category_model.dart';
+import '../features/buyer/discover/models/discover_product_model.dart';
 import '../features/buyer/live/screens/live_screen.dart';
 import '../features/buyer/live/screens/live_sell_screen.dart';
 import '../features/buyer/live/screens/live_bidding_screen.dart';
@@ -216,6 +220,22 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.buyerDiscover,
                 builder: (context, state) => const DiscoverScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'products',
+                    builder: (context, state) {
+                      final cat = state.extra as CategoryModel?;
+                      return DiscoverProductListScreen(category: cat);
+                    },
+                  ),
+                  GoRoute(
+                    path: 'details',
+                    builder: (context, state) {
+                      final prod = state.extra as DiscoverProductModel?;
+                      return DiscoverProductDetailsScreen(product: prod);
+                    },
+                  ),
+                ],
               ),
             ],
           ),

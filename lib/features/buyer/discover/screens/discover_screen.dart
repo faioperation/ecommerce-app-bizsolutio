@@ -1,8 +1,162 @@
 import 'package:flutter/material.dart';
-import '../../../../core/widgets/placeholder_screen.dart';
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
+import '../controllers/discover_controller.dart';
+import '../widgets/discover_search_bar.dart';
+import '../widgets/category_card.dart';
+import '../widgets/recent_search_tile.dart';
+import '../../../../core/theme/app_spacing.dart';
 
 class DiscoverScreen extends StatelessWidget {
   const DiscoverScreen({super.key});
+
   @override
-  Widget build(BuildContext context) => const PlaceholderScreen(title: "Discover", color: Colors.purple);
+  Widget build(BuildContext context) {
+    // Instantiate GetX controller
+    final controller = Get.put(DiscoverController());
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      backgroundColor: isDark ? Colors.black : const Color(0xFFF9FAFB),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: AppSpacing.edgeInsetsAllLg,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 1. Discover Search Bar (Screenshot 1 Top)
+              DiscoverSearchBar(
+                controller: controller.searchController,
+                onSubmitted: (val) => controller.performSearch(val),
+              ),
+              const SizedBox(height: 24),
+
+              // 2. Categories Header
+              Text(
+                'Categories',
+                style: TextStyle(
+                  color: isDark ? Colors.white : const Color(0xFF111827),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  fontFamily: 'Inter',
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // 3. Grid of 6 Categories (Screenshot 1 center Grid)
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 1.0,
+                ),
+                itemCount: controller.categories.length,
+                itemBuilder: (context, index) {
+                  final cat = controller.categories[index];
+                  return CategoryCard(
+                    category: cat,
+                    onTap: () {
+                      // Navigate to Screen 2 using GoRouter with Category parameter passed as extra
+                      context.push('/buyer/discover/products', extra: cat);
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 28),
+
+              // 4. Recent Searches Section (Screenshot 1)
+              Row(
+                children: [
+                  const Icon(Icons.access_time_rounded, color: Colors.grey, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Recent Searches',
+                    style: TextStyle(
+                      color: isDark ? Colors.white70 : const Color(0xFF111827),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Obx(() {
+                if (controller.recentSearches.isEmpty) {
+                  return const Text(
+                    'No recent searches.',
+                    style: TextStyle(color: Colors.grey, fontSize: 13),
+                  );
+                }
+                return Column(
+                  children: controller.recentSearches.map((search) {
+                    return RecentSearchTile(
+                      text: search,
+                      onTap: () {
+                        controller.searchController.text = search;
+                        controller.performSearch(search);
+                      },
+                      onDelete: () => controller.removeRecentSearch(search),
+                    );
+                  }).toList(),
+                );
+              }),
+              const SizedBox(height: 24),
+
+              // 5. Trending Searches Section (Screenshot 1 bottom chips)
+              Row(
+                children: [
+                  const Icon(Icons.trending_up_rounded, color: Color(0xFF7C3AED), size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Trending Searches',
+                    style: TextStyle(
+                      color: isDark ? Colors.white70 : const Color(0xFF111827),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 8.0,
+                runSpacing: 8.0,
+                children: controller.trendingSearches.map((chipText) {
+                  return InkWell(
+                    onTap: () {
+                      controller.searchController.text = chipText;
+                      controller.performSearch(chipText);
+                    },
+                    borderRadius: BorderRadius.circular(20),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFEEF2FF), // Soft Indigo accent
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        chipText,
+                        style: const TextStyle(
+                          color: Color(0xFF4F46E5),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          fontFamily: 'Inter',
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
