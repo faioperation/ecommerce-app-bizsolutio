@@ -6,6 +6,7 @@ class LiveStreamModel {
   final String previewImageUrl;
   final String viewerCount;
   final int productCount;
+  final bool isAuction;
 
   LiveStreamModel({
     required this.id,
@@ -15,5 +16,6 @@ class LiveStreamModel {
     required this.previewImageUrl,
     required this.viewerCount,
     required this.productCount,
+    this.isAuction = false,
   });
 }

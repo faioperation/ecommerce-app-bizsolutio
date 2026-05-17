@@ -25,9 +25,12 @@ import '../features/auth/controllers/seller_registration_controller.dart';
 import '../features/buyer/home/screens/home_screen.dart';
 import '../features/buyer/home/screens/trending_screen.dart';
 import '../features/buyer/home/screens/following_screen.dart';
+import '../features/buyer/home/models/live_model.dart';
 import '../features/buyer/home/screens/live_list_screen.dart';
 import '../features/buyer/discover/discover_screen.dart';
 import '../features/buyer/live/live_screen.dart';
+import '../features/buyer/live/live_sell_screen.dart';
+import '../features/buyer/live/live_bidding_screen.dart';
 import '../features/buyer/inbox/inbox_screen.dart';
 import '../features/buyer/profile/profile_screen.dart';
 import '../features/seller/dashboard/dashboard_screen.dart';
@@ -167,6 +170,20 @@ class AppPages {
       GoRoute(
         path: AppRoutes.passwordSuccess,
         builder: (context, state) => const PasswordSuccessScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.buyerLiveSell,
+        builder: (context, state) {
+          final stream = state.extra as LiveStreamModel;
+          return LiveSellScreen(stream: stream);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.buyerLiveBidding,
+        builder: (context, state) {
+          final stream = state.extra as LiveStreamModel;
+          return LiveBiddingScreen(stream: stream);
+        },
       ),
 
       StatefulShellRoute.indexedStack(

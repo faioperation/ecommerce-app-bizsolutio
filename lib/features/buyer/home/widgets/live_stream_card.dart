@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../models/live_model.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -10,8 +11,17 @@ class LiveStreamCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 24),
+    return InkWell(
+      onTap: () {
+        if (stream.isAuction) {
+          context.push('/buyer/live/bidding', extra: stream);
+        } else {
+          context.push('/buyer/live/sell', extra: stream);
+        }
+      },
+      borderRadius: AppSpacing.borderRadiusLg,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 24),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppSpacing.borderRadiusLg,
@@ -123,8 +133,9 @@ class LiveStreamCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildOverlayBadge(IconData icon, String label) {
     return Container(

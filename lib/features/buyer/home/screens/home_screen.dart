@@ -102,7 +102,7 @@ class BuyerHomeScreen extends StatelessWidget {
                       label: 'Live Now',
                       icon: Icons.play_circle_outline,
                       gradient: const [Color(0xFFFF4D67), Color(0xFFE11D48)],
-                      onTap: () => context.push(AppRoutes.liveNow),
+                      onTap: () => StatefulNavigationShell.of(context).goBranch(2),
                     ),
                     const SizedBox(width: 12),
                     HomeCategoryButton(

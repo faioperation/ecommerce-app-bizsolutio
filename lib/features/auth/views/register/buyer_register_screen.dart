@@ -24,7 +24,16 @@ class BuyerRegisterScreen extends StatelessWidget {
               children: [
                 Image.asset(AppImages.logo, height: 80),
                 const SizedBox(height: 24),
-                Text('Create an Account', style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
+                Text(
+                  'Create an Account',
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? AppColors.darkBodyTitle
+                        : AppColors.primary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
                 const SizedBox(height: 24),
 
                 TextFormField(

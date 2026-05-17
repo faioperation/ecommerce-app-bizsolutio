@@ -20,14 +20,21 @@ class RoleSelectionScreen extends StatelessWidget {
               const Spacer(),
               Text(
                 'Welcome to Vango Live',
-                style: Theme.of(context).textTheme.displayMedium,
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.darkBodyTitle
+                      : AppColors.primary,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
               Text(
                 'Choose how you want to use the app',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppColors.lightTextSecondary,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.darkDescription
+                      : AppColors.lightTextSecondary,
                 ),
                 textAlign: TextAlign.center,
               ),

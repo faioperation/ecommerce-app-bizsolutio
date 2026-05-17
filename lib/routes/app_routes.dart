@@ -22,6 +22,8 @@ class AppRoutes {
   static const String buyerHome = '/buyer/home';
   static const String buyerDiscover = '/buyer/discover';
   static const String buyerLive = '/buyer/live';
+  static const String buyerLiveSell = '/buyer/live/sell';
+  static const String buyerLiveBidding = '/buyer/live/bidding';
   static const String buyerInbox = '/buyer/inbox';
   static const String buyerProfile = '/buyer/profile';
 
