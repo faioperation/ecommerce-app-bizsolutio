@@ -1,15 +1,41 @@
+import 'package:get/get.dart';
+
+enum StoryMediaType { image, video }
+
+class StoryMediaModel {
+  final String id;
+  final String mediaUrl;
+  final StoryMediaType type;
+  final int duration; // in seconds
+  final String? caption;
+
+  StoryMediaModel({
+    required this.id,
+    required this.mediaUrl,
+    required this.type,
+    this.duration = 5,
+    this.caption,
+  });
+}
+
 class StoryModel {
   final String id;
   final String sellerName;
   final String profileImage;
   final bool isLive;
+  final List<StoryMediaModel> slides;
+  final RxBool? _isSeen;
+
+  RxBool get isSeen => _isSeen ?? false.obs;
 
   StoryModel({
     required this.id,
     required this.sellerName,
     required this.profileImage,
     this.isLive = false,
-  });
+    required this.slides,
+    bool isSeen = false,
+  }) : _isSeen = RxBool(isSeen);
 }
 
 enum FeedType { post, live }

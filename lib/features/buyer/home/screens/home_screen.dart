@@ -8,6 +8,7 @@ import '../widgets/home_widgets.dart';
 import '../widgets/feed_card.dart';
 import '../widgets/home_comments_sheet.dart';
 import '../../../../core/theme/app_spacing.dart';
+import 'my_day_view_screen.dart';
 
 class BuyerHomeScreen extends StatelessWidget {
   const BuyerHomeScreen({super.key});
@@ -68,11 +69,23 @@ class BuyerHomeScreen extends StatelessWidget {
                       itemCount: controller.stories.length,
                       itemBuilder: (context, index) {
                         final story = controller.stories[index];
-                        return StoryCard(
+                        return Obx(() => StoryCard(
                           imageUrl: story.profileImage,
                           name: story.sellerName,
                           isLive: story.isLive,
-                        );
+                          isSeen: story.isSeen.value,
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                fullscreenDialog: true,
+                                builder: (context) => MyDayViewScreen(
+                                  story: story,
+                                  homeController: controller,
+                                ),
+                              ),
+                            );
+                          },
+                        ));
                       },
                     ),
                   ),

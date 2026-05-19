@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../models/live_model.dart';
 
@@ -8,7 +9,10 @@ class LiveListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadMockData();
+    // Load mock data safely after the initial build frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadMockData();
+    });
   }
 
   void loadMockData() {

@@ -20,32 +20,84 @@ class HomeController extends GetxController {
       StoryModel(
         id: '1',
         sellerName: 'TechStore',
-        profileImage: 'https://i.pravatar.cc/150?u=1',
+        profileImage: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
         isLive: true,
+        slides: [
+          StoryMediaModel(
+            id: '1_1',
+            mediaUrl: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=600',
+            type: StoryMediaType.image,
+            caption: 'Check out our latest Smart Watch Ultra! ⌚🔥',
+          ),
+          StoryMediaModel(
+            id: '1_2',
+            mediaUrl: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=600',
+            type: StoryMediaType.video,
+            caption: 'Pure acoustic bliss. Active Noise Cancellation in action! 🎧✨',
+          ),
+        ],
       ),
       StoryModel(
         id: '2',
         sellerName: 'FashionHub',
-        profileImage: 'https://i.pravatar.cc/150?u=2',
+        profileImage: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200',
         isLive: true,
+        slides: [
+          StoryMediaModel(
+            id: '2_1',
+            mediaUrl: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600',
+            type: StoryMediaType.video,
+            caption: 'Summer Vibes are here! 👗☀️ 20% off today only!',
+          ),
+          StoryMediaModel(
+            id: '2_2',
+            mediaUrl: 'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?q=80&w=600',
+            type: StoryMediaType.image,
+            caption: 'Denim never goes out of style. Grab yours now! 🧥',
+          ),
+        ],
       ),
       StoryModel(
         id: '3',
         sellerName: 'HomeDecor',
-        profileImage: 'https://i.pravatar.cc/150?u=3',
+        profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200',
         isLive: false,
+        slides: [
+          StoryMediaModel(
+            id: '3_1',
+            mediaUrl: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=600',
+            type: StoryMediaType.image,
+            caption: 'Transform your space with our premium decor collection 🛋️🌿',
+          ),
+        ],
       ),
       StoryModel(
         id: '4',
         sellerName: 'BeautyBox',
-        profileImage: 'https://i.pravatar.cc/150?u=4',
+        profileImage: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200',
         isLive: true,
+        slides: [
+          StoryMediaModel(
+            id: '4_1',
+            mediaUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600',
+            type: StoryMediaType.video,
+            caption: 'Get the perfect glow with our new liquid highlighter! ✨💄',
+          ),
+        ],
       ),
       StoryModel(
         id: '5',
         sellerName: 'GadgetZ',
-        profileImage: 'https://i.pravatar.cc/150?u=5',
+        profileImage: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200',
         isLive: false,
+        slides: [
+          StoryMediaModel(
+            id: '5_1',
+            mediaUrl: 'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=600',
+            type: StoryMediaType.image,
+            caption: 'Satisfying clicks. Dynamic RGB lighting customization! ⌨️🌈',
+          ),
+        ],
       ),
     ]);
 
@@ -198,5 +250,12 @@ class HomeController extends GetxController {
       'Added to cart!',
       snackPosition: SnackPosition.BOTTOM,
     );
+  }
+
+  void markStoryAsSeen(String storyId) {
+    final story = stories.firstWhereOrNull((s) => s.id == storyId);
+    if (story != null) {
+      story.isSeen.value = true;
+    }
   }
 }
