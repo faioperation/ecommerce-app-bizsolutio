@@ -3,7 +3,7 @@ import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 
-class LiveProductCard extends StatelessWidget {
+class LiveProductCard extends StatefulWidget {
   final String imageUrl;
   final String title;
   final double price;
@@ -16,6 +16,33 @@ class LiveProductCard extends StatelessWidget {
     required this.price,
     required this.onBuyPressed,
   });
+
+  @override
+  State<LiveProductCard> createState() => _LiveProductCardState();
+}
+
+class _LiveProductCardState extends State<LiveProductCard> with SingleTickerProviderStateMixin {
+  late AnimationController _pulseController;
+  late Animation<double> _glowAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..repeat(reverse: true);
+
+    _glowAnimation = Tween<double>(begin: 4.0, end: 14.0).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +65,7 @@ class LiveProductCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
-              imageUrl,
+              widget.imageUrl,
               height: 60,
               width: 60,
               fit: BoxFit.cover,
@@ -59,7 +86,7 @@ class LiveProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  widget.title,
                   style: const TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold,
@@ -70,7 +97,7 @@ class LiveProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '${AppConstants.currencySymbol}${price.toStringAsFixed(0)}',
+                  '${AppConstants.currencySymbol}${widget.price.toStringAsFixed(0)}',
                   style: const TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w800,
@@ -80,19 +107,41 @@ class LiveProductCard extends StatelessWidget {
               ],
             ),
           ),
-          ElevatedButton(
-            onPressed: onBuyPressed,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+          AnimatedBuilder(
+            animation: _pulseController,
+            builder: (context, child) {
+              return Transform.scale(
+                scale: 1.0 + (_pulseController.value * 0.06),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.5),
+                        blurRadius: _glowAnimation.value,
+                        spreadRadius: _glowAnimation.value / 4,
+                      ),
+                    ],
+                  ),
+                  child: child,
+                ),
+              );
+            },
+            child: ElevatedButton(
+              onPressed: widget.onBuyPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                elevation: 0,
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            ),
-            child: const Text(
-              'Buy',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              child: const Text(
+                'Buy Now',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
             ),
           ),
         ],

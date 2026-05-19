@@ -108,86 +108,158 @@ class LiveBiddingScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CircleAvatar(
-                              radius: 16,
-                              backgroundImage: NetworkImage(
-                                stream.sellerProfileImage,
-                              ),
-                              onBackgroundImageError: (e, s) =>
-                                  const Icon(Icons.person),
-                            ),
-                            const SizedBox(width: 8),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  stream.sellerName,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
-                                  ),
+                      Expanded(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 16,
+                                backgroundImage: NetworkImage(
+                                  stream.sellerProfileImage,
                                 ),
-                                Row(
+                                onBackgroundImageError: (e, s) =>
+                                    const Icon(Icons.person),
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 4,
-                                        vertical: 1,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.liveBadge,
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: const Text(
-                                        'LIVE',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 8,
-                                          fontWeight: FontWeight.bold,
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            stream.sellerName,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Icon(
-                                      Icons.remove_red_eye_outlined,
-                                      color: Colors.white.withValues(
-                                        alpha: 0.8,
-                                      ),
-                                      size: 10,
-                                    ),
-                                    const SizedBox(width: 2),
-                                    Text(
-                                      stream.viewerCount,
-                                      style: TextStyle(
-                                        color: Colors.white.withValues(
-                                          alpha: 0.8,
+                                        const SizedBox(width: 4),
+                                        const Icon(
+                                          Icons.verified_rounded,
+                                          color: Colors.blueAccent,
+                                          size: 14,
                                         ),
-                                        fontSize: 9,
-                                        fontWeight: FontWeight.bold,
+                                      ],
+                                    ),
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 4,
+                                              vertical: 1,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.liveBadge,
+                                              borderRadius: BorderRadius.circular(4),
+                                            ),
+                                            child: const Text(
+                                              'LIVE',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 8,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          Icon(
+                                            Icons.remove_red_eye_outlined,
+                                            color: Colors.white.withValues(
+                                              alpha: 0.8,
+                                            ),
+                                            size: 10,
+                                          ),
+                                          const SizedBox(width: 2),
+                                          Text(
+                                            stream.viewerCount,
+                                            style: TextStyle(
+                                              color: Colors.white.withValues(
+                                                alpha: 0.8,
+                                              ),
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          const Text(
+                                            '•',
+                                            style: TextStyle(
+                                              color: Colors.white70,
+                                              fontSize: 8,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 4),
+                                          const Icon(
+                                            Icons.star_rounded,
+                                            color: Colors.amber,
+                                            size: 12,
+                                          ),
+                                          const SizedBox(width: 2),
+                                          const Text(
+                                            '4.9',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 9,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                              const SizedBox(width: 8),
+                              Obx(() => GestureDetector(
+                                onTap: () => controller.toggleFollow(),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: controller.isFollowing.value
+                                        ? Colors.white.withValues(alpha: 0.2)
+                                        : AppColors.primary,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: controller.isFollowing.value
+                                        ? Colors.white.withValues(alpha: 0.3)
+                                        : Colors.transparent,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    controller.isFollowing.value ? 'Following' : 'Follow',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              )),
+                            ],
+                          ),
                         ),
                       ),
-                      const Spacer(),
+                      const SizedBox(width: 12),
                       CircleAvatar(
                         backgroundColor: Colors.black.withValues(alpha: 0.5),
                         child: IconButton(
