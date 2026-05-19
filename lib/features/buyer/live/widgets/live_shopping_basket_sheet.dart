@@ -277,13 +277,13 @@ class LiveShoppingBasketSheet extends StatelessWidget {
                                   quantity: 1,
                                 ),
                               );
-                              Get.snackbar(
-                                'Added',
-                                '${product.title} added to basket!',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.green.withValues(alpha: 0.9),
-                                colorText: Colors.white,
-                                duration: const Duration(seconds: 1),
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('${product.title} added to basket!'),
+                                  backgroundColor: Colors.green.withValues(alpha: 0.9),
+                                  duration: const Duration(seconds: 1),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
                               );
                             },
                             style: ElevatedButton.styleFrom(

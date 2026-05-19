@@ -8,6 +8,7 @@ import '../widgets/live_product_card.dart';
 import '../widgets/live_shopping_basket_sheet.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../routes/app_routes.dart';
 import '../../profile/controllers/cart_controller.dart';
 import '../../profile/models/cart_item_model.dart';
 
@@ -301,14 +302,7 @@ class LiveSellScreen extends StatelessWidget {
                           quantity: 1,
                         ),
                       );
-                      Get.snackbar(
-                        'Success',
-                        'Summer Dress added to cart!',
-                        backgroundColor: AppColors.success.withValues(
-                          alpha: 0.9,
-                        ),
-                        colorText: Colors.white,
-                      );
+                      context.push(AppRoutes.profileCart);
                     },
                   ),
                   const SizedBox(height: 16),

@@ -267,6 +267,13 @@ class AppPages {
         },
       ),
       GoRoute(
+        path: AppRoutes.discoverProductDetails,
+        builder: (context, state) {
+          final prod = state.extra as DiscoverProductModel?;
+          return DiscoverProductDetailsScreen(product: prod);
+        },
+      ),
+      GoRoute(
         path: AppRoutes.chatScreen,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>? ?? {};
@@ -328,13 +335,6 @@ class AppPages {
                     builder: (context, state) {
                       final cat = state.extra as CategoryModel?;
                       return DiscoverProductListScreen(category: cat);
-                    },
-                  ),
-                  GoRoute(
-                    path: 'details',
-                    builder: (context, state) {
-                      final prod = state.extra as DiscoverProductModel?;
-                      return DiscoverProductDetailsScreen(product: prod);
                     },
                   ),
                 ],
