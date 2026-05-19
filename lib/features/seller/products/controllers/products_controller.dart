@@ -64,35 +64,22 @@ class SellerProductsController extends GetxController {
         .toList();
   }
 
-  void addProduct(SellerProductModel product) {
+  bool addProduct(SellerProductModel product) {
     productsList.insert(0, product);
-    Get.back(); // Return to previous screen
-    Get.snackbar(
-      'Success',
-      'Product added successfully!',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    return true;
   }
 
-  void updateProduct(SellerProductModel updated) {
+  bool updateProduct(SellerProductModel updated) {
     final index = productsList.indexWhere((p) => p.id == updated.id);
     if (index != -1) {
       productsList[index] = updated;
-      Get.back();
-      Get.snackbar(
-        'Success',
-        'Product updated successfully!',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      return true;
     }
+    return false;
   }
 
-  void deleteProduct(String id) {
+  bool deleteProduct(String id) {
     productsList.removeWhere((p) => p.id == id);
-    Get.snackbar(
-      'Deleted',
-      'Product removed successfully.',
-      snackPosition: SnackPosition.BOTTOM,
-    );
+    return true;
   }
 }

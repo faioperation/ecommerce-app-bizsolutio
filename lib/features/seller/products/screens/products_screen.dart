@@ -160,10 +160,21 @@ class ProductsScreen extends StatelessWidget {
                       },
                       onDelete: () {
                         // Confirm Delete Dialog
-                        Get.dialog(
-                          SellerDeleteConfirmationDialog(
+                        showDialog(
+                          context: context,
+                          builder: (context) => SellerDeleteConfirmationDialog(
                             productName: product.name,
-                            onDelete: () => controller.deleteProduct(product.id),
+                            onDelete: () {
+                              final success = controller.deleteProduct(product.id);
+                              if (success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Product deleted successfully!'),
+                                    backgroundColor: Color(0xFFEF4444),
+                                  ),
+                                );
+                              }
+                            },
                           ),
                         );
                       },

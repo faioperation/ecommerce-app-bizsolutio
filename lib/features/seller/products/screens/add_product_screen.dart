@@ -60,12 +60,11 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     if (_selectedImages.isEmpty) {
-      Get.snackbar(
-        'Images Required',
-        'Please upload at least one product image.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: const Color(0xFFFEE2E2),
-        colorText: const Color(0xFFEF4444),
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please upload at least one product image.'),
+          backgroundColor: Color(0xFFEF4444),
+        ),
       );
       return;
     }
@@ -84,10 +83,21 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
       video: _uploadedVideo,
     );
 
+    bool success = false;
     if (isEdit) {
-      controller.updateProduct(newProduct);
+      success = controller.updateProduct(newProduct);
     } else {
-      controller.addProduct(newProduct);
+      success = controller.addProduct(newProduct);
+    }
+
+    if (success) {
+      Navigator.of(context).pop();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(isEdit ? 'Product updated successfully!' : 'Product added successfully!'),
+          backgroundColor: const Color(0xFF10B981),
+        ),
+      );
     }
   }
 
