@@ -29,7 +29,9 @@ class _DiscoverProductDetailsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DiscoverController>();
+    final controller = Get.isRegistered<DiscoverController>()
+        ? Get.find<DiscoverController>()
+        : Get.put(DiscoverController());
     final activeProduct = widget.product ?? controller.products.first;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
