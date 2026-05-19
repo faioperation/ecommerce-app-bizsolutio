@@ -34,6 +34,7 @@ class AppRoutes {
   static const String sellerAddProduct = '/seller/products/add';
   static const String sellerLive = '/seller/live';
   static const String sellerOrders = '/seller/orders';
+  static const String sellerOrderDetail = '/seller/orders/detail';
   static const String sellerProfile = '/seller/profile';
   static const String sellerSettings = '/seller/settings';
   static const String sellerMessages = '/seller/messages';
@@ -63,5 +64,6 @@ class AppRoutes {
   static const String shopProfile = '/buyer/shop/profile';
 
   // ── Inbox / Messaging ────────────────────────────────────────────────────
-  static const String chatScreen = '/buyer/inbox/chat';
+  // Neutral path — accessible by both buyer and seller
+  static const String chatScreen = '/chat';
 }

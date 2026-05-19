@@ -59,7 +59,9 @@ import '../features/seller/dashboard/screens/revenue_analytics_screen.dart';
 import '../features/seller/products/screens/products_screen.dart';
 import '../features/seller/products/screens/add_product_screen.dart';
 import '../features/seller/products/models/product_model.dart';
+import '../features/seller/orders/models/order_model.dart';
 import '../features/seller/orders/screens/orders_screen.dart';
+import '../features/seller/orders/screens/order_detail_screen.dart';
 import '../features/seller/profile/screens/profile_screen.dart';
 import '../features/seller/inbox/screens/inbox_screen.dart';
 
@@ -128,9 +130,11 @@ class AppPages {
 
       final isBuyerRoute = state.matchedLocation.startsWith('/buyer');
       final isSellerRoute = state.matchedLocation.startsWith('/seller');
+      // /chat is a shared route — accessible by both buyer and seller
+      final isChatRoute = state.matchedLocation.startsWith('/chat');
 
       if (role == UserRole.buyer && isSellerRoute) return AppRoutes.buyerHome;
-      if (role == UserRole.seller && isBuyerRoute)
+      if (role == UserRole.seller && isBuyerRoute && !isChatRoute)
         return AppRoutes.sellerDashboard;
 
       if (state.matchedLocation == '/') {
@@ -314,6 +318,14 @@ class AppPages {
         },
       ),
 
+      GoRoute(
+        path: AppRoutes.sellerOrderDetail,
+        builder: (context, state) {
+          final order = state.extra as SellerOrderModel;
+          return SellerOrderDetailScreen(order: order);
+        },
+      ),
+
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return BuyerNavigationScreen(navigationShell: navigationShell);
@@ -373,7 +385,9 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.buyerInbox,
                 builder: (context, state) {
-                  Get.put(InboxController());
+                  if (!Get.isRegistered<InboxController>()) {
+                    Get.put(InboxController(), permanent: true);
+                  }
                   return const InboxListScreen();
                 },
               ),

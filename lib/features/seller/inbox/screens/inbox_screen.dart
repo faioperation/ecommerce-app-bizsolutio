@@ -10,8 +10,10 @@ class SellerInboxScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Reuse InboxController for complete code reuse and shared state/API integration
-    final ctrl = Get.put(InboxController());
+    // Reuse the same singleton InboxController shared with buyer inbox
+    final ctrl = Get.isRegistered<InboxController>()
+        ? Get.find<InboxController>()
+        : Get.put(InboxController(), permanent: true);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
