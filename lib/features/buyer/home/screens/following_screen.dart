@@ -20,7 +20,10 @@ class FollowingScreen extends StatelessWidget {
         leading: const BackButton(),
         title: Text(
           'Following',
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: Obx(() {

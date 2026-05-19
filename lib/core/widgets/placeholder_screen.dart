@@ -27,10 +27,7 @@ class PlaceholderScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.displaySmall,
-            ),
+            Text(title, style: Theme.of(context).textTheme.displaySmall),
             const SizedBox(height: 20),
             if (showRoleToggle) ...[
               const Text("Switch Role to test Dynamic Navigation:"),
@@ -46,7 +43,9 @@ class PlaceholderScreen extends StatelessWidget {
                 },
                 child: Obx(() {
                   final role = Get.find<AuthController>().userRole.value;
-                  return Text("Current Role: ${role.name.toUpperCase()} (Tap to switch)");
+                  return Text(
+                    "Current Role: ${role.name.toUpperCase()} (Tap to switch)",
+                  );
                 }),
               ),
               const SizedBox(height: 10),
@@ -55,8 +54,8 @@ class PlaceholderScreen extends StatelessWidget {
                   Get.find<AuthController>().logout(context);
                 },
                 child: const Text("Log Out"),
-              )
-            ]
+              ),
+            ],
           ],
         ),
       ),

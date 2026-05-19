@@ -5,10 +5,7 @@ import '../../../core/widgets/animated_nav_item.dart';
 class SellerNavigationScreen extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
-  const SellerNavigationScreen({
-    super.key,
-    required this.navigationShell,
-  });
+  const SellerNavigationScreen({super.key, required this.navigationShell});
 
   void _onTap(int index) {
     navigationShell.goBranch(

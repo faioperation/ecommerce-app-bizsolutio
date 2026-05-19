@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
 import '../models/home_models.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -29,20 +30,21 @@ class FeedCard extends StatelessWidget {
         image: DecorationImage(
           image: NetworkImage(item.imageUrl),
           fit: BoxFit.cover,
-          onError: (exception, stackTrace) {
-
-          },
+          onError: (exception, stackTrace) {},
         ),
       ),
       child: Stack(
         children: [
-
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: AppSpacing.borderRadiusLg,
                 gradient: LinearGradient(
-                  colors: [Colors.black.withValues(alpha: 0.6), Colors.transparent, Colors.black.withValues(alpha: 0.7)],
+                  colors: [
+                    Colors.black.withValues(alpha: 0.6),
+                    Colors.transparent,
+                    Colors.black.withValues(alpha: 0.7),
+                  ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -64,7 +66,14 @@ class FeedCard extends StatelessWidget {
                   children: [
                     CircleAvatar(radius: 3, backgroundColor: Colors.white),
                     SizedBox(width: 4),
-                    Text('LIVE', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+                    Text(
+                      'LIVE',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -79,7 +88,11 @@ class FeedCard extends StatelessWidget {
               children: [
                 Text(
                   '@${item.sellerName}',
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Text(
@@ -90,8 +103,12 @@ class FeedCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '\$${item.price.toStringAsFixed(2)}',
-                  style: const TextStyle(color: AppColors.accentPink, fontWeight: FontWeight.bold, fontSize: 18),
+                  '${AppConstants.currencySymbol}${item.price.toStringAsFixed(2)}',
+                  style: const TextStyle(
+                    color: AppColors.accentPink,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
               ],
             ),
@@ -123,7 +140,10 @@ class FeedCard extends StatelessWidget {
                   onPressed: onAddToCart,
                   heroTag: null,
                   backgroundColor: AppColors.primary,
-                  child: const Icon(Icons.add_shopping_cart, color: Colors.white),
+                  child: const Icon(
+                    Icons.add_shopping_cart,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
@@ -147,7 +167,14 @@ class FeedCard extends StatelessWidget {
             onPressed: onTap,
             icon: Icon(icon, color: color, size: 32),
           ),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );

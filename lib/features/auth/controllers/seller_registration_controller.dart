@@ -3,23 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SellerRegistrationController extends GetxController {
-  
   final shopName = ''.obs;
   final businessType = ''.obs;
   final country = ''.obs;
   final categories = <String>[].obs;
 
-  
   final idCardPath = ''.obs;
   final selfiePath = ''.obs;
   final businessDocPath = ''.obs;
 
-  
   final logoPath = ''.obs;
   final bannerPath = ''.obs;
   final description = ''.obs;
 
-  
   final stripeConnected = false.obs;
   final bankInfo = ''.obs;
   final walletInfo = ''.obs;
@@ -35,10 +31,14 @@ class SellerRegistrationController extends GetxController {
     }
   }
 
-  Future<void> pickImage(BuildContext context, ImageSource source, Function(String) onPicked) async {
+  Future<void> pickImage(
+    BuildContext context,
+    ImageSource source,
+    Function(String) onPicked,
+  ) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: source);
-    
+
     if (image != null) {
       onPicked(image.path);
     }
@@ -91,7 +91,12 @@ class SellerRegistrationController extends GetxController {
     );
   }
 
-  Widget _buildSourceOption(BuildContext context, {required IconData icon, required String label, required VoidCallback onTap}) {
+  Widget _buildSourceOption(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(12),
@@ -109,7 +114,6 @@ class SellerRegistrationController extends GetxController {
   }
 
   Future<void> submitRegistration() async {
-    
     Get.snackbar(
       'Success',
       'Seller registration submitted successfully!',

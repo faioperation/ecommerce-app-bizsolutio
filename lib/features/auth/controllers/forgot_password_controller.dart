@@ -8,7 +8,7 @@ class ForgotPasswordController extends GetxController {
   final otpController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  
+
   final RxBool isLoading = false.obs;
   final RxBool isPasswordVisible = false.obs;
 
@@ -26,7 +26,10 @@ class ForgotPasswordController extends GetxController {
       context.push(AppRoutes.otpVerification);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your email address'), backgroundColor: Colors.redAccent),
+        const SnackBar(
+          content: Text('Please enter your email address'),
+          backgroundColor: Colors.redAccent,
+        ),
       );
     }
   }
@@ -41,13 +44,17 @@ class ForgotPasswordController extends GetxController {
       context.push(AppRoutes.resetPassword);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a valid 6-digit OTP'), backgroundColor: Colors.redAccent),
+        const SnackBar(
+          content: Text('Please enter a valid 6-digit OTP'),
+          backgroundColor: Colors.redAccent,
+        ),
       );
     }
   }
 
   void resetPassword(BuildContext context) async {
-    if (newPasswordController.text == confirmPasswordController.text && newPasswordController.text.isNotEmpty) {
+    if (newPasswordController.text == confirmPasswordController.text &&
+        newPasswordController.text.isNotEmpty) {
       isLoading.value = true;
 
       await Future.delayed(const Duration(seconds: 1));
@@ -56,7 +63,10 @@ class ForgotPasswordController extends GetxController {
       context.pushReplacement(AppRoutes.passwordSuccess);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Passwords do not match'), backgroundColor: Colors.redAccent),
+        const SnackBar(
+          content: Text('Passwords do not match'),
+          backgroundColor: Colors.redAccent,
+        ),
       );
     }
   }

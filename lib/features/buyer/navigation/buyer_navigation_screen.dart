@@ -5,13 +5,9 @@ import '../../../core/widgets/animated_nav_item.dart';
 class BuyerNavigationScreen extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
-  const BuyerNavigationScreen({
-    super.key,
-    required this.navigationShell,
-  });
+  const BuyerNavigationScreen({super.key, required this.navigationShell});
 
   void _onTap(int index) {
-
     navigationShell.goBranch(
       index,
 

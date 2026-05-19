@@ -23,7 +23,11 @@ class ForgotPasswordScreen extends StatelessWidget {
               const SizedBox(height: 32),
               Image.asset(AppImages.logo, height: 100),
               const SizedBox(height: 24),
-              Text('Reset Your Password', style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
+              Text(
+                'Reset Your Password',
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
               const SizedBox(height: 16),
               Text(
                 'Enter your email address and we will send you a 6-digit OTP to reset your password.',
@@ -31,7 +35,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
-              
+
               TextFormField(
                 controller: controller.emailController,
                 keyboardType: TextInputType.emailAddress,
@@ -40,15 +44,21 @@ class ForgotPasswordScreen extends StatelessWidget {
                   prefixIcon: Icon(Icons.email_outlined),
                 ),
               ),
-              
+
               const SizedBox(height: 32),
-              Obx(() => ElevatedButton(
-                onPressed: controller.isLoading.value ? null : () => controller.sendOtp(context),
-                style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
-                child: controller.isLoading.value
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text('Send OTP', style: TextStyle(fontSize: 16)),
-              )),
+              Obx(
+                () => ElevatedButton(
+                  onPressed: controller.isLoading.value
+                      ? null
+                      : () => controller.sendOtp(context),
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                  child: controller.isLoading.value
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text('Send OTP', style: TextStyle(fontSize: 16)),
+                ),
+              ),
             ],
           ),
         ),

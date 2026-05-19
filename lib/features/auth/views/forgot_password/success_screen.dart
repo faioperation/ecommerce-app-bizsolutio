@@ -20,7 +20,11 @@ class PasswordSuccessScreen extends StatelessWidget {
             children: [
               Image.asset(AppImages.logo, height: 120),
               const SizedBox(height: 32),
-              Text('Password Set Successfully!', style: Theme.of(context).textTheme.headlineMedium, textAlign: TextAlign.center),
+              Text(
+                'Password Set Successfully!',
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
+              ),
               const SizedBox(height: 16),
               Text(
                 'Your password has been successfully reset. You can now log in with your new password.',
@@ -30,8 +34,13 @@ class PasswordSuccessScreen extends StatelessWidget {
               const SizedBox(height: 48),
               ElevatedButton(
                 onPressed: () => context.go(AppRoutes.roleSelection),
-                style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
-                child: const Text('Return to Role Selection', style: TextStyle(fontSize: 16)),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text(
+                  'Return to Role Selection',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
             ],
           ),

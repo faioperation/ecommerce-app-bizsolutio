@@ -1,4 +1,3 @@
-
 class AppRoutes {
   AppRoutes._();
 
@@ -21,7 +20,11 @@ class AppRoutes {
 
   static const String buyerHome = '/buyer/home';
   static const String buyerDiscover = '/buyer/discover';
+  static const String discoverProducts = '/buyer/discover/products';
+  static const String discoverProductDetails = '/buyer/discover/details';
   static const String buyerLive = '/buyer/live';
+  static const String buyerLiveSell = '/buyer/live/sell';
+  static const String buyerLiveBidding = '/buyer/live/bidding';
   static const String buyerInbox = '/buyer/inbox';
   static const String buyerProfile = '/buyer/profile';
 
@@ -33,4 +36,27 @@ class AppRoutes {
   static const String trending = '/buyer/home/trending';
   static const String following = '/buyer/home/following';
   static const String liveNow = '/buyer/home/live-now';
+
+  // Checkout flow (uses MaterialPageRoute, registered for named route access)
+  static const String checkout = '/checkout';
+  static const String checkoutAddress = '/checkout/address';
+  static const String checkoutPayment = '/checkout/payment';
+  static const String checkoutSuccess = '/checkout/success';
+
+  // Profile Sub-screens
+  static const String profileOrders = '/buyer/profile/orders';
+  static const String profileWishlist = '/buyer/profile/wishlist';
+  static const String profileCart = '/buyer/profile/cart';
+  static const String profileSettings = '/buyer/profile/settings';
+  static const String profileEdit = '/buyer/profile/edit';
+  static const String profileChangePassword = '/buyer/profile/change-password';
+  static const String privacyPolicy = '/buyer/profile/privacy-policy';
+  static const String privacySecurity = '/buyer/profile/privacy-security';
+  static const String termsOfService = '/buyer/profile/terms-of-service';
+
+  // ── Shop Profile ────────────────────────────────────────────────────────
+  static const String shopProfile = '/buyer/shop/profile';
+
+  // ── Inbox / Messaging ────────────────────────────────────────────────────
+  static const String chatScreen = '/buyer/inbox/chat';
 }

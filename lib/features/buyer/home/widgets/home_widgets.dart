@@ -31,7 +31,9 @@ class StoryCard extends StatelessWidget {
                       end: Alignment.bottomRight,
                     )
                   : null,
-              border: !isLive ? Border.all(color: AppColors.lightBorder, width: 2) : null,
+              border: !isLive
+                  ? Border.all(color: AppColors.lightBorder, width: 2)
+                  : null,
             ),
             child: CircleAvatar(
               radius: 35,
@@ -75,7 +77,11 @@ class HomeCategoryButton extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
           decoration: BoxDecoration(
-            gradient: LinearGradient(colors: gradient, begin: Alignment.topLeft, end: Alignment.bottomRight),
+            gradient: LinearGradient(
+              colors: gradient,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
             borderRadius: AppSpacing.borderRadiusMd,
             boxShadow: [
               BoxShadow(
@@ -93,7 +99,11 @@ class HomeCategoryButton extends StatelessWidget {
               Flexible(
                 child: Text(
                   label,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 13,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -116,7 +126,9 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Text(
         title,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+        style: Theme.of(
+          context,
+        ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
       ),
     );
   }

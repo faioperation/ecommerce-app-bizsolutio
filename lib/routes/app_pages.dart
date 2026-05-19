@@ -25,11 +25,34 @@ import '../features/auth/controllers/seller_registration_controller.dart';
 import '../features/buyer/home/screens/home_screen.dart';
 import '../features/buyer/home/screens/trending_screen.dart';
 import '../features/buyer/home/screens/following_screen.dart';
+import '../features/buyer/home/models/live_model.dart';
 import '../features/buyer/home/screens/live_list_screen.dart';
-import '../features/buyer/discover/discover_screen.dart';
-import '../features/buyer/live/live_screen.dart';
-import '../features/buyer/inbox/inbox_screen.dart';
-import '../features/buyer/profile/profile_screen.dart';
+import '../features/buyer/discover/screens/discover_screen.dart';
+import '../features/buyer/discover/screens/discover_product_list_screen.dart';
+import '../features/buyer/discover/screens/discover_product_details_screen.dart';
+import '../features/buyer/discover/models/category_model.dart';
+import '../features/buyer/discover/models/discover_product_model.dart';
+import '../features/buyer/live/screens/live_screen.dart';
+import '../features/buyer/live/screens/live_sell_screen.dart';
+import '../features/buyer/live/screens/live_bidding_screen.dart';
+import '../features/buyer/inbox/screens/inbox_list_screen.dart';
+import '../features/buyer/inbox/screens/chat_screen.dart';
+import '../features/buyer/inbox/controllers/inbox_controller.dart';
+import '../features/buyer/profile/screens/profile_screen.dart';
+import '../features/buyer/checkout/screens/checkout_screen.dart';
+import '../features/buyer/checkout/screens/select_address_screen.dart';
+import '../features/buyer/checkout/screens/payment_method_screen.dart';
+import '../features/buyer/checkout/screens/order_success_screen.dart';
+import '../features/buyer/profile/screens/my_orders_screen.dart';
+import '../features/buyer/profile/screens/wishlist_screen.dart';
+import '../features/buyer/profile/screens/cart_screen.dart';
+import '../features/buyer/profile/screens/settings_screen.dart';
+import '../features/buyer/profile/screens/edit_profile_screen.dart';
+import '../features/buyer/profile/screens/change_password_screen.dart';
+import '../features/buyer/profile/screens/privacy_policy_screen.dart';
+import '../features/buyer/profile/screens/privacy_security_screen.dart';
+import '../features/buyer/profile/screens/terms_of_service_screen.dart';
+import '../features/buyer/shop/screens/shop_profile_screen.dart';
 import '../features/seller/dashboard/dashboard_screen.dart';
 import '../features/seller/products/products_screen.dart';
 import '../features/seller/live/live_screen.dart';
@@ -40,7 +63,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
     notifyListeners();
     _subscription = stream.asBroadcastStream().listen(
-          (dynamic _) => notifyListeners(),
+      (dynamic _) => notifyListeners(),
     );
   }
   late final StreamSubscription<dynamic> _subscription;
@@ -74,12 +97,18 @@ class AppPages {
       final isRoleSelection = state.matchedLocation == AppRoutes.roleSelection;
       final isLogin = state.matchedLocation == AppRoutes.login;
       final isRegister = state.matchedLocation.startsWith('/register');
-      final isForgotPassword = state.matchedLocation == AppRoutes.forgotPassword ||
+      final isForgotPassword =
+          state.matchedLocation == AppRoutes.forgotPassword ||
           state.matchedLocation == AppRoutes.otpVerification ||
           state.matchedLocation == AppRoutes.resetPassword ||
           state.matchedLocation == AppRoutes.passwordSuccess;
 
-      final isAuthRoute = isSplash || isRoleSelection || isLogin || isRegister || isForgotPassword;
+      final isAuthRoute =
+          isSplash ||
+          isRoleSelection ||
+          isLogin ||
+          isRegister ||
+          isForgotPassword;
 
       if (!isAuth) {
         return isAuthRoute ? null : AppRoutes.splash;
@@ -97,10 +126,13 @@ class AppPages {
       final isSellerRoute = state.matchedLocation.startsWith('/seller');
 
       if (role == UserRole.buyer && isSellerRoute) return AppRoutes.buyerHome;
-      if (role == UserRole.seller && isBuyerRoute) return AppRoutes.sellerDashboard;
+      if (role == UserRole.seller && isBuyerRoute)
+        return AppRoutes.sellerDashboard;
 
       if (state.matchedLocation == '/') {
-        return (role == UserRole.seller) ? AppRoutes.sellerDashboard : AppRoutes.buyerHome;
+        return (role == UserRole.seller)
+            ? AppRoutes.sellerDashboard
+            : AppRoutes.buyerHome;
       }
 
       return null;
@@ -168,6 +200,97 @@ class AppPages {
         path: AppRoutes.passwordSuccess,
         builder: (context, state) => const PasswordSuccessScreen(),
       ),
+      GoRoute(
+        path: AppRoutes.checkout,
+        builder: (context, state) {
+          return const CheckoutScreen();
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.checkoutAddress,
+        builder: (context, state) => const SelectAddressScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.checkoutPayment,
+        builder: (context, state) => const PaymentMethodScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.checkoutSuccess,
+        builder: (context, state) => const OrderSuccessScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileSettings,
+        builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileOrders,
+        builder: (context, state) => const MyOrdersScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileWishlist,
+        builder: (context, state) => const WishlistScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileCart,
+        builder: (context, state) => const CartScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileEdit,
+        builder: (context, state) => const EditProfileScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.profileChangePassword,
+        builder: (context, state) => const ChangePasswordScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.privacyPolicy,
+        builder: (context, state) => const PrivacyPolicyScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.privacySecurity,
+        builder: (context, state) => const PrivacySecurityScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.termsOfService,
+        builder: (context, state) => const TermsOfServiceScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.shopProfile,
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>? ?? {};
+          return ShopProfileScreen(
+            sellerName: args['sellerName'] ?? 'Unknown Shop',
+            profileImageUrl:
+                args['profileImageUrl'] ??
+                'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200',
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.chatScreen,
+        builder: (context, state) {
+          final args = state.extra as Map<String, dynamic>? ?? {};
+          return ChatScreen(
+            chatId: args['chatId'] ?? '',
+            shopName: args['shopName'] ?? 'Chat',
+            profileImage: args['profileImage'] ?? '',
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.buyerLiveSell,
+        builder: (context, state) {
+          final stream = state.extra as LiveStreamModel;
+          return LiveSellScreen(stream: stream);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.buyerLiveBidding,
+        builder: (context, state) {
+          final stream = state.extra as LiveStreamModel;
+          return LiveBiddingScreen(stream: stream);
+        },
+      ),
 
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -199,6 +322,22 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.buyerDiscover,
                 builder: (context, state) => const DiscoverScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'products',
+                    builder: (context, state) {
+                      final cat = state.extra as CategoryModel?;
+                      return DiscoverProductListScreen(category: cat);
+                    },
+                  ),
+                  GoRoute(
+                    path: 'details',
+                    builder: (context, state) {
+                      final prod = state.extra as DiscoverProductModel?;
+                      return DiscoverProductDetailsScreen(product: prod);
+                    },
+                  ),
+                ],
               ),
             ],
           ),
@@ -214,7 +353,10 @@ class AppPages {
             routes: [
               GoRoute(
                 path: AppRoutes.buyerInbox,
-                builder: (context, state) => const InboxScreen(),
+                builder: (context, state) {
+                  Get.put(InboxController());
+                  return const InboxListScreen();
+                },
               ),
             ],
           ),

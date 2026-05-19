@@ -4,7 +4,6 @@ import 'app_spacing.dart';
 import 'app_text_styles.dart';
 
 class AppTheme {
-
   AppTheme._();
 
   static ThemeData get lightTheme {
@@ -107,7 +106,8 @@ class AppTheme {
         elevation: 8,
       ),
       actionIconTheme: ActionIconThemeData(
-        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new),
+        backButtonIconBuilder: (BuildContext context) =>
+            const Icon(Icons.arrow_back_ios_new_rounded),
       ),
     );
   }
@@ -125,16 +125,17 @@ class AppTheme {
         error: AppColors.error,
         onPrimary: Colors.white,
         onSecondary: Colors.white,
-        onSurface: AppColors.darkTextPrimary,
+        onSurface: AppColors.darkHeading,
         onError: Colors.white,
       ),
       textTheme: AppTextStyles.darkTextTheme,
+      iconTheme: const IconThemeData(color: AppColors.darkIcon),
 
       appBarTheme: AppBarTheme(
         backgroundColor: AppColors.darkBackground,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.darkTextPrimary),
+        iconTheme: const IconThemeData(color: AppColors.darkHeading),
         titleTextStyle: AppTextStyles.darkTextTheme.titleLarge,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -212,7 +213,8 @@ class AppTheme {
         elevation: 8,
       ),
       actionIconTheme: ActionIconThemeData(
-        backButtonIconBuilder: (BuildContext context) => const Icon(Icons.arrow_back_ios_new),
+        backButtonIconBuilder: (BuildContext context) =>
+            const Icon(Icons.arrow_back_ios_new_rounded),
       ),
     );
   }
