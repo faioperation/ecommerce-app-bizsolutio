@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../routes/app_routes.dart';
 import '../controllers/home_controller.dart';
+import '../controllers/notification_controller.dart';
 import '../widgets/home_widgets.dart';
 import '../widgets/feed_card.dart';
+import '../widgets/home_comments_sheet.dart';
 import '../../../../core/theme/app_spacing.dart';
 
 class BuyerHomeScreen extends StatelessWidget {
@@ -13,6 +15,7 @@ class BuyerHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(HomeController());
+    final notificationController = Get.put(NotificationController());
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -27,16 +30,24 @@ class BuyerHomeScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            icon: Badge(
-              label: const Text('2'),
-              child: Icon(
-                Icons.notifications_outlined,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-            ),
-            onPressed: () {},
-          ),
+          Obx(() {
+            final unreadCount = notificationController.unreadCount;
+            return IconButton(
+              icon: unreadCount > 0
+                  ? Badge(
+                      label: Text('$unreadCount'),
+                      child: Icon(
+                        Icons.notifications_outlined,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    )
+                  : Icon(
+                      Icons.notifications_outlined,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+              onPressed: () => context.push(AppRoutes.notifications),
+            );
+          }),
           const SizedBox(width: 8),
         ],
       ),
@@ -121,10 +132,18 @@ class BuyerHomeScreen extends StatelessWidget {
                       return FeedCard(
                         item: item,
                         onLike: () => controller.toggleLike(item.id),
-                        onComment: () => Get.snackbar(
-                          'Info',
-                          'Comments Screen coming soon!',
-                        ),
+                        onComment: () {
+                          showModalBottomSheet(
+                            context: context,
+                            backgroundColor: Colors.transparent,
+                            isScrollControlled: true,
+                            barrierColor: Colors.black45,
+                            builder: (context) => HomeCommentsSheet(
+                              itemId: item.id,
+                              controller: controller,
+                            ),
+                          );
+                        },
                         onShare: () => Get.snackbar(
                           'Info',
                           'Share functionality coming soon!',

@@ -37,3 +37,55 @@ class FeedItemModel {
     this.isLiked = false,
   });
 }
+
+class CommentModel {
+  final String id;
+  final String userName;
+  final String userProfileUrl;
+  final String commentText;
+  final DateTime timestamp;
+
+  CommentModel({
+    required this.id,
+    required this.userName,
+    required this.userProfileUrl,
+    required this.commentText,
+    required this.timestamp,
+  });
+}
+
+class NotificationModel {
+  final String id;
+  final String title;
+  final String description;
+  final String timeAgo;
+  final bool isRead;
+  final String type; // 'order', 'like', 'message', 'follower', 'sale'
+
+  NotificationModel({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.timeAgo,
+    this.isRead = false,
+    required this.type,
+  });
+
+  NotificationModel copyWith({
+    String? id,
+    String? title,
+    String? description,
+    String? timeAgo,
+    bool? isRead,
+    String? type,
+  }) {
+    return NotificationModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      timeAgo: timeAgo ?? this.timeAgo,
+      isRead: isRead ?? this.isRead,
+      type: type ?? this.type,
+    );
+  }
+}

@@ -36,6 +36,7 @@ class AppRoutes {
   static const String trending = '/buyer/home/trending';
   static const String following = '/buyer/home/following';
   static const String liveNow = '/buyer/home/live-now';
+  static const String notifications = '/buyer/home/notifications';
 
   // Checkout flow (uses MaterialPageRoute, registered for named route access)
   static const String checkout = '/checkout';

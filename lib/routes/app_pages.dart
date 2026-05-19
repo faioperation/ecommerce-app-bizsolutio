@@ -27,6 +27,7 @@ import '../features/buyer/home/screens/trending_screen.dart';
 import '../features/buyer/home/screens/following_screen.dart';
 import '../features/buyer/home/models/live_model.dart';
 import '../features/buyer/home/screens/live_list_screen.dart';
+import '../features/buyer/home/screens/notification_screen.dart';
 import '../features/buyer/discover/screens/discover_screen.dart';
 import '../features/buyer/discover/screens/discover_product_list_screen.dart';
 import '../features/buyer/discover/screens/discover_product_details_screen.dart';
@@ -321,6 +322,10 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.liveNow,
                 builder: (context, state) => const LiveListScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.notifications,
+                builder: (context, state) => const NotificationScreen(),
               ),
             ],
           ),
