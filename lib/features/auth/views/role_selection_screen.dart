@@ -59,7 +59,8 @@ class RoleSelectionScreen extends StatelessWidget {
                 description: 'Set up your shop, go live, and start selling!',
                 icon: Icons.storefront_outlined,
                 color: AppColors.accentPink,
-                onTap: () => context.push(AppRoutes.sellerRegStep1),
+                onTap: () =>
+                    context.push(AppRoutes.login, extra: UserRole.seller),
               ),
               const Spacer(),
             ],

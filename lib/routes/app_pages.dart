@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'app_routes.dart';
 import '../features/auth/controllers/auth_controller.dart';
 import '../features/buyer/navigation/buyer_navigation_screen.dart';
-import '../features/seller/navigation/seller_navigation_screen.dart';
+import '../features/seller/navigation/screens/seller_navigation_screen.dart';
 import '../features/auth/views/login_screen.dart';
 import '../features/auth/views/splash_screen.dart';
 import '../features/auth/views/role_selection_screen.dart';
@@ -54,11 +54,14 @@ import '../features/buyer/profile/screens/privacy_policy_screen.dart';
 import '../features/buyer/profile/screens/privacy_security_screen.dart';
 import '../features/buyer/profile/screens/terms_of_service_screen.dart';
 import '../features/buyer/shop/screens/shop_profile_screen.dart';
-import '../features/seller/dashboard/dashboard_screen.dart';
-import '../features/seller/products/products_screen.dart';
-import '../features/seller/live/live_screen.dart';
-import '../features/seller/orders/orders_screen.dart';
-import '../features/seller/profile/profile_screen.dart';
+import '../features/seller/dashboard/screens/dashboard_screen.dart';
+import '../features/seller/dashboard/screens/revenue_analytics_screen.dart';
+import '../features/seller/products/screens/products_screen.dart';
+import '../features/seller/products/screens/add_product_screen.dart';
+import '../features/seller/products/models/product_model.dart';
+import '../features/seller/orders/screens/orders_screen.dart';
+import '../features/seller/profile/screens/profile_screen.dart';
+import '../features/seller/inbox/screens/inbox_screen.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -299,6 +302,17 @@ class AppPages {
           return LiveBiddingScreen(stream: stream);
         },
       ),
+      GoRoute(
+        path: AppRoutes.sellerRevenueAnalytics,
+        builder: (context, state) => const SellerRevenueAnalyticsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerAddProduct,
+        builder: (context, state) {
+          final prod = state.extra as SellerProductModel?;
+          return SellerAddProductScreen(editProduct: prod);
+        },
+      ),
 
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -400,14 +414,6 @@ class AppPages {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoutes.sellerLive,
-                builder: (context, state) => const SellerLivestreamScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
                 path: AppRoutes.sellerOrders,
                 builder: (context, state) => const OrdersScreen(),
               ),
@@ -418,6 +424,14 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.sellerProfile,
                 builder: (context, state) => const SellerProfileScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.sellerMessages,
+                builder: (context, state) => const SellerInboxScreen(),
               ),
             ],
           ),

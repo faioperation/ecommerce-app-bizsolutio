@@ -29,10 +29,14 @@ class AppRoutes {
   static const String buyerProfile = '/buyer/profile';
 
   static const String sellerDashboard = '/seller/dashboard';
+  static const String sellerRevenueAnalytics = '/seller/dashboard/revenue-analytics';
   static const String sellerProducts = '/seller/products';
+  static const String sellerAddProduct = '/seller/products/add';
   static const String sellerLive = '/seller/live';
   static const String sellerOrders = '/seller/orders';
   static const String sellerProfile = '/seller/profile';
+  static const String sellerSettings = '/seller/settings';
+  static const String sellerMessages = '/seller/messages';
   static const String trending = '/buyer/home/trending';
   static const String following = '/buyer/home/following';
   static const String liveNow = '/buyer/home/live-now';
