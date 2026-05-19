@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/seller_dashboard_model.dart';
+import '../../../../core/constants/app_constants.dart';
 
 class SellerRecentOrdersList extends StatelessWidget {
   final List<DashboardOrderModel> orders;
@@ -106,7 +107,7 @@ class SellerRecentOrdersList extends StatelessWidget {
                 ],
               ),
               Text(
-                '৳${order.amount.toStringAsFixed(0)}',
+                '${AppConstants.currencySymbol}${order.amount.toStringAsFixed(0)}',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

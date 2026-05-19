@@ -7,6 +7,7 @@ import '../widgets/stat_card.dart';
 import '../widgets/quick_actions.dart';
 import '../widgets/revenue_chart.dart';
 import '../widgets/recent_orders_list.dart';
+import '../../../../core/constants/app_constants.dart';
 
 class SellerDashboardScreen extends StatelessWidget {
   const SellerDashboardScreen({super.key});
@@ -123,7 +124,7 @@ class SellerDashboardScreen extends StatelessWidget {
                     children: [
                       SellerStatCard(
                         title: 'Total Revenue',
-                        value: '৳${data.totalRevenue.toStringAsFixed(0).replaceAllMapped(
+                        value: '${AppConstants.currencySymbol}${data.totalRevenue.toStringAsFixed(0).replaceAllMapped(
                               RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                               (Match m) => '${m[1]},',
                             )}',

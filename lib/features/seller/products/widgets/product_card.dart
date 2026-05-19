@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/product_model.dart';
+import '../../../../core/constants/app_constants.dart';
 
 class SellerProductCard extends StatelessWidget {
   final SellerProductModel product;
@@ -95,14 +96,14 @@ class SellerProductCard extends StatelessWidget {
                           ),
                         ),
                         // Three dots menu
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(
-                            Icons.more_vert,
-                            color: isDark ? Colors.grey[400] : Colors.grey[600],
-                            size: 20,
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {},
+                        //   child: Icon(
+                        //     Icons.more_vert,
+                        //     color: isDark ? Colors.grey[400] : Colors.grey[600],
+                        //     size: 20,
+                        //   ),
+                        // ),
                       ],
                     ),
                     const SizedBox(height: 2),
@@ -119,7 +120,7 @@ class SellerProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '৳${product.price.toStringAsFixed(0)}',
+                          '${AppConstants.currencySymbol}${product.price.toStringAsFixed(0)}',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -157,11 +158,11 @@ class SellerProductCard extends StatelessWidget {
                                 ),
                               ),
                             const SizedBox(width: 8),
-                            Icon(
-                              Icons.qr_code_2,
-                              color: const Color(0xFF6366F1).withValues(alpha: 0.8),
-                              size: 18,
-                            ),
+                            // Icon(
+                            //   Icons.qr_code_2,
+                            //   color: const Color(0xFF6366F1).withValues(alpha: 0.8),
+                            //   size: 18,
+                            // ),
                           ],
                         ),
                       ],

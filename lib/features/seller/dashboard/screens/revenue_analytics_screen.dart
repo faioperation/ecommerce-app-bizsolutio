@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../../core/constants/app_constants.dart';
 import 'package:get/get.dart';
 import '../controllers/revenue_analytics_controller.dart';
 import '../widgets/time_period_selector.dart';
@@ -86,7 +87,7 @@ class SellerRevenueAnalyticsScreen extends StatelessWidget {
                     Expanded(
                       child: AnalyticsStatCard(
                         title: 'Avg. Order Value',
-                        value: '৳${data.avgOrderValue.toStringAsFixed(0)}',
+                        value: '${AppConstants.currencySymbol}${data.avgOrderValue.toStringAsFixed(0)}',
                         growthText: '+${data.avgOrderValueGrowth.toStringAsFixed(0)}% from last week',
                         icon: Icons.trending_up,
                         iconColor: const Color(0xFF6366F1),

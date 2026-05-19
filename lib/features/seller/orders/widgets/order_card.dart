@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/order_model.dart';
+import '../../../../core/constants/app_constants.dart';
 
 // Reusable order card — renders one order row exactly like the screenshot
 class SellerOrderCard extends StatelessWidget {
@@ -194,7 +195,7 @@ class SellerOrderCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '৳${order.totalAmount.toStringAsFixed(0)}',
+                  '${AppConstants.currencySymbol}${order.totalAmount.toStringAsFixed(0)}',
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/revenue_analytics_model.dart';
+import '../../../../core/constants/app_constants.dart';
 
 class TopSellingProductsList extends StatelessWidget {
   final List<TopSellingProductModel> products;
@@ -106,7 +107,7 @@ class TopSellingProductsList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '৳${product.revenue.toStringAsFixed(0)}',
+                        '${AppConstants.currencySymbol}${product.revenue.toStringAsFixed(0)}',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,

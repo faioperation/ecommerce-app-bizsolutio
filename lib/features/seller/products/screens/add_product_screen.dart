@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/products_controller.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../models/product_model.dart';
 import '../widgets/image_picker_section.dart';
 import '../widgets/video_picker_section.dart';
@@ -178,7 +179,7 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
                           Expanded(
                             child: SellerCustomTextField(
                               controller: _priceController,
-                              labelText: 'Price (৳)',
+                              labelText: 'Price (${AppConstants.currencySymbol})',
                               hintText: '0',
                               keyboardType: TextInputType.number,
                               validator: (val) {

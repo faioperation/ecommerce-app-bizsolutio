@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/orders_controller.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../models/order_model.dart';
 import '../widgets/order_detail_widgets.dart';
 
@@ -296,7 +297,7 @@ class SellerOrderDetailScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '৳${item.subtotal.toStringAsFixed(0)}',
+                            '${AppConstants.currencySymbol}${item.subtotal.toStringAsFixed(0)}',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -319,11 +320,11 @@ class SellerOrderDetailScreen extends StatelessWidget {
                   children: [
                     OrderDetailRow(
                       label: 'Subtotal',
-                      value: '৳${order.subtotal.toStringAsFixed(0)}',
+                      value: '${AppConstants.currencySymbol}${order.subtotal.toStringAsFixed(0)}',
                     ),
                     OrderDetailRow(
                       label: 'Delivery Charge',
-                      value: '৳${order.deliveryCharge.toStringAsFixed(0)}',
+                      value: '${AppConstants.currencySymbol}${order.deliveryCharge.toStringAsFixed(0)}',
                     ),
                     const SizedBox(height: 12),
                     Divider(
@@ -333,7 +334,7 @@ class SellerOrderDetailScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     OrderDetailRow(
                       label: 'Total Amount',
-                      value: '৳${order.grandTotal.toStringAsFixed(0)}',
+                      value: '${AppConstants.currencySymbol}${order.grandTotal.toStringAsFixed(0)}',
                       bold: true,
                       valueColor: const Color(0xFF6366F1),
                     ),
