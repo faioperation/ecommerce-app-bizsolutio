@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../models/store_model.dart';
 
@@ -87,7 +88,7 @@ class FeaturedProductCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '৳${product.price.toStringAsFixed(0)}',
+                    '${AppConstants.currencySymbol}${product.price.toStringAsFixed(0)}',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

@@ -59,17 +59,17 @@ class LiveSellController extends GetxController {
 
   final comments = <LiveActivityModel>[
     LiveActivityModel(
-      username: 'user123',
+      username: 'John Smith',
       text: 'This looks amazing! 😍',
       isBid: false,
     ),
     LiveActivityModel(
-      username: 'shopper456',
+      username: 'John Smith',
       text: "What's the price?",
       isBid: false,
     ),
     LiveActivityModel(
-      username: 'buyer789',
+      username: 'John Smith',
       text: 'Just ordered one!',
       isBid: false,
     ),

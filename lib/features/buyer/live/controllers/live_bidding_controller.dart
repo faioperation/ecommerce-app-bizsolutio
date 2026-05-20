@@ -14,7 +14,7 @@ class LiveBiddingController extends GetxController {
   final showEndBanner = false.obs;
 
   final currentBid = 420.0.obs;
-  final highestBidder = 'Alex'.obs;
+  final highestBidder = 'John Smith'.obs;
   final totalBids = 23.obs;
 
   final isLiked = false.obs;
@@ -37,20 +37,20 @@ class LiveBiddingController extends GetxController {
   }
 
   final activities = <LiveActivityModel>[
-    LiveActivityModel(username: 'Rifat', text: 'How much? 🤔', isBid: false),
-    LiveActivityModel(username: 'Alex', text: 'Start auction 🔥', isBid: false),
+    LiveActivityModel(username: 'John Smith', text: 'How much? 🤔', isBid: false),
+    LiveActivityModel(username: 'John Smith', text: 'Start auction 🔥', isBid: false),
     LiveActivityModel(
-      username: 'Nayeem',
+      username: 'John Smith',
       text: 'placed ${AppConstants.currencySymbol}400',
       isBid: true,
     ),
     LiveActivityModel(
-      username: 'Sarah',
+      username: 'John Smith',
       text: 'This is amazing!',
       isBid: false,
     ),
     LiveActivityModel(
-      username: 'Alex',
+      username: 'John Smith',
       text: 'placed ${AppConstants.currencySymbol}420',
       isBid: true,
     ),
@@ -89,7 +89,7 @@ class LiveBiddingController extends GetxController {
     isAuctionEnded.value = false;
     showEndBanner.value = false;
     currentBid.value = 420.0;
-    highestBidder.value = 'Alex';
+    highestBidder.value = 'John Smith';
     totalBids.value = 23;
 
     activities.removeWhere((act) => act.username == 'You');
@@ -147,7 +147,7 @@ class LiveBiddingController extends GetxController {
 
     bool isBid =
         text.toLowerCase().contains('placed') ||
-        text.toLowerCase().contains('${AppConstants.currencySymbol}') ||
+        text.toLowerCase().contains(AppConstants.currencySymbol) ||
         RegExp(r'\d+').hasMatch(text);
 
     activities.add(

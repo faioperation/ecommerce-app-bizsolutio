@@ -97,13 +97,13 @@ class LiveBroadcastController extends GetxController {
     comments.assignAll([
       LiveCommentModel(
         id: '1',
-        userName: 'Rahul Ahmed',
+        userName: 'John Smith',
         message: 'How much is the watch?',
         timestamp: DateTime.now().subtract(const Duration(seconds: 30)),
       ),
       LiveCommentModel(
         id: '2',
-        userName: 'Ayesha Khan',
+        userName: 'John Smith',
         message: 'Do you ship to Chittagong?',
         timestamp: DateTime.now().subtract(const Duration(seconds: 15)),
       ),

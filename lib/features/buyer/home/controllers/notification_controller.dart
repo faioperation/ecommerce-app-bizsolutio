@@ -25,7 +25,7 @@ class NotificationController extends GetxController {
       NotificationModel(
         id: '2',
         title: 'New Likes',
-        description: 'Sarah and 12 others liked your review',
+        description: 'John Smith and 12 others liked your review',
         timeAgo: '5 hours ago',
         isRead: false,
         type: 'like',
