@@ -39,6 +39,13 @@ class StoreModel {
   final double rating;
   final int productsCount;
   final List<StoreProductModel> featuredProducts;
+  final String? bannerImagePath;
+  final String description;
+  final String contactEmail;
+  final String phoneNumber;
+  final String shippingPolicy;
+  final String returnPolicy;
+  final String termsOfService;
 
   StoreModel({
     required this.id,
@@ -49,7 +56,51 @@ class StoreModel {
     required this.rating,
     required this.productsCount,
     required this.featuredProducts,
+    this.bannerImagePath,
+    this.description = '',
+    this.contactEmail = '',
+    this.phoneNumber = '',
+    this.shippingPolicy = '',
+    this.returnPolicy = '',
+    this.termsOfService = '',
   });
+
+  StoreModel copyWith({
+    String? id,
+    String? name,
+    String? category,
+    String? avatar,
+    int? followers,
+    double? rating,
+    int? productsCount,
+    List<StoreProductModel>? featuredProducts,
+    String? bannerImagePath,
+    bool clearBanner = false,
+    String? description,
+    String? contactEmail,
+    String? phoneNumber,
+    String? shippingPolicy,
+    String? returnPolicy,
+    String? termsOfService,
+  }) {
+    return StoreModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      avatar: avatar ?? this.avatar,
+      followers: followers ?? this.followers,
+      rating: rating ?? this.rating,
+      productsCount: productsCount ?? this.productsCount,
+      featuredProducts: featuredProducts ?? this.featuredProducts,
+      bannerImagePath: clearBanner ? null : (bannerImagePath ?? this.bannerImagePath),
+      description: description ?? this.description,
+      contactEmail: contactEmail ?? this.contactEmail,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      shippingPolicy: shippingPolicy ?? this.shippingPolicy,
+      returnPolicy: returnPolicy ?? this.returnPolicy,
+      termsOfService: termsOfService ?? this.termsOfService,
+    );
+  }
 
   factory StoreModel.fromJson(Map<String, dynamic> json) {
     return StoreModel(
@@ -64,6 +115,13 @@ class StoreModel {
               ?.map((item) => StoreProductModel.fromJson(item as Map<String, dynamic>))
               .toList() ??
           [],
+      bannerImagePath: json['bannerImagePath'] as String?,
+      description: json['description'] as String? ?? '',
+      contactEmail: json['contactEmail'] as String? ?? '',
+      phoneNumber: json['phoneNumber'] as String? ?? '',
+      shippingPolicy: json['shippingPolicy'] as String? ?? '',
+      returnPolicy: json['returnPolicy'] as String? ?? '',
+      termsOfService: json['termsOfService'] as String? ?? '',
     );
   }
 
@@ -77,6 +135,13 @@ class StoreModel {
       'rating': rating,
       'productsCount': productsCount,
       'featuredProducts': featuredProducts.map((p) => p.toJson()).toList(),
+      'bannerImagePath': bannerImagePath,
+      'description': description,
+      'contactEmail': contactEmail,
+      'phoneNumber': phoneNumber,
+      'shippingPolicy': shippingPolicy,
+      'returnPolicy': returnPolicy,
+      'termsOfService': termsOfService,
     };
   }
 }

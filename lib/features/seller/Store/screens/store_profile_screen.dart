@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -68,18 +69,26 @@ class StoreProfileScreen extends StatelessWidget {
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
-                    // Vibrant Purple-to-Pink Gradient Banner
+                    // Vibrant Purple-to-Pink Gradient Banner or user's custom cover photo
                     Container(
                       height: 120,
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.primary,
-                            AppColors.accentPink,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+                      decoration: BoxDecoration(
+                        image: store.bannerImagePath != null
+                            ? DecorationImage(
+                                image: FileImage(File(store.bannerImagePath!)),
+                                fit: BoxFit.cover,
+                              )
+                            : null,
+                        gradient: store.bannerImagePath == null
+                            ? const LinearGradient(
+                                colors: [
+                                  AppColors.primary,
+                                  AppColors.accentPink,
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              )
+                            : null,
                       ),
                     ),
                     // Floating Avatar Box overlapping the banner

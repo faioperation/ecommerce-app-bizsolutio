@@ -85,7 +85,7 @@ class SellerOrderDetailScreen extends StatelessWidget {
                         CircleAvatar(
                           radius: 20,
                           backgroundColor:
-                              const Color(0xFF6366F1).withOpacity(0.15),
+                              const Color(0xFF6366F1).withValues(alpha: 0.15),
                           backgroundImage: order.customerAvatar.isNotEmpty
                               ? NetworkImage(order.customerAvatar)
                               : null,

@@ -65,6 +65,11 @@ import '../features/seller/orders/screens/order_detail_screen.dart';
 import '../features/seller/profile/screens/profile_screen.dart';
 import '../features/seller/inbox/screens/inbox_screen.dart';
 import '../features/seller/Store/screens/store_profile_screen.dart';
+import '../features/seller/Store/screens/store_settings_screen.dart';
+import '../features/seller/live/screens/live_screen.dart';
+import '../features/seller/live/screens/setup_livestream_screen.dart';
+import '../features/seller/live/screens/live_preview_screen.dart';
+import '../features/seller/live/models/live_session_data.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -135,8 +140,9 @@ class AppPages {
       final isChatRoute = state.matchedLocation.startsWith('/chat');
 
       if (role == UserRole.buyer && isSellerRoute) return AppRoutes.buyerHome;
-      if (role == UserRole.seller && isBuyerRoute && !isChatRoute)
+      if (role == UserRole.seller && isBuyerRoute && !isChatRoute) {
         return AppRoutes.sellerDashboard;
+      }
 
       if (state.matchedLocation == '/') {
         return (role == UserRole.seller)
@@ -409,6 +415,25 @@ class AppPages {
       GoRoute(
         path: AppRoutes.sellerProfile,
         builder: (context, state) => const SellerProfileScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerStoreSettings,
+        builder: (context, state) => const StoreSettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerSetupLivestream,
+        builder: (context, state) => const SetupLivestreamScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerLive,
+        builder: (context, state) => const SellerLivestreamScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerLivePreview,
+        builder: (context, state) {
+          final sessionData = state.extra as LiveSessionData;
+          return LivePreviewScreen(sessionData: sessionData);
+        },
       ),
 
       StatefulShellRoute.indexedStack(
