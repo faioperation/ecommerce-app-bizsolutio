@@ -36,6 +36,7 @@ class AppRoutes {
   static const String sellerOrders = '/seller/orders';
   static const String sellerOrderDetail = '/seller/orders/detail';
   static const String sellerProfile = '/seller/profile';
+  static const String sellerStore = '/seller/store';
   static const String sellerSettings = '/seller/settings';
   static const String sellerMessages = '/seller/messages';
   static const String trending = '/buyer/home/trending';

@@ -64,6 +64,7 @@ import '../features/seller/orders/screens/orders_screen.dart';
 import '../features/seller/orders/screens/order_detail_screen.dart';
 import '../features/seller/profile/screens/profile_screen.dart';
 import '../features/seller/inbox/screens/inbox_screen.dart';
+import '../features/seller/Store/screens/store_profile_screen.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -404,11 +405,18 @@ class AppPages {
         ],
       ),
 
+      // Seller standalone routes (not in nav bar)
+      GoRoute(
+        path: AppRoutes.sellerProfile,
+        builder: (context, state) => const SellerProfileScreen(),
+      ),
+
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return SellerNavigationScreen(navigationShell: navigationShell);
         },
         branches: [
+          // Index 0: Dashboard
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -417,6 +425,7 @@ class AppPages {
               ),
             ],
           ),
+          // Index 1: Products
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -425,6 +434,7 @@ class AppPages {
               ),
             ],
           ),
+          // Index 2: Orders
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -433,14 +443,16 @@ class AppPages {
               ),
             ],
           ),
+          // Index 3: Store — matches nav bar 'Store' tab
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoutes.sellerProfile,
-                builder: (context, state) => const SellerProfileScreen(),
+                path: AppRoutes.sellerStore,
+                builder: (context, state) => const StoreProfileScreen(),
               ),
             ],
           ),
+          // Index 4: Messages
           StatefulShellBranch(
             routes: [
               GoRoute(
