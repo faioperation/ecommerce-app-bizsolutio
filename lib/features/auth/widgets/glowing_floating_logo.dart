@@ -12,7 +12,7 @@ class GlowingFloatingLogo extends StatefulWidget {
     super.key,
     required this.imagePath,
     this.size = 120.0,
-    this.animationDuration = const Duration(milliseconds: 2500),
+    this.animationDuration = const Duration(milliseconds: 2000), // Faster animation (1 second)
   });
 
   @override
@@ -22,10 +22,10 @@ class GlowingFloatingLogo extends StatefulWidget {
 class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  
+
   // Animation for the vertical bobbing / floating movement
   late final Animation<Offset> _floatAnimation;
-  
+
   // Animations for the pulsing background glow (scale and opacity)
   late final Animation<double> _glowScaleAnimation;
   late final Animation<double> _glowOpacityAnimation;
@@ -33,7 +33,7 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
   @override
   void initState() {
     super.initState();
-    
+
     _controller = AnimationController(
       vsync: this,
       duration: widget.animationDuration,
@@ -99,12 +99,14 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
                       shape: BoxShape.circle,
                       gradient: RadialGradient(
                         colors: [
+                          AppColors.primary.withValues(
+                            alpha: 0.60,
+                          ), // Brighter core glow
                           AppColors.accentPink.withValues(alpha: 0.35),
-                          AppColors.primary.withValues(alpha: 0.20),
-                          AppColors.liveBadge.withValues(alpha: 0.10),
+                          AppColors.liveBadge.withValues(alpha: 0.15),
                           Colors.transparent,
                         ],
-                        stops: const [0.0, 0.45, 0.75, 1.0],
+                        stops: const [0.1, 0.4, 0.7, 1.0],
                       ),
                     ),
                   ),
@@ -112,30 +114,17 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
               );
             },
           ),
-          
+
           // 2. Interactive Floating Logo Layer (in the front)
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
               return Transform.translate(
                 offset: _floatAnimation.value,
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      // Subtly project a small soft shadow directly beneath the logo to ground it
-                      BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.15),
-                        blurRadius: 15,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                  child: Image.asset(
-                    widget.imagePath,
-                    height: widget.size,
-                    fit: BoxFit.contain,
-                  ),
+                child: Image.asset(
+                  widget.imagePath,
+                  height: widget.size,
+                  fit: BoxFit.contain,
                 ),
               );
             },

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../routes/app_routes.dart';
 import '../controllers/live_preview_controller.dart';
 import '../models/live_session_data.dart';
 import '../widgets/preview_cover_section.dart';
 import '../widgets/preview_product_list.dart';
 import '../widgets/live_type_selector.dart';
-import '../../../../core/theme/app_colors.dart';
 
 class LivePreviewScreen extends StatelessWidget {
   final LiveSessionData sessionData;
@@ -134,14 +134,7 @@ class LivePreviewScreen extends StatelessWidget {
                     height: 52,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        // TODO: Navigate to the actual live broadcast screen
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                'Starting ${controller.selectedLiveType.value.label} stream...'),
-                            backgroundColor: AppColors.success,
-                          ),
-                        );
+                        context.push(AppRoutes.sellerLiveBroadcast, extra: sessionData);
                       },
                       icon: const Icon(Icons.videocam_outlined, color: Colors.white),
                       label: const Text(

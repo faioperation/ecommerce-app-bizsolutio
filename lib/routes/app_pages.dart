@@ -69,6 +69,7 @@ import '../features/seller/Store/screens/store_settings_screen.dart';
 import '../features/seller/live/screens/live_screen.dart';
 import '../features/seller/live/screens/setup_livestream_screen.dart';
 import '../features/seller/live/screens/live_preview_screen.dart';
+import '../features/seller/live/screens/live_broadcast_screen.dart';
 import '../features/seller/live/models/live_session_data.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -433,6 +434,13 @@ class AppPages {
         builder: (context, state) {
           final sessionData = state.extra as LiveSessionData;
           return LivePreviewScreen(sessionData: sessionData);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.sellerLiveBroadcast,
+        builder: (context, state) {
+          final sessionData = state.extra as LiveSessionData;
+          return LiveBroadcastScreen(sessionData: sessionData);
         },
       ),
 
