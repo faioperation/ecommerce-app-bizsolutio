@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,21 +19,45 @@ class LiveBroadcastController extends GetxController {
   // Chat State
   final RxList<LiveCommentModel> comments = <LiveCommentModel>[].obs;
   final TextEditingController chatInputController = TextEditingController();
+  final Rx<LiveCommentModel?> replyingToComment = Rx<LiveCommentModel?>(null);
 
   // Stream Stats
   final RxString viewerCount = '1.2K'.obs;
+  
+  // Timer State
+  Timer? _liveTimer;
+  final RxInt liveSeconds = 0.obs;
+  final RxString liveDuration = '00:00'.obs;
 
   void init(LiveSessionData data) {
     sessionData = data;
     _initializeCamera();
     _loadMockComments();
+    _startLiveTimer();
   }
 
   @override
   void onClose() {
+    _liveTimer?.cancel();
     cameraController?.dispose();
     chatInputController.dispose();
     super.onClose();
+  }
+
+  void _startLiveTimer() {
+    _liveTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      liveSeconds.value++;
+      final minutes = (liveSeconds.value ~/ 60).toString().padLeft(2, '0');
+      final seconds = (liveSeconds.value % 60).toString().padLeft(2, '0');
+      
+      // If live for more than an hour, show HH:MM:SS
+      if (liveSeconds.value >= 3600) {
+        final hours = (liveSeconds.value ~/ 3600).toString().padLeft(2, '0');
+        liveDuration.value = '$hours:$minutes:$seconds';
+      } else {
+        liveDuration.value = '$minutes:$seconds';
+      }
+    });
   }
 
   Future<void> _initializeCamera() async {
@@ -85,16 +110,31 @@ class LiveBroadcastController extends GetxController {
     ]);
   }
 
+  void setReplyTo(LiveCommentModel comment) {
+    replyingToComment.value = comment;
+  }
+
+  void cancelReply() {
+    replyingToComment.value = null;
+  }
+
   void sendMessage() {
     final text = chatInputController.text.trim();
     if (text.isNotEmpty) {
+      // If replying to someone, prepend their name
+      final finalMessage = replyingToComment.value != null 
+          ? '@${replyingToComment.value!.userName} $text' 
+          : text;
+
       comments.add(LiveCommentModel(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
         userName: 'Seller (You)',
-        message: text,
+        message: finalMessage,
         timestamp: DateTime.now(),
       ));
+      
       chatInputController.clear();
+      replyingToComment.value = null;
       // Future API integration: Send this message to WebSocket server
     }
   }

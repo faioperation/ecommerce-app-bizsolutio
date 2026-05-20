@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 class LiveTopBar extends StatelessWidget {
   final String viewerCount;
+  final String liveDuration;
   final VoidCallback onClose;
 
   const LiveTopBar({
     super.key,
     required this.viewerCount,
+    required this.liveDuration,
     required this.onClose,
   });
 
@@ -31,7 +33,7 @@ class LiveTopBar extends StatelessWidget {
           children: [
             Row(
               children: [
-                // LIVE Indicator
+                // LIVE Indicator + Timer
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
@@ -56,6 +58,21 @@ class LiveTopBar extends StatelessWidget {
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.5,
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      Container(
+                        width: 1,
+                        height: 12,
+                        color: Colors.white.withValues(alpha: 0.3),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        liveDuration,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],

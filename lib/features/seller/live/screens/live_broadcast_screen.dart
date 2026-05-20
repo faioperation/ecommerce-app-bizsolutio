@@ -64,6 +64,7 @@ class LiveBroadcastScreen extends StatelessWidget {
                 // Top Bar (Live Status, Viewer Count, Close)
                 Obx(() => LiveTopBar(
                   viewerCount: controller.viewerCount.value,
+                  liveDuration: controller.liveDuration.value,
                   onClose: () => _confirmEndLive(context, controller),
                 )),
                 

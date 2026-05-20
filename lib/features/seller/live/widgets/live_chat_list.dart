@@ -23,40 +23,52 @@ class LiveChatList extends StatelessWidget {
           final comment = comments[comments.length - 1 - index];
           final isSeller = comment.userName.contains('(You)');
           
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                comment.userName,
-                style: TextStyle(
-                  color: isSeller ? const Color(0xFF6C4DFF) : Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
-                  shadows: const [
-                    Shadow(
-                      color: Colors.black54,
-                      blurRadius: 2,
-                      offset: Offset(0, 1),
-                    )
-                  ],
-                ),
+          return GestureDetector(
+            onTap: () => controller.setReplyTo(comment),
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              decoration: BoxDecoration(
+                color: controller.replyingToComment.value?.id == comment.id 
+                    ? Colors.white.withValues(alpha: 0.1) 
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
               ),
-              const SizedBox(height: 2),
-              Text(
-                comment.message,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black54,
-                      blurRadius: 2,
-                      offset: Offset(0, 1),
-                    )
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    comment.userName,
+                    style: TextStyle(
+                      color: isSeller ? const Color(0xFF6C4DFF) : Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      shadows: const [
+                        Shadow(
+                          color: Colors.black54,
+                          blurRadius: 2,
+                          offset: Offset(0, 1),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    comment.message,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black54,
+                          blurRadius: 2,
+                          offset: Offset(0, 1),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           );
         },
       );
