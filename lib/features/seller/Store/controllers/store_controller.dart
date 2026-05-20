@@ -39,7 +39,7 @@ class StoreController extends GetxController {
       bannerImagePath: null, // Start with no user uploaded banner
       description: 'Your premium boutique destination for curated high-quality watches, bags, and electronic accessories.',
       contactEmail: 'mystore@example.com',
-      phoneNumber: '+880 1712-345678',
+      phoneNumber: '+1 (555) 123-4567',
       shippingPolicy: 'We ship orders within 24-48 hours. Delivery takes 2-3 business days within Dhaka, and 5-7 business days across other areas of Bangladesh. Enjoy free shipping on orders above ${AppConstants.currencySymbol}5,000.',
       returnPolicy: 'We accept returns within 7 days of delivery. Items must be in their original packaging, unused, and with all tags intact. Return shipping charges apply unless the item is defective.',
       termsOfService: 'By shopping on My Store, you agree to our terms of service. All product warranties are subject to original brand manufacturer policies. Prices are subject to change without prior notice.',

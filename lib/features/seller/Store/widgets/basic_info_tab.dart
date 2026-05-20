@@ -199,7 +199,7 @@ class BasicInfoTab extends StatelessWidget {
           SettingsTextField(
             label: 'Phone Number',
             controller: phoneController,
-            placeholder: '+880 1712-345678',
+            placeholder: '+1 (555) 123-4567',
             keyboardType: TextInputType.phone,
           ),
         ],

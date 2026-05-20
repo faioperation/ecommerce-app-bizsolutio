@@ -22,7 +22,7 @@ class SellerOrdersController extends GetxController {
   void loadOrders() {
     final address1 = const DeliveryAddressModel(
       fullName: 'John Smith',
-      phone: '+880 1712-345678',
+      phone: '+1 (555) 123-4567',
       addressLine1: '123 Melton Road',
       addressLine2: '',
       city: 'Leicester',
@@ -30,21 +30,21 @@ class SellerOrdersController extends GetxController {
     );
     final address2 = const DeliveryAddressModel(
       fullName: 'John Smith',
-      phone: '+880 1812-987654',
+      phone: '+1 (555) 123-4567',
       addressLine1: '123 Melton Road',
       city: 'Leicester',
       country: 'UK',
     );
     final address3 = const DeliveryAddressModel(
       fullName: 'John Smith',
-      phone: '+880 1912-111222',
+      phone: '+1 (555) 123-4567',
       addressLine1: '123 Melton Road',
       city: 'Leicester',
       country: 'UK',
     );
     final address4 = const DeliveryAddressModel(
       fullName: 'John Smith',
-      phone: '+880 1612-333444',
+      phone: '+1 (555) 123-4567',
       addressLine1: '123 Melton Road',
       city: 'Leicester',
       country: 'UK',
