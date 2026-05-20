@@ -18,6 +18,23 @@ class LiveBiddingController extends GetxController {
   final totalBids = 23.obs;
 
   final isLiked = false.obs;
+  final isFollowing = false.obs;
+
+  void toggleFollow() {
+    isFollowing.toggle();
+    Get.snackbar(
+      isFollowing.value ? 'Following' : 'Unfollowed',
+      isFollowing.value
+          ? 'You are now following this seller!'
+          : 'You unfollowed this seller.',
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: isFollowing.value
+          ? Colors.green.withValues(alpha: 0.9)
+          : Colors.black87.withValues(alpha: 0.9),
+      colorText: Colors.white,
+      duration: const Duration(seconds: 1),
+    );
+  }
 
   final activities = <LiveActivityModel>[
     LiveActivityModel(username: 'Rifat', text: 'How much? 🤔', isBid: false),

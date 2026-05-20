@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../routes/app_routes.dart';
 import '../../controllers/seller_registration_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 class SellerRegistrationScreen5 extends StatelessWidget {
   const SellerRegistrationScreen5({super.key});
@@ -198,13 +199,13 @@ class SellerRegistrationScreen5 extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 32),
-            SizedBox(
+             SizedBox(
               width: double.infinity,
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context); // Close dialog
-                  context.go(AppRoutes.sellerDashboard);
+                  Get.find<AuthController>().login(UserRole.seller, context);
                 },
                 child: const Text('Go to Dashboard'),
               ),

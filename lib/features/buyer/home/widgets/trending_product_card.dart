@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ecommerce_bizsolutio/core/constants/app_constants.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../routes/app_routes.dart';
+import '../../discover/models/discover_product_model.dart';
 import '../models/trending_model.dart';
 
 class TrendingProductCard extends StatelessWidget {
@@ -11,7 +14,28 @@ class TrendingProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        final discoverProduct = DiscoverProductModel(
+          id: product.id,
+          name: product.name,
+          price: product.currentPrice,
+          originalPrice: product.originalPrice,
+          availableQuantity: 50,
+          imageUrl: product.imageUrl,
+          categoryId: 'trending',
+          rating: product.rating,
+          reviewCount: 24,
+          soldCount: int.tryParse(product.soldCount.replaceAll(RegExp(r'[^0-9]'), '')) ?? 120,
+          sellerName: 'FashionHub',
+          sellerProfileImage: 'https://i.pravatar.cc/150?u=fashion',
+          sellerRating: 4.8,
+          description: 'This is a trending product highly rated by our community. Get yours today at an exclusive discount!',
+          subcategory: 'Trending',
+        );
+        context.push(AppRoutes.discoverProductDetails, extra: discoverProduct);
+      },
+      child: Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         borderRadius: AppSpacing.borderRadiusMd,
@@ -190,6 +214,7 @@ class TrendingProductCard extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ),
+  );
   }
 }

@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'app_routes.dart';
 import '../features/auth/controllers/auth_controller.dart';
 import '../features/buyer/navigation/buyer_navigation_screen.dart';
-import '../features/seller/navigation/seller_navigation_screen.dart';
+import '../features/seller/navigation/screens/seller_navigation_screen.dart';
 import '../features/auth/views/login_screen.dart';
 import '../features/auth/views/splash_screen.dart';
 import '../features/auth/views/role_selection_screen.dart';
@@ -27,6 +27,7 @@ import '../features/buyer/home/screens/trending_screen.dart';
 import '../features/buyer/home/screens/following_screen.dart';
 import '../features/buyer/home/models/live_model.dart';
 import '../features/buyer/home/screens/live_list_screen.dart';
+import '../features/buyer/home/screens/notification_screen.dart';
 import '../features/buyer/discover/screens/discover_screen.dart';
 import '../features/buyer/discover/screens/discover_product_list_screen.dart';
 import '../features/buyer/discover/screens/discover_product_details_screen.dart';
@@ -53,11 +54,16 @@ import '../features/buyer/profile/screens/privacy_policy_screen.dart';
 import '../features/buyer/profile/screens/privacy_security_screen.dart';
 import '../features/buyer/profile/screens/terms_of_service_screen.dart';
 import '../features/buyer/shop/screens/shop_profile_screen.dart';
-import '../features/seller/dashboard/dashboard_screen.dart';
-import '../features/seller/products/products_screen.dart';
-import '../features/seller/live/live_screen.dart';
-import '../features/seller/orders/orders_screen.dart';
-import '../features/seller/profile/profile_screen.dart';
+import '../features/seller/dashboard/screens/dashboard_screen.dart';
+import '../features/seller/dashboard/screens/revenue_analytics_screen.dart';
+import '../features/seller/products/screens/products_screen.dart';
+import '../features/seller/products/screens/add_product_screen.dart';
+import '../features/seller/products/models/product_model.dart';
+import '../features/seller/orders/models/order_model.dart';
+import '../features/seller/orders/screens/orders_screen.dart';
+import '../features/seller/orders/screens/order_detail_screen.dart';
+import '../features/seller/profile/screens/profile_screen.dart';
+import '../features/seller/inbox/screens/inbox_screen.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -124,9 +130,11 @@ class AppPages {
 
       final isBuyerRoute = state.matchedLocation.startsWith('/buyer');
       final isSellerRoute = state.matchedLocation.startsWith('/seller');
+      // /chat is a shared route — accessible by both buyer and seller
+      final isChatRoute = state.matchedLocation.startsWith('/chat');
 
       if (role == UserRole.buyer && isSellerRoute) return AppRoutes.buyerHome;
-      if (role == UserRole.seller && isBuyerRoute)
+      if (role == UserRole.seller && isBuyerRoute && !isChatRoute)
         return AppRoutes.sellerDashboard;
 
       if (state.matchedLocation == '/') {
@@ -267,6 +275,13 @@ class AppPages {
         },
       ),
       GoRoute(
+        path: AppRoutes.discoverProductDetails,
+        builder: (context, state) {
+          final prod = state.extra as DiscoverProductModel?;
+          return DiscoverProductDetailsScreen(product: prod);
+        },
+      ),
+      GoRoute(
         path: AppRoutes.chatScreen,
         builder: (context, state) {
           final args = state.extra as Map<String, dynamic>? ?? {};
@@ -289,6 +304,25 @@ class AppPages {
         builder: (context, state) {
           final stream = state.extra as LiveStreamModel;
           return LiveBiddingScreen(stream: stream);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.sellerRevenueAnalytics,
+        builder: (context, state) => const SellerRevenueAnalyticsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerAddProduct,
+        builder: (context, state) {
+          final prod = state.extra as SellerProductModel?;
+          return SellerAddProductScreen(editProduct: prod);
+        },
+      ),
+
+      GoRoute(
+        path: AppRoutes.sellerOrderDetail,
+        builder: (context, state) {
+          final order = state.extra as SellerOrderModel;
+          return SellerOrderDetailScreen(order: order);
         },
       ),
 
@@ -315,6 +349,10 @@ class AppPages {
                 path: AppRoutes.liveNow,
                 builder: (context, state) => const LiveListScreen(),
               ),
+              GoRoute(
+                path: AppRoutes.notifications,
+                builder: (context, state) => const NotificationScreen(),
+              ),
             ],
           ),
           StatefulShellBranch(
@@ -328,13 +366,6 @@ class AppPages {
                     builder: (context, state) {
                       final cat = state.extra as CategoryModel?;
                       return DiscoverProductListScreen(category: cat);
-                    },
-                  ),
-                  GoRoute(
-                    path: 'details',
-                    builder: (context, state) {
-                      final prod = state.extra as DiscoverProductModel?;
-                      return DiscoverProductDetailsScreen(product: prod);
                     },
                   ),
                 ],
@@ -354,7 +385,9 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.buyerInbox,
                 builder: (context, state) {
-                  Get.put(InboxController());
+                  if (!Get.isRegistered<InboxController>()) {
+                    Get.put(InboxController(), permanent: true);
+                  }
                   return const InboxListScreen();
                 },
               ),
@@ -395,14 +428,6 @@ class AppPages {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoutes.sellerLive,
-                builder: (context, state) => const SellerLivestreamScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
                 path: AppRoutes.sellerOrders,
                 builder: (context, state) => const OrdersScreen(),
               ),
@@ -413,6 +438,14 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.sellerProfile,
                 builder: (context, state) => const SellerProfileScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.sellerMessages,
+                builder: (context, state) => const SellerInboxScreen(),
               ),
             ],
           ),

@@ -1,0 +1,756 @@
+import 'dart:async';
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import '../models/home_models.dart';
+import '../controllers/home_controller.dart';
+import '../../../../core/theme/app_colors.dart';
+
+class MyDayViewScreen extends StatefulWidget {
+  final StoryModel story;
+  final HomeController homeController;
+
+  const MyDayViewScreen({
+    super.key,
+    required this.story,
+    required this.homeController,
+  });
+
+  @override
+  State<MyDayViewScreen> createState() => _MyDayViewScreenState();
+}
+
+class _MyDayViewScreenState extends State<MyDayViewScreen>
+    with TickerProviderStateMixin {
+  late PageController _pageController;
+  late AnimationController _progressAnimController;
+  int _currentSlideIndex = 0;
+  bool _isPaused = false;
+  final TextEditingController _replyController = TextEditingController();
+
+  // For the flying emojis animation
+  final List<FloatingEmoji> _floatingEmojis = [];
+  final double _bottomOffset = 100.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    
+    // Set up progress bar animation controller
+    _progressAnimController = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: widget.story.slides[_currentSlideIndex].duration),
+    );
+
+    _progressAnimController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _goToNextSlide();
+      }
+    });
+
+    // Start progress
+    _startProgress();
+    
+    // Hide status bar for immersive full screen
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _progressAnimController.dispose();
+    _replyController.dispose();
+    
+    // Dispose all active flying emoji controllers to prevent ticker leaks
+    for (var emoji in _floatingEmojis) {
+      try {
+        emoji.animController.dispose();
+      } catch (_) {}
+    }
+    _floatingEmojis.clear();
+
+    // Restore system UI
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.dispose();
+  }
+
+  void _startProgress() {
+    _progressAnimController.stop();
+    _progressAnimController.reset();
+    _progressAnimController.duration = Duration(
+      seconds: widget.story.slides[_currentSlideIndex].duration,
+    );
+    _progressAnimController.forward();
+  }
+
+  void _goToNextSlide() {
+    if (_currentSlideIndex < widget.story.slides.length - 1) {
+      setState(() {
+        _currentSlideIndex++;
+      });
+      _pageController.animateToPage(
+        _currentSlideIndex,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      _startProgress();
+    } else {
+      // Last slide completed, close story and mark as seen
+      _exitStory();
+    }
+  }
+
+  void _goToPrevSlide() {
+    if (_currentSlideIndex > 0) {
+      setState(() {
+        _currentSlideIndex--;
+      });
+      _pageController.animateToPage(
+        _currentSlideIndex,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+      _startProgress();
+    } else {
+      // Already on first slide, restart it
+      _startProgress();
+    }
+  }
+
+  void _pauseStory() {
+    if (!_isPaused) {
+      setState(() {
+        _isPaused = true;
+      });
+      _progressAnimController.stop();
+    }
+  }
+
+  void _resumeStory() {
+    if (_isPaused) {
+      setState(() {
+        _isPaused = false;
+      });
+      _progressAnimController.forward();
+    }
+  }
+
+  void _exitStory() {
+    widget.homeController.markStoryAsSeen(widget.story.id);
+    Navigator.of(context).pop();
+  }
+
+  // Spawns a floating emoji animation
+  void _spawnEmoji(String emoji) {
+    if (!mounted) return;
+
+    final randomX = (MediaQuery.of(context).size.width / 2) + 
+        (DateTime.now().millisecondsSinceEpoch % 120 - 60);
+    
+    final newEmoji = FloatingEmoji(
+      emoji: emoji,
+      startX: randomX,
+      animController: AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 1800),
+      ),
+    );
+
+    setState(() {
+      _floatingEmojis.add(newEmoji);
+    });
+
+    newEmoji.animController.forward().then((_) {
+      if (!mounted) return;
+      setState(() {
+        _floatingEmojis.remove(newEmoji);
+      });
+      try {
+        newEmoji.animController.dispose();
+      } catch (_) {}
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final slides = widget.story.slides;
+    final currentSlide = slides[_currentSlideIndex];
+    final size = MediaQuery.of(context).size;
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          // 1. Gesture Detector for press-and-hold, tap left/right, and swipe down
+          GestureDetector(
+            onLongPressDown: (_) => _pauseStory(),
+            onLongPressUp: () => _resumeStory(),
+            onLongPressEnd: (_) => _resumeStory(),
+            onVerticalDragUpdate: (details) {
+              if (details.delta.dy > 10) {
+                _exitStory();
+              }
+            },
+            child: Stack(
+              children: [
+                // Media Viewer (Page View)
+                PageView.builder(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: slides.length,
+                  itemBuilder: (context, index) {
+                    final slide = slides[index];
+                    return _buildMediaContent(slide);
+                  },
+                ),
+
+                // Ambient Dark Gradients (Top & Bottom for readability)
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  height: 160,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.black54, Colors.transparent],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: 220,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Colors.transparent, Colors.black87],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // 2. Invisible Tap Zones for Navigating Slides (Left & Right margins)
+          if (!_isPaused) ...[
+            // Left Tap Zone (Prev Slide)
+            Positioned(
+              top: 100,
+              bottom: 120,
+              left: 0,
+              width: size.width * 0.3,
+              child: GestureDetector(
+                onTap: _goToPrevSlide,
+              ),
+            ),
+            // Right Tap Zone (Next Slide)
+            Positioned(
+              top: 100,
+              bottom: 120,
+              right: 0,
+              width: size.width * 0.3,
+              child: GestureDetector(
+                onTap: _goToNextSlide,
+              ),
+            ),
+          ],
+
+          // 3. Floating Emojis Animation Canvas
+          ..._floatingEmojis.map((floating) {
+            return AnimatedBuilder(
+              animation: floating.animController,
+              builder: (context, child) {
+                final value = floating.animController.value;
+                // Path of emoji rising up in a wave pattern
+                final double currentY = size.height - _bottomOffset - (value * 400);
+                final double waveOffset = 30 * (1 - value) * (1 - value) * (1 - value) * 
+                    (value < 0.5 ? -1 : 1) * (value * 3.14 * 2).abs().remainder(1);
+                
+                return Positioned(
+                  left: floating.startX + waveOffset,
+                  top: currentY,
+                  child: Opacity(
+                    opacity: 1 - value,
+                    child: Transform.scale(
+                      scale: 1.0 + (value * 0.5),
+                      child: Text(
+                        floating.emoji,
+                        style: const TextStyle(fontSize: 32),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }),
+
+          // 4. UI Elements Layer (Header, Progress Indicators, Footer replies)
+          SafeArea(
+            child: Column(
+              children: [
+                // Top Progress Indicators
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  child: Row(
+                    children: List.generate(
+                      slides.length,
+                      (index) => Expanded(
+                        child: Container(
+                          height: 3,
+                          margin: const EdgeInsets.symmetric(horizontal: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.white24,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              double widthFactor = 0.0;
+                              if (index < _currentSlideIndex) {
+                                widthFactor = 1.0;
+                              } else if (index == _currentSlideIndex) {
+                                return AnimatedBuilder(
+                                  animation: _progressAnimController,
+                                  builder: (context, child) {
+                                    return Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Container(
+                                        height: 3,
+                                        width: constraints.maxWidth * 
+                                            _progressAnimController.value,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(2),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                              
+                              return Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  height: 3,
+                                  width: constraints.maxWidth * widthFactor,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Header Profile Info
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(1.5),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white, width: 1),
+                        ),
+                        child: CircleAvatar(
+                          radius: 18,
+                          backgroundImage: NetworkImage(widget.story.profileImage),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                widget.story.sellerName,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  fontFamily: 'Inter',
+                                ),
+                              ),
+                              if (widget.story.isLive) ...[
+                                const SizedBox(width: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.liveBadge,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: const Text(
+                                    'LIVE',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            currentSlide.type == StoryMediaType.video 
+                                ? 'Short Video • 2h ago' 
+                                : 'Photo • 2h ago',
+                            style: const TextStyle(
+                              color: Colors.white70,
+                              fontSize: 10,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(Icons.close_rounded, color: Colors.white, size: 28),
+                        onPressed: _exitStory,
+                      ),
+                    ],
+                  ),
+                ),
+
+                const Spacer(),
+
+                // Bottom Content Overlays (Caption, Reactions, Reply Bar)
+                if (!_isPaused) ...[
+                  // Slide Caption (if present)
+                  if (currentSlide.caption != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.4),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                          ),
+                          child: Text(
+                            currentSlide.caption!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  // Quick reaction buttons (Glassmorphic Tray)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.08),
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: Colors.white.withValues(alpha: 0.05)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              _buildEmojiReaction('❤️'),
+                              _buildEmojiReaction('🔥'),
+                              _buildEmojiReaction('😂'),
+                              _buildEmojiReaction('👏'),
+                              _buildEmojiReaction('😮'),
+                              _buildEmojiReaction('😢'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Bottom Message Reply input bar
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, bottom: 16, top: 8),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(
+                                color: Colors.white.withValues(alpha: 0.15),
+                              ),
+                            ),
+                            child: TextField(
+                              controller: _replyController,
+                              style: const TextStyle(color: Colors.white, fontSize: 14),
+                              onTap: _pauseStory,
+                              onSubmitted: (val) {
+                                _resumeStory();
+                                if (val.trim().isNotEmpty) {
+                                  Get.snackbar(
+                                    'Reply Sent',
+                                    'Your response was sent to ${widget.story.sellerName}!',
+                                    backgroundColor: const Color(0xFF6C4DFF),
+                                    colorText: Colors.white,
+                                  );
+                                  _replyController.clear();
+                                }
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'Send message to ${widget.story.sellerName}...',
+                                hintStyle: TextStyle(
+                                  color: Colors.white.withValues(alpha: 0.5),
+                                  fontSize: 13,
+                                ),
+                                border: InputBorder.none,
+                                contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 10,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        GestureDetector(
+                          onTap: () {
+                            if (_replyController.text.trim().isNotEmpty) {
+                              Get.snackbar(
+                                'Reply Sent',
+                                'Your response was sent to ${widget.story.sellerName}!',
+                                backgroundColor: const Color(0xFF6C4DFF),
+                                colorText: Colors.white,
+                              );
+                              _replyController.clear();
+                              FocusScope.of(context).unfocus();
+                              _resumeStory();
+                            } else {
+                              // If empty, trigger a heart burst!
+                              _spawnEmoji('❤️');
+                            }
+                          },
+                          child: Container(
+                            height: 48,
+                            width: 48,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF6C4DFF),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.send_rounded,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Quick reaction emoji builder
+  Widget _buildEmojiReaction(String emoji) {
+    return GestureDetector(
+      onTap: () => _spawnEmoji(emoji),
+      child: Container(
+        padding: const EdgeInsets.all(6),
+        decoration: const BoxDecoration(shape: BoxShape.circle),
+        child: Text(
+          emoji,
+          style: const TextStyle(fontSize: 24),
+        ),
+      ),
+    );
+  }
+
+  // Renders the image or the premium simulated video content
+  Widget _buildMediaContent(StoryMediaModel slide) {
+    final size = MediaQuery.of(context).size;
+
+    if (slide.type == StoryMediaType.video) {
+      // 1. HIGH-FIDELITY SIMULATED CINEMATIC VIDEO PLAYER
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          // Slow cinematic zooming parallax background
+          AnimatedBuilder(
+            animation: _progressAnimController,
+            builder: (context, child) {
+              final scale = 1.0 + (_progressAnimController.value * 0.15);
+              return Transform.scale(
+                scale: scale,
+                child: Image.network(
+                  slide.mediaUrl,
+                  fit: BoxFit.cover,
+                ),
+              );
+            },
+          ),
+          
+          // Immersive dark neon video overlays
+          Container(
+            color: Colors.black.withValues(alpha: 0.15),
+          ),
+          
+          // Looping Pulsating Video Overlay (Audio Wave, Spinning Vinyl)
+          Positioned(
+            right: 16,
+            bottom: 240,
+            child: Column(
+              children: [
+                // Live Sound Pulsing Icon
+                _buildVideoControlCircle(
+                  icon: Icons.music_note_rounded,
+                  color: const Color(0xFF6C4DFF),
+                  pulse: true,
+                ),
+                const SizedBox(height: 14),
+                // Play/Pause Floating status
+                _buildVideoControlCircle(
+                  icon: _isPaused ? Icons.play_arrow_rounded : Icons.pause_rounded,
+                  color: Colors.white24,
+                  pulse: false,
+                ),
+              ],
+            ),
+          ),
+          
+          // Video Tag Identifier
+          Positioned(
+            top: 100,
+            left: 20,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.red.withValues(alpha: 0.85),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.red.withValues(alpha: 0.4),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: const Row(
+                children: [
+                  Icon(Icons.video_library_rounded, color: Colors.white, size: 12),
+                  SizedBox(width: 6),
+                  Text(
+                    'SHORT REEL',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      );
+    } else {
+      // 2. STANDARD PREMIUM PHOTO CONTENT
+      return Image.network(
+        slide.mediaUrl,
+        fit: BoxFit.cover,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return Container(
+            color: Colors.black87,
+            child: const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6C4DFF)),
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  // Floating controls overlay helper for Video Simulation
+  Widget _buildVideoControlCircle({
+    required IconData icon,
+    required Color color,
+    required bool pulse,
+  }) {
+    return AnimatedBuilder(
+      animation: _progressAnimController,
+      builder: (context, child) {
+        final double scale = pulse
+            ? 1.0 + (0.15 * (1.0 - (_progressAnimController.value * 4).remainder(1.0).abs()))
+            : 1.0;
+        
+        return Transform.scale(
+          scale: scale,
+          child: Container(
+            height: 44,
+            width: 44,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.8),
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: color.withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Icon(icon, color: Colors.white, size: 18),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// Data holder class for flying emojis
+class FloatingEmoji {
+  final String emoji;
+  final double startX;
+  final AnimationController animController;
+
+  FloatingEmoji({
+    required this.emoji,
+    required this.startX,
+    required this.animController,
+  });
+}

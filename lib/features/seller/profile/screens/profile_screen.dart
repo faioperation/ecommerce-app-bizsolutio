@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/widgets/placeholder_screen.dart';
+import '../../../../core/widgets/placeholder_screen.dart';
 
 class SellerProfileScreen extends StatelessWidget {
   const SellerProfileScreen({super.key});

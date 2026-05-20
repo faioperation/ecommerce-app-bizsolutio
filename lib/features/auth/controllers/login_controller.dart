@@ -33,7 +33,7 @@ class LoginController extends GetxController {
     if (role == UserRole.buyer) {
       context.push(AppRoutes.registerBuyer);
     } else {
-      context.push(AppRoutes.registerSeller);
+      context.push(AppRoutes.sellerRegStep1);
     }
   }
 

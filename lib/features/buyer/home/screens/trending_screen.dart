@@ -19,23 +19,21 @@ class TrendingScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
         leading: const BackButton(),
-        title: Flexible(
-          child: Row(
-            children: [
-              const Icon(Icons.trending_up, color: AppColors.primary),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  'Trending Now',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onSurface,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+        title: Row(
+          children: [
+            const Icon(Icons.trending_up, color: AppColors.primary),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Trending Now',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontWeight: FontWeight.bold,
                 ),
+                overflow: TextOverflow.ellipsis,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       body: SingleChildScrollView(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../../core/constants/app_images.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../routes/app_routes.dart';
@@ -17,6 +18,8 @@ class RoleSelectionScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const Spacer(),
+              Image.asset(AppImages.logo, height: 100),
               const Spacer(),
               Text(
                 'Welcome to Vango Live',
@@ -38,7 +41,8 @@ class RoleSelectionScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const Spacer(),
+              //const Spacer(),
+              const SizedBox(height: 32),
               _buildRoleCard(
                 context,
                 title: 'Become a Buyer',
@@ -55,7 +59,8 @@ class RoleSelectionScreen extends StatelessWidget {
                 description: 'Set up your shop, go live, and start selling!',
                 icon: Icons.storefront_outlined,
                 color: AppColors.accentPink,
-                onTap: () => context.push(AppRoutes.sellerRegStep1),
+                onTap: () =>
+                    context.push(AppRoutes.login, extra: UserRole.seller),
               ),
               const Spacer(),
             ],
