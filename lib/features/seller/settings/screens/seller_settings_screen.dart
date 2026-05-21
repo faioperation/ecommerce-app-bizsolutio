@@ -207,31 +207,31 @@ class _SellerSettingsScreenState extends State<SellerSettingsScreen> {
                 ],
               ),
             ),
-            const SizedBox(height: 36),
+            const SizedBox(height: 16),
 
             // App Version & Log Out Button Group
             Center(
               child: Column(
                 children: [
-                  Text(
-                    'App Version',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: subtitleColor,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '2.4.1',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: headerTextColor,
-                      fontFamily: 'Inter',
-                    ),
-                  ),
-                  const SizedBox(height: 20),
+                  // Text(
+                  //   'App Version',
+                  //   style: TextStyle(
+                  //     fontSize: 12,
+                  //     color: subtitleColor,
+                  //     fontFamily: 'Inter',
+                  //   ),
+                  // ),
+                  // const SizedBox(height: 4),
+                  // Text(
+                  //   '2.4.1',
+                  //   style: TextStyle(
+                  //     fontSize: 14,
+                  //     fontWeight: FontWeight.bold,
+                  //     color: headerTextColor,
+                  //     fontFamily: 'Inter',
+                  //   ),
+                  // ),
+                  const SizedBox(height: 8),
                   SizedBox(
                     width: double.infinity,
                     height: 52,
