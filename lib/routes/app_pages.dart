@@ -72,6 +72,9 @@ import '../features/seller/live/screens/live_preview_screen.dart';
 import '../features/seller/live/screens/live_broadcast_screen.dart';
 import '../features/seller/live/models/live_session_data.dart';
 import '../features/seller/settings/screens/seller_settings_screen.dart';
+import '../features/seller/liveList/models/past_live_stream_model.dart';
+import '../features/seller/liveList/screens/seller_live_list_screen.dart';
+import '../features/seller/liveList/screens/seller_past_live_playback_screen.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -446,6 +449,17 @@ class AppPages {
         builder: (context, state) {
           final sessionData = state.extra as LiveSessionData;
           return LiveBroadcastScreen(sessionData: sessionData);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.sellerPastLivesList,
+        builder: (context, state) => const SellerLiveListScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerPastLivePlayback,
+        builder: (context, state) {
+          final pastLive = state.extra as PastLiveStreamModel;
+          return SellerPastLivePlaybackScreen(pastLive: pastLive);
         },
       ),
 

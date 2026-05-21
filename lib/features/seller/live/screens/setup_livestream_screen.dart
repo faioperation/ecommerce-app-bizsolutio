@@ -70,6 +70,17 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.history_rounded,
+              color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            ),
+            tooltip: 'Past Lives',
+            onPressed: () => context.push(AppRoutes.sellerPastLivesList),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: Column(
         children: [
@@ -80,6 +91,79 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // 0. Past Lives Quick Access Banner
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 24),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: isDark
+                            ? [const Color(0xFF2E1A47), const Color(0xFF1E1E22)]
+                            : [const Color(0xFFECE6F5), Colors.white],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: InkWell(
+                      onTap: () => context.push(AppRoutes.sellerPastLivesList),
+                      borderRadius: BorderRadius.circular(16),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.15),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.video_library_rounded,
+                              color: AppColors.primary,
+                              size: 22,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Recorded Live Streams',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  'Review comments, sales data, and replay previous streams.',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 14,
+                            color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  
                   // 1. Stream Title Form
                   SettingsTextField(
                     label: 'Stream Title',
