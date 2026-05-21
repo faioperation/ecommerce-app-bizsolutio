@@ -21,12 +21,7 @@ class SellerDashboardScreen extends StatelessWidget {
       backgroundColor: isDark ? Colors.black : const Color(0xFFF8F9FC),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Action for starting a livestream / Go Live
-          Get.snackbar(
-            'Go Live',
-            'Livestreaming setup will open here.',
-            snackPosition: SnackPosition.BOTTOM,
-          );
+          context.push(AppRoutes.sellerSetupLivestream);
         },
         backgroundColor: isDark ? const Color(0xFF1E1E2A) : Colors.white,
         foregroundColor: isDark ? Colors.white : Colors.black87,
@@ -177,12 +172,7 @@ class SellerDashboardScreen extends StatelessWidget {
                       context.go(AppRoutes.sellerProducts);
                     },
                     onGoLive: () {
-                      // Trigger same action as floating camera
-                      Get.snackbar(
-                        'Go Live',
-                        'Livestreaming setup will open here.',
-                        snackPosition: SnackPosition.BOTTOM,
-                      );
+                      context.push(AppRoutes.sellerSetupLivestream);
                     },
                     onViewOrders: () {
                       context.go(AppRoutes.sellerOrders);

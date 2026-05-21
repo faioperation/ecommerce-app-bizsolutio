@@ -17,8 +17,8 @@ class ProfileController extends GetxController {
 
     user.value = ProfileUserModel(
       id: 'usr_001',
-      name: 'John Doe',
-      email: 'john.doe@email.com',
+      name: 'John Smith',
+      email: 'john.smith@email.com',
       ordersCount: 45,
       wishlistCount: 12,
       loyaltyPoints: 2400,

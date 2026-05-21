@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../routes/app_routes.dart';
 import '../../profile/controllers/cart_controller.dart';
@@ -217,7 +218,7 @@ class LiveShoppingBasketSheet extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      '£${product.price.toStringAsFixed(0)}',
+                                      '${AppConstants.currencySymbol}${product.price.toStringAsFixed(0)}',
                                       style: const TextStyle(
                                         color: AppColors.primary,
                                         fontSize: 14,
@@ -337,7 +338,7 @@ class LiveShoppingBasketSheet extends StatelessWidget {
                         ),
                         const SizedBox(height: 2),
                         Obx(() => Text(
-                          '${cartController.totalItemCount} Items • £${cartController.subtotal.toStringAsFixed(0)}',
+                          '${cartController.totalItemCount} Items • ${AppConstants.currencySymbol}${cartController.subtotal.toStringAsFixed(0)}',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 16,

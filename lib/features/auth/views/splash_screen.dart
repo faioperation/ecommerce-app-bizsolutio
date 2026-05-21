@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/auth_controller.dart';
+import '../widgets/glowing_floating_logo.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _navigateToNext() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 10));
     if (mounted) {
       final authController = Get.find<AuthController>();
       if (!authController.isAuthenticated.value) {
@@ -43,8 +44,11 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(AppImages.logo, height: 120),
-            const SizedBox(height: 16),
+            const GlowingFloatingLogo(
+              imagePath: AppImages.logo,
+              size: 130.0,
+            ),
+            const SizedBox(height: 12),
             Text(
               'Vango Live',
               style: Theme.of(context).textTheme.displayMedium?.copyWith(
@@ -54,15 +58,17 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Text(
-              'Your Social Commerce Hub',
+              'Watch  •  Shop  •  Go Live',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: isDark
                     ? Theme.of(
                         context,
-                      ).colorScheme.onSurface.withValues(alpha: 0.7)
-                    : Colors.white70,
+                      ).colorScheme.onSurface.withValues(alpha: 0.8)
+                    : Colors.white.withValues(alpha: 0.9),
+                letterSpacing: 1.2,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],

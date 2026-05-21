@@ -21,41 +21,41 @@ class SellerOrdersController extends GetxController {
   // ── Mock data — TODO: replace with API call ───────────────
   void loadOrders() {
     final address1 = const DeliveryAddressModel(
-      fullName: 'Rahul Ahmed',
-      phone: '+880 1712-345678',
-      addressLine1: '23 Mirpur Road',
-      addressLine2: 'Apt 4B',
-      city: 'Dhaka',
-      country: 'Bangladesh',
+      fullName: 'John Smith',
+      phone: '+1 (555) 123-4567',
+      addressLine1: '123 Melton Road',
+      addressLine2: '',
+      city: 'Leicester',
+      country: 'UK',
     );
     final address2 = const DeliveryAddressModel(
-      fullName: 'Priya Sharma',
-      phone: '+880 1812-987654',
-      addressLine1: '45 Agrabad',
-      city: 'Chittagong',
-      country: 'Bangladesh',
+      fullName: 'John Smith',
+      phone: '+1 (555) 123-4567',
+      addressLine1: '123 Melton Road',
+      city: 'Leicester',
+      country: 'UK',
     );
     final address3 = const DeliveryAddressModel(
-      fullName: 'Karim Hassan',
-      phone: '+880 1912-111222',
-      addressLine1: '12 Zindabazar',
-      city: 'Sylhet',
-      country: 'Bangladesh',
+      fullName: 'John Smith',
+      phone: '+1 (555) 123-4567',
+      addressLine1: '123 Melton Road',
+      city: 'Leicester',
+      country: 'UK',
     );
     final address4 = const DeliveryAddressModel(
-      fullName: 'Sara Khan',
-      phone: '+880 1612-333444',
-      addressLine1: '8 Rajpara',
-      city: 'Rajshahi',
-      country: 'Bangladesh',
+      fullName: 'John Smith',
+      phone: '+1 (555) 123-4567',
+      addressLine1: '123 Melton Road',
+      city: 'Leicester',
+      country: 'UK',
     );
 
     ordersList.assignAll([
       SellerOrderModel(
         id: '1001',
         orderNumber: '#1001',
-        customerName: 'Rahul Ahmed',
-        customerLocation: 'Dhaka, Bangladesh',
+        customerName: 'John Smith',
+        customerLocation: 'Leicester, UK',
         customerAvatar: '',
         items: const [
           OrderItemModel(id: 'p1', name: 'Premium Watch', price: 299.0, quantity: 1, imageUrl: ''),
@@ -73,8 +73,8 @@ class SellerOrdersController extends GetxController {
       SellerOrderModel(
         id: '1002',
         orderNumber: '#1002',
-        customerName: 'Priya Sharma',
-        customerLocation: 'Chittagong, Bangladesh',
+        customerName: 'John Smith',
+        customerLocation: 'Leicester, UK',
         customerAvatar: '',
         items: const [
           OrderItemModel(id: 'p3', name: 'Wireless Headphones', price: 199.0, quantity: 2, imageUrl: ''),
@@ -90,8 +90,8 @@ class SellerOrdersController extends GetxController {
       SellerOrderModel(
         id: '1003',
         orderNumber: '#1003',
-        customerName: 'Karim Hassan',
-        customerLocation: 'Sylhet, Bangladesh',
+        customerName: 'John Smith',
+        customerLocation: 'Leicester, UK',
         customerAvatar: '',
         items: const [
           OrderItemModel(id: 'p4', name: 'Smart Fitness Band', price: 89.0, quantity: 3, imageUrl: ''),
@@ -107,8 +107,8 @@ class SellerOrdersController extends GetxController {
       SellerOrderModel(
         id: '1004',
         orderNumber: '#1004',
-        customerName: 'Sara Khan',
-        customerLocation: 'Rajshahi, Bangladesh',
+        customerName: 'John Smith',
+        customerLocation: 'Leicester, UK',
         customerAvatar: '',
         items: const [
           OrderItemModel(id: 'p5', name: 'Premium Watch', price: 299.0, quantity: 1, imageUrl: ''),

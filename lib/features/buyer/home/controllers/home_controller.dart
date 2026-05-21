@@ -105,21 +105,21 @@ class HomeController extends GetxController {
       '1': <CommentModel>[
         CommentModel(
           id: 'c1',
-          userName: 'Alex Carter',
+          userName: 'John Smith',
           userProfileUrl: 'https://i.pravatar.cc/150?u=alex',
           commentText: 'This wireless headphone is absolutely amazing! 🔥',
           timestamp: DateTime.now().subtract(const Duration(hours: 2)),
         ),
         CommentModel(
           id: 'c2',
-          userName: 'Sarah Jenkins',
+          userName: 'John Smith',
           userProfileUrl: 'https://i.pravatar.cc/150?u=sarah',
           commentText: 'Does it support active noise cancelling?',
           timestamp: DateTime.now().subtract(const Duration(minutes: 45)),
         ),
         CommentModel(
           id: 'c3',
-          userName: 'David Miller',
+          userName: 'John Smith',
           userProfileUrl: 'https://i.pravatar.cc/150?u=david',
           commentText: 'Wow, looks sleek and premium.',
           timestamp: DateTime.now().subtract(const Duration(minutes: 10)),
@@ -128,14 +128,14 @@ class HomeController extends GetxController {
       '2': <CommentModel>[
         CommentModel(
           id: 'c4',
-          userName: 'Emma Watson',
+          userName: 'John Smith',
           userProfileUrl: 'https://i.pravatar.cc/150?u=emma',
           commentText: 'Can\'t wait for the live sale! 😍',
           timestamp: DateTime.now().subtract(const Duration(hours: 1)),
         ),
         CommentModel(
           id: 'c5',
-          userName: 'Ryan Reynolds',
+          userName: 'John Smith',
           userProfileUrl: 'https://i.pravatar.cc/150?u=ryan',
           commentText: 'Is there a discount code available?',
           timestamp: DateTime.now().subtract(const Duration(minutes: 20)),
@@ -144,7 +144,7 @@ class HomeController extends GetxController {
       '3': <CommentModel>[
         CommentModel(
           id: 'c6',
-          userName: 'Sophia Turner',
+          userName: 'John Smith',
           userProfileUrl: 'https://i.pravatar.cc/150?u=sophia',
           commentText: 'Matches my living room perfectly. Gorgeous design!',
           timestamp: DateTime.now().subtract(const Duration(hours: 3)),

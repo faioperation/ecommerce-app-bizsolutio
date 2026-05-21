@@ -38,7 +38,7 @@ class PasswordSuccessScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: const Text(
-                  'Return to Role Selection',
+                  'Jump back into Vango Live 🚀',
                   style: TextStyle(fontSize: 16),
                 ),
               ),

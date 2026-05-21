@@ -37,21 +37,21 @@ class SellerDashboardController extends GetxController {
         recentOrders: [
           DashboardOrderModel(
             orderId: '1001',
-            customerName: 'Rahul Ahmed',
+            customerName: 'John Smith',
             itemsCount: 2,
             amount: 450.0,
             status: 'new',
           ),
           DashboardOrderModel(
             orderId: '1002',
-            customerName: 'Ayesha Khan',
+            customerName: 'John Smith',
             itemsCount: 1,
             amount: 299.0,
             status: 'processing',
           ),
           DashboardOrderModel(
             orderId: '1003',
-            customerName: 'Karim Hossain',
+            customerName: 'John Smith',
             itemsCount: 3,
             amount: 847.0,
             status: 'shipped',
