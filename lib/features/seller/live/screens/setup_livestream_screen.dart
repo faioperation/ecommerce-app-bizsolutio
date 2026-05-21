@@ -296,7 +296,7 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
                         ),
                       ),
                       child: const Text(
-                        'Go Live Now',
+                        'Go Live',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
