@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/live_broadcast_controller.dart';
+import 'live_comment_card.dart';
 
 class LiveChatList extends StatelessWidget {
   final LiveBroadcastController controller;
@@ -21,54 +22,12 @@ class LiveChatList extends StatelessWidget {
         itemBuilder: (context, index) {
           // Because of reverse: true, index 0 is the newest, which is at the end of the list
           final comment = comments[comments.length - 1 - index];
-          final isSeller = comment.userName.contains('(You)');
           
-          return GestureDetector(
-            onTap: () => controller.setReplyTo(comment),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              decoration: BoxDecoration(
-                color: controller.replyingToComment.value?.id == comment.id 
-                    ? Colors.white.withValues(alpha: 0.1) 
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    comment.userName,
-                    style: TextStyle(
-                      color: isSeller ? const Color(0xFF6C4DFF) : Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 13,
-                      shadows: const [
-                        Shadow(
-                          color: Colors.black54,
-                          blurRadius: 2,
-                          offset: Offset(0, 1),
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    comment.message,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black54,
-                          blurRadius: 2,
-                          offset: Offset(0, 1),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          return LiveCommentCard(
+            comment: comment,
+            onReplyTap: controller.setReplyTo,
+            onLikeTap: controller.toggleLike,
+            isHighlighted: controller.replyingToComment.value?.id == comment.id,
           );
         },
       );

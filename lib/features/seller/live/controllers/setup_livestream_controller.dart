@@ -20,9 +20,12 @@ class SetupLivestreamController extends GetxController {
   }
 
   // Reactive state fields
-  final RxnString coverImagePath = RxnString();
   final RxList<StoreProductModel> selectedProducts = <StoreProductModel>[].obs;
   late TextEditingController titleController;
+  
+  // Stream options
+  final Rx<LiveType> selectedLiveType = LiveType.sell.obs;
+  final RxString searchQuery = ''.obs;
 
   @override
   void onInit() {
@@ -41,9 +44,26 @@ class SetupLivestreamController extends GetxController {
     return _storeController.store.value?.featuredProducts ?? [];
   }
 
-  /// Update the livestream cover image path reactively
-  void updateCoverImage(String? path) {
-    coverImagePath.value = path;
+  /// Get active seller's store products filtered by the search query
+  List<StoreProductModel> get filteredProducts {
+    final query = searchQuery.value.trim().toLowerCase();
+    if (query.isEmpty) {
+      return storeProducts;
+    }
+    return storeProducts.where((p) => p.title.toLowerCase().contains(query)).toList();
+  }
+
+  /// Set the live stream type selection
+  void selectLiveType(LiveType type) {
+    selectedLiveType.value = type;
+  }
+
+  /// Reset all form fields to their default unselected state
+  void reset() {
+    titleController.clear();
+    selectedProducts.clear();
+    selectedLiveType.value = LiveType.sell;
+    searchQuery.value = '';
   }
 
   /// Toggle selection state of a product to feature in the stream
@@ -92,8 +112,9 @@ class SetupLivestreamController extends GetxController {
 
     return LiveSessionData(
       title: title,
-      coverImagePath: coverImagePath.value,
+      coverImagePath: null, // Cover image removed per requirements
       selectedProducts: liveProducts,
+      liveType: selectedLiveType.value,
     );
   }
 }

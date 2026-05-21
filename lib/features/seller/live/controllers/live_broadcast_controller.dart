@@ -9,7 +9,7 @@ import '../models/live_comment_model.dart';
 /// Controller for the actual Live Broadcast screen.
 /// Handles Camera initialization, stream statistics, and chat logic.
 class LiveBroadcastController extends GetxController {
-  late final LiveSessionData sessionData;
+  late LiveSessionData sessionData;
 
   // Camera State
   CameraController? cameraController;
@@ -93,17 +93,27 @@ class LiveBroadcastController extends GetxController {
   }
 
   void _loadMockComments() {
-    // Adding the mock comments from the screenshot
     comments.assignAll([
       LiveCommentModel(
         id: '1',
         userName: 'John Smith',
         message: 'How much is the watch?',
         timestamp: DateTime.now().subtract(const Duration(seconds: 30)),
+        likeCount: 2,
+        replies: [
+          LiveCommentModel(
+            id: '1_1',
+            userName: 'Seller (You)',
+            message: 'It is \$120. Free shipping is active today!',
+            timestamp: DateTime.now().subtract(const Duration(seconds: 25)),
+            parentId: '1',
+            likeCount: 1,
+          ),
+        ],
       ),
       LiveCommentModel(
         id: '2',
-        userName: 'John Smith',
+        userName: 'Emma Watson',
         message: 'Do you ship to Chittagong?',
         timestamp: DateTime.now().subtract(const Duration(seconds: 15)),
       ),
@@ -118,20 +128,75 @@ class LiveBroadcastController extends GetxController {
     replyingToComment.value = null;
   }
 
+  void toggleLike(String commentId, {String? parentId}) {
+    if (parentId != null) {
+      final parentIndex = comments.indexWhere((c) => c.id == parentId);
+      if (parentIndex != -1) {
+        final parent = comments[parentIndex];
+        final replyIndex = parent.replies.indexWhere((r) => r.id == commentId);
+        if (replyIndex != -1) {
+          final reply = parent.replies[replyIndex];
+          final updatedIsLiked = !reply.isLiked;
+          final updatedLikeCount = updatedIsLiked ? reply.likeCount + 1 : reply.likeCount - 1;
+          
+          final updatedReplies = List<LiveCommentModel>.from(parent.replies);
+          updatedReplies[replyIndex] = reply.copyWith(
+            isLiked: updatedIsLiked,
+            likeCount: updatedLikeCount < 0 ? 0 : updatedLikeCount,
+          );
+          
+          comments[parentIndex] = parent.copyWith(replies: updatedReplies);
+        }
+      }
+    } else {
+      final commentIndex = comments.indexWhere((c) => c.id == commentId);
+      if (commentIndex != -1) {
+        final comment = comments[commentIndex];
+        final updatedIsLiked = !comment.isLiked;
+        final updatedLikeCount = updatedIsLiked ? comment.likeCount + 1 : comment.likeCount - 1;
+        
+        comments[commentIndex] = comment.copyWith(
+          isLiked: updatedIsLiked,
+          likeCount: updatedLikeCount < 0 ? 0 : updatedLikeCount,
+        );
+      }
+    }
+  }
+
   void sendMessage() {
     final text = chatInputController.text.trim();
     if (text.isNotEmpty) {
-      // If replying to someone, prepend their name
-      final finalMessage = replyingToComment.value != null 
-          ? '@${replyingToComment.value!.userName} $text' 
-          : text;
+      final now = DateTime.now();
+      final parentComment = replyingToComment.value;
 
-      comments.add(LiveCommentModel(
-        id: DateTime.now().millisecondsSinceEpoch.toString(),
-        userName: 'Seller (You)',
-        message: finalMessage,
-        timestamp: DateTime.now(),
-      ));
+      if (parentComment != null) {
+        // If the targeted comment is a reply, we link it under the main parent
+        final parentId = parentComment.parentId ?? parentComment.id;
+        final parentIndex = comments.indexWhere((c) => c.id == parentId);
+        
+        if (parentIndex != -1) {
+          final parent = comments[parentIndex];
+          final newReply = LiveCommentModel(
+            id: now.millisecondsSinceEpoch.toString(),
+            userName: 'Seller (You)',
+            message: text,
+            timestamp: now,
+            parentId: parentId,
+          );
+          
+          comments[parentIndex] = parent.copyWith(
+            replies: [...parent.replies, newReply],
+          );
+        }
+      } else {
+        // Add as a normal parent comment
+        comments.add(LiveCommentModel(
+          id: now.millisecondsSinceEpoch.toString(),
+          userName: 'Seller (You)',
+          message: text,
+          timestamp: now,
+        ));
+      }
       
       chatInputController.clear();
       replyingToComment.value = null;
