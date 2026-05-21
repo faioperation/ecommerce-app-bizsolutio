@@ -14,8 +14,8 @@ class SellerSettingsController extends GetxController {
   // Mock Active Profile State
   final Rx<SellerProfileModel> profile = const SellerProfileModel(
     name: 'John Doe Store',
-    mobile: '+8801712345678',
-    address: '123 Fashion Street, Dhaka, Bangladesh',
+    mobile: '+1-555-123-4567',
+    address: '123 Melton Road, Leicester, UK',
     imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200',
   ).obs;
 

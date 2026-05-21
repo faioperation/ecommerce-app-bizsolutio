@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import '../controllers/seller_settings_controller.dart';
 import '../widgets/settings_item_tile.dart';
 import 'profile_information_screen.dart';
 import '../../../buyer/profile/screens/change_password_screen.dart';
-import '../../../buyer/checkout/screens/payment_method_screen.dart';
+import 'seller_payment_screen.dart';
 import '../../../buyer/profile/screens/terms_of_service_screen.dart';
 import '../../../buyer/profile/screens/privacy_policy_screen.dart';
 import '../../../auth/controllers/auth_controller.dart';
@@ -51,7 +52,7 @@ class _SellerSettingsScreenState extends State<SellerSettingsScreen> {
             color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
             size: 20,
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
         ),
         title: Text(
           'Settings',
@@ -128,7 +129,7 @@ class _SellerSettingsScreenState extends State<SellerSettingsScreen> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => const PaymentMethodScreen(isSelectionMode: false),
+                          builder: (context) => const SellerPaymentScreen(),
                         ),
                       );
                     },

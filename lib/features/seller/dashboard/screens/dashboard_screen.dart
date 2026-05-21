@@ -94,9 +94,7 @@ class SellerDashboardScreen extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          // Navigate to Settings branch (index 4)
-                          // With GoRouter, we can route directly to the path
-                          context.go(AppRoutes.sellerSettings);
+                          context.push(AppRoutes.sellerSettings);
                         },
                         icon: Icon(
                           Icons.settings_outlined,
