@@ -71,6 +71,7 @@ import '../features/seller/live/screens/setup_livestream_screen.dart';
 import '../features/seller/live/screens/live_preview_screen.dart';
 import '../features/seller/live/screens/live_broadcast_screen.dart';
 import '../features/seller/live/models/live_session_data.dart';
+import '../features/seller/settings/screens/seller_settings_screen.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -420,6 +421,10 @@ class AppPages {
       GoRoute(
         path: AppRoutes.sellerStoreSettings,
         builder: (context, state) => const StoreSettingsScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerSettings,
+        builder: (context, state) => const SellerSettingsScreen(),
       ),
       GoRoute(
         path: AppRoutes.sellerSetupLivestream,
