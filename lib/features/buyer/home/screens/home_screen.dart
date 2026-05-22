@@ -64,30 +64,137 @@ class BuyerHomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 110,
                   child: Obx(
-                    () => ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: controller.stories.length,
-                      itemBuilder: (context, index) {
-                        final story = controller.stories[index];
-                        return Obx(() => StoryCard(
-                          imageUrl: story.profileImage,
-                          name: story.sellerName,
-                          isLive: story.isLive,
-                          isSeen: story.isSeen.value,
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                fullscreenDialog: true,
-                                builder: (context) => MyDayViewScreen(
-                                  story: story,
-                                  homeController: controller,
+                    () {
+                      final hasMyStory = controller.myStory.value != null;
+                      final totalCount = controller.stories.length + 1;
+
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: totalCount,
+                        itemBuilder: (context, index) {
+                          if (index == 0) {
+                            // Render User's own Add Day / My Day
+                            if (!hasMyStory) {
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 16),
+                                child: GestureDetector(
+                                  onTap: () => _showCreateDaySheet(context, controller),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(3),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: Colors.grey.withValues(alpha: 0.3),
+                                            width: 2.0,
+                                          ),
+                                        ),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(2),
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.white,
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              const CircleAvatar(
+                                                radius: 33,
+                                                backgroundImage: NetworkImage(
+                                                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200',
+                                                ),
+                                              ),
+                                              Positioned(
+                                                bottom: 0,
+                                                right: 0,
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(2),
+                                                  decoration: const BoxDecoration(
+                                                    color: Colors.white,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Container(
+                                                    padding: const EdgeInsets.all(3),
+                                                    decoration: const BoxDecoration(
+                                                      color: Color(0xFF6C4DFF),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: const Icon(
+                                                      Icons.add,
+                                                      color: Colors.white,
+                                                      size: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      const SizedBox(
+                                        width: 80,
+                                        child: Text(
+                                          'Add Day',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'Inter',
+                                            color: Colors.black87,
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ));
-                      },
-                    ),
+                              );
+                            } else {
+                              final myStoryData = controller.myStory.value!;
+                              return Obx(() => StoryCard(
+                                imageUrl: myStoryData.profileImage,
+                                name: 'My Day',
+                                isLive: false,
+                                isSeen: myStoryData.isSeen.value,
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      fullscreenDialog: true,
+                                      builder: (context) => MyDayViewScreen(
+                                        story: myStoryData,
+                                        homeController: controller,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ));
+                            }
+                          }
+
+                          // Render standard stories
+                          final story = controller.stories[index - 1];
+                          return Obx(() => StoryCard(
+                            imageUrl: story.profileImage,
+                            name: story.sellerName,
+                            isLive: story.isLive,
+                            isSeen: story.isSeen.value,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  fullscreenDialog: true,
+                                  builder: (context) => MyDayViewScreen(
+                                    story: story,
+                                    homeController: controller,
+                                  ),
+                                ),
+                              );
+                            },
+                          ));
+                        },
+                      );
+                    },
                   ),
                 ),
 
@@ -171,6 +278,206 @@ class BuyerHomeScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showCreateDaySheet(BuildContext context, HomeController controller) {
+    final captionController = TextEditingController();
+    final RxString selectedImage = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600'.obs;
+
+    final List<Map<String, String>> templates = [
+      {
+        'title': 'Cool Denim',
+        'url': 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600',
+      },
+      {
+        'title': 'Neon Vibe',
+        'url': 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=600',
+      },
+      {
+        'title': 'Sunny Sunset',
+        'url': 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=600',
+      },
+    ];
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Create your Day',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Select a template and write your thoughts!',
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                const Text(
+                  'Select Outfit / Style Layout:',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  height: 100,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: templates.length,
+                    itemBuilder: (context, idx) {
+                      final item = templates[idx];
+                      return Obx(() {
+                        final isSelected = selectedImage.value == item['url'];
+                        return GestureDetector(
+                          onTap: () {
+                            selectedImage.value = item['url']!;
+                          },
+                          child: Container(
+                            width: 100,
+                            margin: const EdgeInsets.only(right: 12),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: isSelected ? const Color(0xFF6C4DFF) : Colors.transparent,
+                                width: 2.5,
+                              ),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Image.network(
+                                    item['url']!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Container(
+                                    color: Colors.black.withValues(alpha: 0.15),
+                                  ),
+                                  Positioned(
+                                    bottom: 6,
+                                    left: 6,
+                                    right: 6,
+                                    child: Text(
+                                      item['title']!,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Add a Caption:',
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey.shade200),
+                  ),
+                  child: TextField(
+                    controller: captionController,
+                    maxLines: 2,
+                    style: const TextStyle(color: Colors.black87, fontSize: 14),
+                    decoration: InputDecoration(
+                      hintText: 'Share what you are wearing today...',
+                      hintStyle: TextStyle(color: Colors.grey[500], fontSize: 13),
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      controller.addMyStorySlide(
+                        selectedImage.value,
+                        captionController.text.trim(),
+                      );
+                      Navigator.pop(context);
+                      Get.snackbar(
+                        'Success',
+                        'Successfully posted to your Day! 🎉',
+                        snackPosition: SnackPosition.BOTTOM,
+                        backgroundColor: const Color(0xFF6C4DFF),
+                        colorText: Colors.white,
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF6C4DFF),
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(26),
+                      ),
+                    ),
+                    child: const Text(
+                      'Post to My Day',
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

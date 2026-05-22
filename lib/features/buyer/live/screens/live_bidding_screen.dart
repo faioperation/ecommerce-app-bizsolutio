@@ -353,29 +353,26 @@ class LiveBiddingScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                           height: 48,
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.5),
+                            color: Colors.black.withValues(alpha: 0.6),
                             borderRadius: BorderRadius.circular(24),
                             border: Border.all(
-                              color: AppColors.accentPink.withValues(
-                                alpha: 0.4,
-                              ),
-                              width: 1.0,
+                              color: AppColors.accentPink.withValues(alpha: 0.5),
+                              width: 1.2,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: AppColors.accentPink.withValues(
-                                  alpha: 0.05,
-                                ),
-                                blurRadius: 8,
+                                color: AppColors.accentPink.withValues(alpha: 0.1),
+                                blurRadius: 10,
                                 spreadRadius: 1,
                               ),
                             ],
                           ),
                           child: Row(
                             children: [
+                              const SizedBox(width: 12),
                               Expanded(
                                 child: Obx(
                                   () => TextField(
@@ -383,34 +380,52 @@ class LiveBiddingScreen extends StatelessWidget {
                                     enabled: !controller.isAuctionEnded.value,
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 13,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                     onSubmitted: (_) => controller.addComment(),
                                     decoration: const InputDecoration(
-                                      hintText:
-                                          'Add a comment or enter a bid...',
+                                      hintText: 'Add a comment or enter a bid...',
                                       hintStyle: TextStyle(
                                         color: Colors.white54,
-                                        fontSize: 13,
+                                        fontSize: 14,
                                       ),
                                       border: InputBorder.none,
                                       isDense: true,
+                                      contentPadding: EdgeInsets.symmetric(vertical: 8),
                                     ),
                                   ),
                                 ),
                               ),
+                              const SizedBox(width: 8),
                               Obx(
-                                () => IconButton(
-                                  icon: const Icon(
-                                    Icons.send_rounded,
-                                    color: AppColors.accentPink,
-                                    size: 18,
-                                  ),
-                                  onPressed: controller.isAuctionEnded.value
+                                () => GestureDetector(
+                                  onTap: controller.isAuctionEnded.value
                                       ? null
                                       : controller.addComment,
-                                  constraints: const BoxConstraints(),
-                                  padding: EdgeInsets.zero,
+                                  child: Opacity(
+                                    opacity: controller.isAuctionEnded.value ? 0.5 : 1.0,
+                                    child: Container(
+                                      width: 36,
+                                      height: 36,
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.accentPink,
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Color(0x3DF42F63),
+                                            blurRadius: 6,
+                                            spreadRadius: 1,
+                                          ),
+                                        ],
+                                      ),
+                                      child: const Icon(
+                                        Icons.send_rounded,
+                                        color: Colors.white,
+                                        size: 16,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
