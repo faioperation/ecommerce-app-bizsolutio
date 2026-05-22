@@ -5,6 +5,7 @@ import '../controllers/login_controller.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/constants/app_images.dart';
+import '../../../core/widgets/glowing_floating_logo.dart';
 
 class LoginScreen extends StatelessWidget {
   final UserRole role;
@@ -27,7 +28,12 @@ class LoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Image.asset(AppImages.logo, height: 100),
+                  const Center(
+                    child: GlowingFloatingLogo(
+                      imagePath: AppImages.logo,
+                      size: 100.0,
+                    ),
+                  ),
                   const SizedBox(height: 32),
                   RichText(
                     textAlign: TextAlign.center,

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/forgot_password_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/constants/app_images.dart';
+import '../../../../core/widgets/glowing_floating_logo.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
   const ForgotPasswordScreen({super.key});
@@ -15,13 +15,18 @@ class ForgotPasswordScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Forgot Password')),
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: AppSpacing.edgeInsetsAllLg,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 32),
-              Image.asset(AppImages.logo, height: 100),
+              const Center(
+                child: GlowingFloatingLogo(
+                  imagePath: AppImages.logo,
+                  size: 100.0,
+                ),
+              ),
               const SizedBox(height: 24),
               Text(
                 'Reset Your Password',

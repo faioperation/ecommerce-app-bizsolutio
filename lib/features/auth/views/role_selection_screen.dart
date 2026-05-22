@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_images.dart';
+import '../../../core/widgets/glowing_floating_logo.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../routes/app_routes.dart';
@@ -23,7 +24,12 @@ class RoleSelectionScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Spacer(),
-              Image.asset(AppImages.logo, height: 100),
+              const Center(
+                child: GlowingFloatingLogo(
+                  imagePath: AppImages.logo,
+                  size: 100.0,
+                ),
+              ),
               const Spacer(),
               Text(
                 'Welcome to Vango Live',

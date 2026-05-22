@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
+import '../theme/app_colors.dart';
 
 /// A custom widget that renders a logo with a floating (hovering) animation
 /// and a soft, pulsing multi-layered halo/glow effect in the background.
