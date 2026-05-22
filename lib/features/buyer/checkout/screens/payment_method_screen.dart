@@ -7,7 +7,8 @@ import '../widgets/payment_method_tile.dart';
 import '../widgets/add_card_dialog.dart';
 
 class PaymentMethodScreen extends StatelessWidget {
-  const PaymentMethodScreen({super.key});
+  final bool isSelectionMode;
+  const PaymentMethodScreen({super.key, this.isSelectionMode = true});
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +96,12 @@ class PaymentMethodScreen extends StatelessWidget {
               if (wallet != null) ...[
                 PaymentMethodTile(
                   method: wallet,
-                  isSelected: controller.selectedPaymentId.value == wallet.id,
+                  isSelected: isSelectionMode && controller.selectedPaymentId.value == wallet.id,
                   onTap: () {
-                    controller.selectPayment(wallet.id);
-                    Navigator.of(context).pop();
+                    if (isSelectionMode) {
+                      controller.selectPayment(wallet.id);
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
                 const SizedBox(height: 8),
@@ -120,16 +123,18 @@ class PaymentMethodScreen extends StatelessWidget {
                 ...cards.map(
                   (card) => PaymentMethodTile(
                     method: card,
-                    isSelected: controller.selectedPaymentId.value == card.id,
+                    isSelected: isSelectionMode && controller.selectedPaymentId.value == card.id,
                     onTap: () {
-                      controller.selectPayment(card.id);
-                      Navigator.of(context).pop();
+                      if (isSelectionMode) {
+                        controller.selectPayment(card.id);
+                        Navigator.of(context).pop();
+                      }
                     },
                   ),
                 ),
               ],
 
-              if (cashOpt != null) ...[
+              if (isSelectionMode && cashOpt != null) ...[
                 const SizedBox(height: 8),
                 _buildCashOnDelivery(context, controller, cashOpt, isDark),
               ],

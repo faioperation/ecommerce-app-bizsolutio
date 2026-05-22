@@ -4,11 +4,13 @@ class LiveSessionData {
   final String title;
   final String? coverImagePath; // null if no cover was uploaded
   final List<LiveStreamProduct> selectedProducts;
+  final LiveType liveType;
 
   const LiveSessionData({
     required this.title,
     this.coverImagePath,
     required this.selectedProducts,
+    required this.liveType,
   });
 }
 

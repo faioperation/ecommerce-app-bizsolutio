@@ -6,6 +6,7 @@ import '../controllers/profile_controller.dart';
 import '../widgets/profile_menu_tile.dart';
 import '../widgets/profile_section_header.dart';
 import '../../../../routes/app_routes.dart';
+import '../../../auth/controllers/auth_controller.dart';
 
 class BuyerProfileScreen extends StatelessWidget {
   const BuyerProfileScreen({super.key});
@@ -198,6 +199,49 @@ class BuyerProfileScreen extends StatelessWidget {
                       onTap: () => context.push(AppRoutes.checkoutPayment),
                     ),
                   ],
+                ),
+
+                const SizedBox(height: 16),
+
+                // Log Out Section
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: TextButton(
+                      onPressed: () =>
+                          Get.find<AuthController>().logout(context),
+                      style: TextButton.styleFrom(
+                        backgroundColor: isDark
+                            ? const Color(0xFF3B1E22)
+                            : const Color(0xFFFFECEF),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.logout_rounded,
+                            color: Color(0xFFFF486A),
+                            size: 18,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            'Log Out',
+                            style: TextStyle(
+                              color: Color(0xFFFF486A),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.5,
+                              fontFamily: 'Inter',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 32),

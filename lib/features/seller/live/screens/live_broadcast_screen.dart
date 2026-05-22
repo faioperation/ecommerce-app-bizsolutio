@@ -9,12 +9,32 @@ import '../widgets/live_chat_list.dart';
 import '../widgets/live_pinned_products.dart';
 import '../widgets/live_chat_input.dart';
 
-class LiveBroadcastScreen extends StatelessWidget {
+class LiveBroadcastScreen extends StatefulWidget {
   final LiveSessionData sessionData;
 
   const LiveBroadcastScreen({super.key, required this.sessionData});
 
-  void _confirmEndLive(BuildContext context, LiveBroadcastController controller) {
+  @override
+  State<LiveBroadcastScreen> createState() => _LiveBroadcastScreenState();
+}
+
+class _LiveBroadcastScreenState extends State<LiveBroadcastScreen> {
+  late final LiveBroadcastController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(LiveBroadcastController());
+    controller.init(widget.sessionData);
+  }
+
+  @override
+  void dispose() {
+    Get.delete<LiveBroadcastController>();
+    super.dispose();
+  }
+
+  void _confirmEndLive(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -43,10 +63,6 @@ class LiveBroadcastScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize controller and pass session data
-    final controller = Get.put(LiveBroadcastController());
-    controller.init(sessionData);
-
     return Scaffold(
       backgroundColor: Colors.black, // Dark background for live stream
       resizeToAvoidBottomInset: true, // Allow chat input to push up
@@ -65,7 +81,7 @@ class LiveBroadcastScreen extends StatelessWidget {
                 Obx(() => LiveTopBar(
                   viewerCount: controller.viewerCount.value,
                   liveDuration: controller.liveDuration.value,
-                  onClose: () => _confirmEndLive(context, controller),
+                  onClose: () => _confirmEndLive(context),
                 )),
                 
                 // Spacer pushes chat and products to bottom

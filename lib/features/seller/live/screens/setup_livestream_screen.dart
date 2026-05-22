@@ -1,12 +1,11 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
-import '../../Store/widgets/dashed_rect_painter.dart';
+import '../../../../routes/app_routes.dart';
 import '../../Store/widgets/settings_text_field.dart';
 import '../controllers/setup_livestream_controller.dart';
 import '../widgets/live_product_selection_card.dart';
+import '../widgets/live_type_selector.dart';
 import '../widgets/tips_card.dart';
 import '../../../../core/theme/app_colors.dart';
 
@@ -21,35 +20,21 @@ class SetupLivestreamScreen extends StatefulWidget {
 
 class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
   final SetupLivestreamController _controller = Get.put(SetupLivestreamController());
-  final ImagePicker _picker = ImagePicker();
 
-  /// Pick cover photo from local phone storage gallery
-  Future<void> _pickCoverImage() async {
-    try {
-      final XFile? image = await _picker.pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 85,
-      );
-      if (image != null) {
-        _controller.updateCoverImage(image.path);
-      }
-    } catch (e) {
-      debugPrint('Error picking stream cover image: $e');
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to pick cover image. Please grant storage access.'),
-          backgroundColor: AppColors.error,
-        ),
-      );
-    }
+  @override
+  void dispose() {
+    Get.delete<SetupLivestreamController>();
+    super.dispose();
   }
 
   /// Handles submit execution
   void _handleSubmit() {
     final sessionData = _controller.validateAndSubmit(context);
     if (sessionData != null) {
-      context.push('/seller/live-preview', extra: sessionData);
+      context.push(AppRoutes.sellerLiveBroadcast, extra: sessionData).then((_) {
+        // Clear all selections when returning from a broadcast
+        _controller.reset();
+      });
     }
   }
 
@@ -85,6 +70,17 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.history_rounded,
+              color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            ),
+            tooltip: 'Past Lives',
+            onPressed: () => context.push(AppRoutes.sellerPastLivesList),
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: Column(
         children: [
@@ -95,132 +91,80 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 1. Cover Image Header
-                  Text(
-                    'Cover Image',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                  // 0. Past Lives Quick Access Banner
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 24),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: isDark
+                            ? [const Color(0xFF2E1A47), const Color(0xFF1E1E22)]
+                            : [const Color(0xFFECE6F5), Colors.white],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: InkWell(
+                      onTap: () => context.push(AppRoutes.sellerPastLivesList),
+                      borderRadius: BorderRadius.circular(16),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.15),
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.video_library_rounded,
+                              color: AppColors.primary,
+                              size: 22,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Recorded Live Streams',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                                  ),
+                                ),
+                                const SizedBox(height: 2),
+                                Text(
+                                  'Review comments, sales data, and replay previous streams.',
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 14,
+                            color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 12),
                   
-                  // Dotted Cover Picker / Preview Box
-                  Obx(() {
-                    final coverPath = _controller.coverImagePath.value;
-                    
-                    return AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 250),
-                      child: coverPath != null
-                          ? Container(
-                              key: const ValueKey('preview'),
-                              height: 160,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                image: DecorationImage(
-                                  image: FileImage(File(coverPath)),
-                                  fit: BoxFit.cover,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withValues(alpha: 0.1),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  )
-                                ],
-                              ),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: Colors.black.withValues(alpha: 0.35),
-                                    ),
-                                  ),
-                                  Center(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        ElevatedButton.icon(
-                                          onPressed: _pickCoverImage,
-                                          icon: const Icon(Icons.edit, size: 16),
-                                          label: const Text('Change'),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                            foregroundColor: AppColors.lightTextPrimary,
-                                            elevation: 0,
-                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(12),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 12),
-                                        ElevatedButton.icon(
-                                          onPressed: () => _controller.updateCoverImage(null),
-                                          icon: const Icon(Icons.delete_outline, size: 16),
-                                          label: const Text('Remove'),
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: AppColors.error,
-                                            foregroundColor: Colors.white,
-                                            elevation: 0,
-                                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(12),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          : InkWell(
-                              key: const ValueKey('upload'),
-                              onTap: _pickCoverImage,
-                              borderRadius: BorderRadius.circular(16),
-                              child: CustomPaint(
-                                painter: DashedRectPainter(
-                                  color: AppColors.primary.withValues(alpha: 0.3),
-                                  borderRadius: 16,
-                                  dash: 6,
-                                  gap: 4,
-                                  strokeWidth: 1.5,
-                                ),
-                                child: Container(
-                                  height: 160,
-                                  width: double.infinity,
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.image_outlined,
-                                        size: 44,
-                                        color: labelColor.withValues(alpha: 0.7),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Text(
-                                        'Upload cover image',
-                                        style: TextStyle(
-                                          color: labelColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                    );
-                  }),
-                  const SizedBox(height: 24),
-                  
-                  // 2. Stream Title Form
+                  // 1. Stream Title Form
                   SettingsTextField(
                     label: 'Stream Title',
                     controller: _controller.titleController,
@@ -228,7 +172,7 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
                   ),
                   const SizedBox(height: 24),
                   
-                  // 3. Products List Header
+                  // 2. Products List Header
                   Text(
                     'Select Products to Feature',
                     style: TextStyle(
@@ -239,17 +183,51 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
                   ),
                   const SizedBox(height: 12),
                   
+                  // Search Bar Widget
+                  Container(
+                    decoration: BoxDecoration(
+                      color: isDark ? const Color(0xFF1E1E22) : const Color(0xFFF9FAFB),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: borderColor),
+                    ),
+                    child: TextField(
+                      onChanged: (val) => _controller.searchQuery.value = val,
+                      style: TextStyle(
+                        color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+                        fontSize: 14,
+                      ),
+                      decoration: InputDecoration(
+                        hintText: 'Search products...',
+                        hintStyle: TextStyle(
+                          color: (isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary).withValues(alpha: 0.6),
+                          fontSize: 14,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+                          size: 20,
+                        ),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  
                   // Interactive reactive list of products
                   Obx(() {
-                    final products = _controller.storeProducts;
+                    final products = _controller.filteredProducts;
                     // Force Obx to track the selection list by reading it synchronously
                     final selectedList = _controller.selectedProducts.toList();
                     
                     if (products.isEmpty) {
+                      final hasSearch = _controller.searchQuery.value.trim().isNotEmpty;
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: Text(
-                          'No products found in your store. Add products to feature them.',
+                          hasSearch
+                              ? 'No products match your search.'
+                              : 'No products found in your store. Add products to feature them.',
                           style: TextStyle(
                             fontSize: 13,
                             color: labelColor,
@@ -275,7 +253,14 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
                       },
                     );
                   }),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 24),
+                  
+                  // 3. Live Type Selection (Sell vs Bidding)
+                  Obx(() => LiveTypeSelector(
+                        selectedType: _controller.selectedLiveType.value,
+                        onTypeSelected: _controller.selectLiveType,
+                      )),
+                  const SizedBox(height: 24),
                   
                   // 4. Suggestions advice card
                   const TipsCard(),
@@ -294,27 +279,47 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
               ),
             ),
             child: SafeArea(
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _handleSubmit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                    elevation: 1,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: _handleSubmit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.white,
+                        elevation: 1,
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        'Go Live',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                  child: const Text(
-                    'Continue',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                  const SizedBox(height: 8),
+                  TextButton(
+                    onPressed: () => context.pop(),
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 44),
+                    ),
+                    child: Text(
+                      'Back',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? Colors.white70 : Colors.black87,
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
