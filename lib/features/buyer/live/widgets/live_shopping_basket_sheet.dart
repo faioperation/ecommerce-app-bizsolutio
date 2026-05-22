@@ -78,13 +78,13 @@ class LiveShoppingBasketSheet extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 2),
-                      Text(
-                        '174.2K followers  |  123.4K sold',
-                        style: TextStyle(
-                          color: Colors.grey.shade500,
-                          fontSize: 11,
-                        ),
-                      ),
+                      // Text(
+                      //   '174.2K followers  |  123.4K sold',
+                      //   style: TextStyle(
+                      //     color: Colors.grey.shade500,
+                      //     fontSize: 11,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -245,32 +245,32 @@ class LiveShoppingBasketSheet extends StatelessWidget {
                                 const SizedBox(height: 4),
 
                                 // Delivery and Returns Badges
-                                Row(
-                                  children: [
-                                    if (product.deliveryOption != null)
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFE2F9F3),
-                                          borderRadius: BorderRadius.circular(4),
-                                        ),
-                                        child: const Row(
-                                          children: [
-                                            Icon(Icons.local_shipping_outlined, color: Colors.teal, size: 10),
-                                            SizedBox(width: 2),
-                                            Text(
-                                              'Free 3-day delivery',
-                                              style: TextStyle(
-                                                color: Colors.teal,
-                                                fontSize: 8,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                  ],
-                                ),
+                                // Row(
+                                //   children: [
+                                //     if (product.deliveryOption != null)
+                                //       Container(
+                                //         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                //         decoration: BoxDecoration(
+                                //           color: const Color(0xFFE2F9F3),
+                                //           borderRadius: BorderRadius.circular(4),
+                                //         ),
+                                //         child: const Row(
+                                //           children: [
+                                //             Icon(Icons.local_shipping_outlined, color: Colors.teal, size: 10),
+                                //             SizedBox(width: 2),
+                                //             Text(
+                                //               'Free 3-day delivery',
+                                //               style: TextStyle(
+                                //                 color: Colors.teal,
+                                //                 fontSize: 8,
+                                //                 fontWeight: FontWeight.bold,
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //   ],
+                                // ),
                                 const SizedBox(height: 6),
 
                                 // Price & Buy Actions row
@@ -315,11 +315,11 @@ class LiveShoppingBasketSheet extends StatelessWidget {
                                               border: Border.all(color: Colors.grey.shade300, width: 1.0),
                                               borderRadius: BorderRadius.circular(6),
                                             ),
-                                            child: const Icon(
-                                              Icons.add_shopping_cart_rounded,
-                                              color: Colors.black87,
-                                              size: 16,
-                                            ),
+                                            // child: const Icon(
+                                            //   Icons.add_shopping_cart_rounded,
+                                            //   color: Colors.black87,
+                                            //   size: 16,
+                                            // ),
                                           ),
                                         ),
                                         const SizedBox(width: 8),

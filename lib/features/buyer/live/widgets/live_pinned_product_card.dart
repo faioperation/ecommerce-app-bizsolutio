@@ -117,16 +117,16 @@ class LivePinnedProductCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       if (product.flashSaleText != null)
-                        Text(
-                          product.flashSaleText!,
-                          style: const TextStyle(
-                            color: Color(0xFFF42F63),
-                            fontSize: 9,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        // Text(
+                        //   product.flashSaleText!,
+                        //   style: const TextStyle(
+                        //     color: Color(0xFFF42F63),
+                        //     fontSize: 9,
+                        //     fontWeight: FontWeight.w600,
+                        //   ),
+                        //   maxLines: 1,
+                        //   overflow: TextOverflow.ellipsis,
+                        // ),
                       const SizedBox(height: 2),
                       Text(
                         '${AppConstants.currencySymbol}${product.price.toStringAsFixed(2)}',

@@ -325,218 +325,524 @@ class LiveSellScreen extends StatelessWidget {
                     );
                   }),
 
-                  // 4. Comment Input & Icons Row
-                  Row(
-                    children: [
-                      // Shopping Bag Button (Left side of comments)
-                      GestureDetector(
-                        onTap: () => _showLiveShoppingBasket(context, controller),
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.4),
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: Colors.white24,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              const Icon(
-                                Icons.shopping_bag_rounded,
-                                color: Colors.orange,
-                                size: 20,
-                              ),
-                              Positioned(
-                                right: -2,
-                                top: -2,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF42F63),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 16,
-                                  ),
-                                  child: const Text(
-                                    '99+',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 6,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
 
-                      // Glassmorphic Input Textfield
-                      Expanded(
-                        child: Container(
-                          height: 48,
+                  // 4. Comment Input & Action Row
+
+                  // ===============================
+// FACEBOOK / TIKTOK STYLE
+// COMMENT INPUT BAR
+// ===============================
+
+                  SizedBox(
+                    height: 56,
+
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+
+                      children: [
+
+                        const SizedBox(width: 4),
+
+                        /// =========================
+                        /// COMMENT INPUT BOX
+                        /// =========================
+
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.68,
+
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                          ),
+
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.6),
-                            borderRadius: BorderRadius.circular(24),
+                            color: Colors.black.withOpacity(0.45),
+
+                            borderRadius: BorderRadius.circular(30),
+
                             border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.25),
-                              width: 1.2,
+                              color: Colors.white.withOpacity(0.08),
                             ),
                           ),
+
                           child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: TextField(
-                                  controller: controller.commentController,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.4,
-                                  ),
-                                  onSubmitted: (_) => controller.addComment(),
-                                  textAlignVertical: TextAlignVertical.center,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Say something...',
-                                    hintStyle: TextStyle(
-                                      color: Colors.white54,
-                                      fontSize: 14,
-                                    ),
-                                    border: InputBorder.none,
-                                    isDense: false,
-                                    contentPadding: EdgeInsets.zero,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 6),
+
+                              /// =========================
+                              /// SHOPPING BAG BUTTON
+                              /// =========================
+
                               GestureDetector(
-                                onTap: controller.addComment,
+                                onTap: () =>
+                                    _showLiveShoppingBasket(context, controller),
+
                                 child: Container(
-                                  width: 36,
                                   height: 36,
-                                  margin: const EdgeInsets.only(right: 6),
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xFFF42F63),
+                                  width: 36,
+
+                                  decoration: BoxDecoration(
+                                    color: Colors.orange.withOpacity(0.15),
                                     shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0x3DF42F63),
-                                        blurRadius: 6,
-                                        spreadRadius: 1,
+                                  ),
+
+                                  child: Stack(
+                                    alignment: Alignment.center,
+
+                                    children: [
+
+                                      const Icon(
+                                        Icons.shopping_bag_rounded,
+                                        color: Colors.orange,
+                                        size: 18,
+                                      ),
+
+                                      Positioned(
+                                        right: 0,
+                                        top: 0,
+
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 3,
+                                            vertical: 1,
+                                          ),
+
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFF42F63),
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+
+                                          child: const Text(
+                                            '99+',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 6,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  child: const Icon(
-                                    Icons.send_rounded,
-                                    color: Colors.white,
-                                    size: 16,
-                                  ),
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
 
-                      // Emoji trigger icon
-                      _buildBottomActionIcon(
-                        icon: Icons.sentiment_satisfied_alt_rounded,
-                        onTap: () => showEmojiBar.toggle(),
-                      ),
-                      const SizedBox(width: 6),
+                              const SizedBox(width: 10),
 
-                      // Co-host/Connect icon
-                      _buildBottomActionIcon(
-                        icon: Icons.people_outline_rounded,
-                        onTap: () {
-                          Get.snackbar(
-                            'Co-Host Request',
-                            'Sending request to connect with the host...',
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.black87,
-                            colorText: Colors.white,
-                          );
-                        },
-                      ),
-                      const SizedBox(width: 6),
+                              /// =========================
+                              /// TEXT FIELD
+                              /// =========================
 
-                      // Rose icon
-                      _buildBottomActionIcon(
-                        icon: Icons.local_florist_rounded,
-                        customWidget: const Text('🌹', style: TextStyle(fontSize: 16)),
-                        onTap: () => controller.sendRose(),
-                      ),
-                      const SizedBox(width: 6),
+                              Expanded(
+                                child: TextField(
+                                  controller: controller.commentController,
 
-                      // Gift box icon
-                      _buildBottomActionIcon(
-                        icon: Icons.card_giftcard_rounded,
-                        customWidget: const Text('🎁', style: TextStyle(fontSize: 16)),
-                        onTap: () => controller.sendGift(),
-                      ),
-                      const SizedBox(width: 6),
+                                  minLines: 1,
+                                  maxLines: 4,
 
-                      // Share icon with badge 102
-                      GestureDetector(
-                        onTap: () {
-                          Get.snackbar(
-                            'Shared',
-                            'Live stream link copied to clipboard!',
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.black87,
-                            colorText: Colors.white,
-                          );
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.4),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              const Icon(
-                                Icons.reply_rounded,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                              Positioned(
-                                bottom: 2,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withValues(alpha: 0.6),
-                                    borderRadius: BorderRadius.circular(4),
+                                  keyboardType: TextInputType.multiline,
+                                  textInputAction: TextInputAction.newline,
+
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    height: 1.5,
                                   ),
-                                  child: const Text(
-                                    '102',
-                                    style: TextStyle(
-                                      color: Colors.white70,
-                                      fontSize: 6,
-                                      fontWeight: FontWeight.bold,
+
+                                  cursorColor: Colors.white,
+
+                                  decoration: InputDecoration(
+                                    hintText: 'Write a comment...',
+                                    hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.6),
+                                      fontSize: 15,
+                                    ),
+
+                                    border: InputBorder.none,
+
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10,
                                     ),
                                   ),
                                 ),
                               ),
+
+                              const SizedBox(width: 8),
+
+                              /// =========================
+                              /// SEND BUTTON
+                              /// =========================
+
+                              GestureDetector(
+                                onTap: controller.addComment,
+
+                                child: Container(
+                                  height: 38,
+                                  width: 38,
+
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFF42F63),
+                                    shape: BoxShape.circle,
+                                  ),
+
+                                  child: const Icon(
+                                    Icons.send_rounded,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+
+                        const SizedBox(width: 10),
+
+                        /// =========================
+                        /// EMOJI BUTTON
+                        /// =========================
+
+                        _buildBottomActionIcon(
+                          icon: Icons.sentiment_satisfied_alt_rounded,
+                          onTap: () => showEmojiBar.toggle(),
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        /// =========================
+                        /// CO HOST BUTTON
+                        /// =========================
+
+                        _buildBottomActionIcon(
+                          icon: Icons.people_outline_rounded,
+
+                          onTap: () {
+                            Get.snackbar(
+                              'Co-Host Request',
+                              'Sending request to connect with the host...',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.black87,
+                              colorText: Colors.white,
+                            );
+                          },
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        /// =========================
+                        /// ROSE BUTTON
+                        /// =========================
+
+                        _buildBottomActionIcon(
+                          icon: Icons.local_florist_rounded,
+
+                          customWidget: const Text(
+                            '🌹',
+                            style: TextStyle(fontSize: 15),
+                          ),
+
+                          onTap: () => controller.sendRose(),
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        /// =========================
+                        /// GIFT BUTTON
+                        /// =========================
+
+                        _buildBottomActionIcon(
+                          icon: Icons.card_giftcard_rounded,
+
+                          customWidget: const Text(
+                            '🎁',
+                            style: TextStyle(fontSize: 15),
+                          ),
+
+                          onTap: () => controller.sendGift(),
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        /// =========================
+                        /// SHARE BUTTON
+                        /// =========================
+
+                        GestureDetector(
+                          onTap: () {
+                            Get.snackbar(
+                              'Shared',
+                              'Live stream link copied to clipboard!',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.black87,
+                              colorText: Colors.white,
+                            );
+                          },
+
+                          child: Container(
+                            height: 40,
+                            width: 40,
+
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.4),
+                              shape: BoxShape.circle,
+                            ),
+
+                            child: Stack(
+                              alignment: Alignment.center,
+
+                              children: [
+
+                                const Icon(
+                                  Icons.reply_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+
+                                Positioned(
+                                  bottom: 2,
+
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 3,
+                                      vertical: 1,
+                                    ),
+
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.7),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+
+                                    child: const Text(
+                                      '102',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 6,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 12),
+                      ],
+                    ),
+                  )
+
+                  // 4. Comment Input & Icons Row
+
+                  // Row(
+                  //   children: [
+                  //     // Shopping Bag Button (Left side of comments)
+                  //     GestureDetector(
+                  //       onTap: () => _showLiveShoppingBasket(context, controller),
+                  //       child: Container(
+                  //         height: 40,
+                  //         width: 40,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.black.withValues(alpha: 0.4),
+                  //           shape: BoxShape.circle,
+                  //           border: Border.all(
+                  //             color: Colors.white24,
+                  //             width: 1.0,
+                  //           ),
+                  //         ),
+                  //         child: Stack(
+                  //           alignment: Alignment.center,
+                  //           children: [
+                  //             const Icon(
+                  //               Icons.shopping_bag_rounded,
+                  //               color: Colors.orange,
+                  //               size: 20,
+                  //             ),
+                  //             Positioned(
+                  //               right: -2,
+                  //               top: -2,
+                  //               child: Container(
+                  //                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                  //                 decoration: BoxDecoration(
+                  //                   color: const Color(0xFFF42F63),
+                  //                   borderRadius: BorderRadius.circular(8),
+                  //                 ),
+                  //                 constraints: const BoxConstraints(
+                  //                   minWidth: 16,
+                  //                 ),
+                  //                 child: const Text(
+                  //                   '99+',
+                  //                   style: TextStyle(
+                  //                     color: Colors.white,
+                  //                     fontSize: 6,
+                  //                     fontWeight: FontWeight.bold,
+                  //                   ),
+                  //                   textAlign: TextAlign.center,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const SizedBox(width: 8),
+                  //
+                  //     // Glassmorphic Input Textfield
+                  //     Expanded(
+                  //       child: Container(
+                  //         height: 48,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.black.withValues(alpha: 0.6),
+                  //           borderRadius: BorderRadius.circular(24),
+                  //           border: Border.all(
+                  //             color: Colors.white.withValues(alpha: 0.25),
+                  //             width: 1.2,
+                  //           ),
+                  //         ),
+                  //         child: Row(
+                  //           crossAxisAlignment: CrossAxisAlignment.center,
+                  //           children: [
+                  //             const SizedBox(width: 16),
+                  //             Expanded(
+                  //               child: TextField(
+                  //                 controller: controller.commentController,
+                  //                 style: const TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 14,
+                  //                   fontWeight: FontWeight.w400,
+                  //                   height: 1.4,
+                  //                 ),
+                  //                 onSubmitted: (_) => controller.addComment(),
+                  //                 textAlignVertical: TextAlignVertical.center,
+                  //                 decoration: const InputDecoration(
+                  //                   hintText: 'Say something...',
+                  //                   hintStyle: TextStyle(
+                  //                     color: Colors.white54,
+                  //                     fontSize: 14,
+                  //                   ),
+                  //                   border: InputBorder.none,
+                  //                   isDense: false,
+                  //                   contentPadding: EdgeInsets.zero,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             const SizedBox(width: 6),
+                  //             GestureDetector(
+                  //               onTap: controller.addComment,
+                  //               child: Container(
+                  //                 width: 36,
+                  //                 height: 36,
+                  //                 margin: const EdgeInsets.only(right: 6),
+                  //                 decoration: const BoxDecoration(
+                  //                   color: Color(0xFFF42F63),
+                  //                   shape: BoxShape.circle,
+                  //                   boxShadow: [
+                  //                     BoxShadow(
+                  //                       color: Color(0x3DF42F63),
+                  //                       blurRadius: 6,
+                  //                       spreadRadius: 1,
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //                 child: const Icon(
+                  //                   Icons.send_rounded,
+                  //                   color: Colors.white,
+                  //                   size: 16,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const SizedBox(width: 8),
+                  //
+                  //     // Emoji trigger icon
+                  //     _buildBottomActionIcon(
+                  //       icon: Icons.sentiment_satisfied_alt_rounded,
+                  //       onTap: () => showEmojiBar.toggle(),
+                  //     ),
+                  //     const SizedBox(width: 6),
+                  //
+                  //     // Co-host/Connect icon
+                  //     _buildBottomActionIcon(
+                  //       icon: Icons.people_outline_rounded,
+                  //       onTap: () {
+                  //         Get.snackbar(
+                  //           'Co-Host Request',
+                  //           'Sending request to connect with the host...',
+                  //           snackPosition: SnackPosition.BOTTOM,
+                  //           backgroundColor: Colors.black87,
+                  //           colorText: Colors.white,
+                  //         );
+                  //       },
+                  //     ),
+                  //     const SizedBox(width: 6),
+                  //
+                  //     // Rose icon
+                  //     _buildBottomActionIcon(
+                  //       icon: Icons.local_florist_rounded,
+                  //       customWidget: const Text('🌹', style: TextStyle(fontSize: 16)),
+                  //       onTap: () => controller.sendRose(),
+                  //     ),
+                  //     const SizedBox(width: 6),
+                  //
+                  //     // Gift box icon
+                  //     _buildBottomActionIcon(
+                  //       icon: Icons.card_giftcard_rounded,
+                  //       customWidget: const Text('🎁', style: TextStyle(fontSize: 16)),
+                  //       onTap: () => controller.sendGift(),
+                  //     ),
+                  //     const SizedBox(width: 6),
+                  //
+                  //     // Share icon with badge 102
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Get.snackbar(
+                  //           'Shared',
+                  //           'Live stream link copied to clipboard!',
+                  //           snackPosition: SnackPosition.BOTTOM,
+                  //           backgroundColor: Colors.black87,
+                  //           colorText: Colors.white,
+                  //         );
+                  //       },
+                  //       child: Container(
+                  //         height: 40,
+                  //         width: 40,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.black.withValues(alpha: 0.4),
+                  //           shape: BoxShape.circle,
+                  //         ),
+                  //         child: Stack(
+                  //           alignment: Alignment.center,
+                  //           children: [
+                  //             const Icon(
+                  //               Icons.reply_rounded,
+                  //               color: Colors.white,
+                  //               size: 18,
+                  //             ),
+                  //             Positioned(
+                  //               bottom: 2,
+                  //               child: Container(
+                  //                 padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                  //                 decoration: BoxDecoration(
+                  //                   color: Colors.black.withValues(alpha: 0.6),
+                  //                   borderRadius: BorderRadius.circular(4),
+                  //                 ),
+                  //                 child: const Text(
+                  //                   '102',
+                  //                   style: TextStyle(
+                  //                     color: Colors.white70,
+                  //                     fontSize: 6,
+                  //                     fontWeight: FontWeight.bold,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
