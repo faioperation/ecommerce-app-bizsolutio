@@ -6,6 +6,7 @@ import '../../controllers/forgot_password_controller.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/constants/app_images.dart';
+import '../../../../core/widgets/glowing_floating_logo.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
   const OtpVerificationScreen({super.key});
@@ -90,7 +91,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 16),
-              Image.asset(AppImages.logo, height: 100),
+              const Center(
+                child: GlowingFloatingLogo(
+                  imagePath: AppImages.logo,
+                  size: 100.0,
+                ),
+              ),
               const SizedBox(height: 24),
               Text(
                 'Enter 6-Digit OTP',

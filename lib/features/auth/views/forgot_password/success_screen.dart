@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../routes/app_routes.dart';
 import '../../../../core/constants/app_images.dart';
+import '../../../../core/widgets/glowing_floating_logo.dart';
 
 class PasswordSuccessScreen extends StatelessWidget {
   const PasswordSuccessScreen({super.key});
@@ -18,7 +18,12 @@ class PasswordSuccessScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset(AppImages.logo, height: 120),
+              const Center(
+                child: GlowingFloatingLogo(
+                  imagePath: AppImages.logo,
+                  size: 120.0,
+                ),
+              ),
               const SizedBox(height: 32),
               Text(
                 'Password Set Successfully!',

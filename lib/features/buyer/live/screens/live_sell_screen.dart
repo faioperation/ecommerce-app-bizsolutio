@@ -4,13 +4,10 @@ import 'package:get/get.dart';
 import '../../home/models/live_model.dart';
 import '../controllers/live_sell_controller.dart';
 import '../widgets/live_comment_bubble.dart';
-import '../widgets/live_product_card.dart';
+import '../widgets/live_pinned_product_card.dart';
 import '../widgets/live_shopping_basket_sheet.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../routes/app_routes.dart';
-import '../../profile/controllers/cart_controller.dart';
-import '../../profile/models/cart_item_model.dart';
+import '../widgets/live_product_detail_sheet.dart';
+import '../models/live_product_model.dart';
 
 class LiveSellScreen extends StatelessWidget {
   final LiveStreamModel stream;
@@ -20,12 +17,13 @@ class LiveSellScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LiveSellController());
-    controller.fetchLiveProducts(); // Keep live products list fresh for this stream!
+    final showEmojiBar = false.obs;
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
+          // 1. Live Video Feed (Background Image)
           Positioned.fill(
             child: Image.network(
               stream.previewImageUrl,
@@ -41,6 +39,7 @@ class LiveSellScreen extends StatelessWidget {
             ),
           ),
 
+          // 2. Dark Gradient Overlay for text readability
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -57,209 +56,209 @@ class LiveSellScreen extends StatelessWidget {
             ),
           ),
 
+          // 3. Main Live Content
           SafeArea(
             child: Padding(
-              padding: AppSpacing.edgeInsetsAllLg,
+              padding: const EdgeInsets.all(12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // --- TOP BAR ROW ---
                   Row(
                     children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 6,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.5),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 16,
-                                backgroundImage: NetworkImage(
-                                  stream.sellerProfileImage,
-                                ),
-                                onBackgroundImageError: (e, s) =>
-                                    const Icon(Icons.person),
+                      // Profile Info Pill (Avatar, Name, Likes)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.4),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              radius: 14,
+                              backgroundImage: NetworkImage(
+                                stream.sellerProfileImage,
                               ),
-                              const SizedBox(width: 8),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
+                              onBackgroundImageError: (e, s) =>
+                                  const Icon(Icons.person, size: 14),
+                            ),
+                            const SizedBox(width: 6),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  stream.sellerName,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            stream.sellerName,
-                                            style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 13,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 4),
-                                        const Icon(
-                                          Icons.verified_rounded,
-                                          color: Colors.blueAccent,
-                                          size: 14,
-                                        ),
-                                      ],
+                                    const Icon(
+                                      Icons.favorite,
+                                      color: Colors.white70,
+                                      size: 8,
                                     ),
-                                    SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 4,
-                                              vertical: 1,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.liveBadge,
-                                              borderRadius: BorderRadius.circular(4),
-                                            ),
-                                            child: const Text(
-                                              'LIVE',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 8,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(width: 4),
-                                          Icon(
-                                            Icons.remove_red_eye_outlined,
-                                            color: Colors.white.withValues(
-                                              alpha: 0.8,
-                                            ),
-                                            size: 10,
-                                          ),
-                                          const SizedBox(width: 2),
-                                          Text(
-                                            stream.viewerCount,
-                                            style: TextStyle(
-                                              color: Colors.white.withValues(
-                                                alpha: 0.8,
-                                              ),
-                                              fontSize: 9,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 4),
-                                          const Text(
-                                            '•',
-                                            style: TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: 8,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 4),
-                                          const Icon(
-                                            Icons.star_rounded,
-                                            color: Colors.amber,
-                                            size: 12,
-                                          ),
-                                          const SizedBox(width: 2),
-                                          const Text(
-                                            '4.9',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 9,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
+                                    const SizedBox(width: 2),
+                                    Text(
+                                      '10.4K',
+                                      style: TextStyle(
+                                        color: Colors.white.withValues(alpha: 0.8),
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ],
                                 ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+
+                      // Join Private Group Button
+                      GestureDetector(
+                        onTap: () => controller.joinSellerGroup(context, stream.sellerName),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: Colors.orange,
+                              width: 1.0,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Icon(
+                                Icons.group_add_rounded,
+                                color: Colors.orange,
+                                size: 11,
                               ),
-                              const SizedBox(width: 8),
-                              Obx(() => GestureDetector(
-                                onTap: () => controller.toggleFollow(),
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 4,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: controller.isFollowing.value
-                                        ? Colors.white.withValues(alpha: 0.2)
-                                        : AppColors.primary,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: controller.isFollowing.value
-                                        ? Colors.white.withValues(alpha: 0.3)
-                                        : Colors.transparent,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    controller.isFollowing.value ? 'Following' : 'Follow',
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                              SizedBox(width: 3),
+                              Text(
+                                'Join',
+                                style: TextStyle(
+                                  color: Colors.orange,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                              )),
+                              ),
                             ],
                           ),
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      // Top Action Buttons
-                      CircleAvatar(
-                        backgroundColor: Colors.black.withValues(alpha: 0.5),
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.share_outlined,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          onPressed: () {},
+
+                      const Spacer(),
+
+                      // Overlapping Viewer Avatars + Viewer Count
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.4),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: 32,
+                              height: 14,
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    left: 0,
+                                    child: CircleAvatar(
+                                      radius: 7,
+                                      backgroundImage: const NetworkImage(
+                                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=60',
+                                      ),
+                                      onBackgroundImageError: (e, s) => const SizedBox.shrink(),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 9,
+                                    child: CircleAvatar(
+                                      radius: 7,
+                                      backgroundImage: const NetworkImage(
+                                        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=60',
+                                      ),
+                                      onBackgroundImageError: (e, s) => const SizedBox.shrink(),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: 18,
+                                    child: CircleAvatar(
+                                      radius: 7,
+                                      backgroundImage: const NetworkImage(
+                                        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=60',
+                                      ),
+                                      onBackgroundImageError: (e, s) => const SizedBox.shrink(),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              stream.viewerCount,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 8),
+
+                      // Close Button
                       CircleAvatar(
-                        backgroundColor: Colors.black.withValues(alpha: 0.5),
+                        radius: 15,
+                        backgroundColor: Colors.black.withValues(alpha: 0.4),
                         child: IconButton(
                           icon: const Icon(
                             Icons.close_rounded,
                             color: Colors.white,
-                            size: 20,
+                            size: 14,
                           ),
                           onPressed: () => context.pop(),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 8),
 
                   const Spacer(),
 
-                  // --- MIDDLE-LOWER PORTION (Structured Comments, Product, Input) ---
-
-                  // 1. Scrollable real-time comments section (placed above Product card)
                   Container(
-                    height: 140,
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    margin: const EdgeInsets.only(bottom: 12),
+                    height: 130,
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    margin: const EdgeInsets.only(bottom: 8),
                     child: ShaderMask(
                       shaderCallback: (rect) {
                         return const LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [Colors.transparent, Colors.black],
-                          stops: [0.0, 0.2],
+                          stops: [0.0, 0.25],
                         ).createShader(rect);
                       },
                       blendMode: BlendMode.dstIn,
@@ -271,7 +270,7 @@ class LiveSellScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final item = controller.comments[index];
                             return Padding(
-                              padding: const EdgeInsets.only(bottom: 6),
+                              padding: const EdgeInsets.only(bottom: 5),
                               child: LiveCommentBubble(
                                 username: item.username,
                                 comment: item.text,
@@ -283,175 +282,596 @@ class LiveSellScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // 2. Product Preview Card (Stunning floating white card)
-                  LiveProductCard(
-                    imageUrl: stream.previewImageUrl,
-                    title: 'Summer Dress Collection',
-                    price: 89,
-                    onBuyPressed: () {
-                      final cartController = Get.isRegistered<CartController>()
-                          ? Get.find<CartController>()
-                          : Get.put(CartController());
-                      cartController.addItem(
-                        CartItemModel(
-                          productId: 'live_prod_${stream.sellerName.toLowerCase().replaceAll(' ', '_')}',
-                          name: 'Summer Dress Collection',
-                          sellerName: stream.sellerName,
-                          imageUrl: stream.previewImageUrl,
-                          price: 89.0,
-                          quantity: 1,
-                        ),
-                      );
-                      context.push(AppRoutes.profileCart);
-                    },
-                  ),
-                  const SizedBox(height: 16),
+                  // 2. Seller Pinned Product Card (Screenshot 1: bottom floating card)
+                  Obx(() {
+                    final product = controller.pinnedProduct.value;
+                    if (product == null) return const SizedBox.shrink();
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0),
+                      child: LivePinnedProductCard(
+                        product: product,
+                        onBuyPressed: () => _showProductDetail(context, product),
+                        onClosePressed: () => controller.pinProduct(null),
+                      ),
+                    );
+                  }),
 
-                  // 3. Comment Input Row (Comment box + Heart toggle)
-                  Row(
-                    children: [
-                      // Glassmorphic Input Textfield
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          height: 48,
+                  // 3. Emoji Picker Quick Bar (Toggled on/off)
+                  Obx(() {
+                    if (!showEmojiBar.value) return const SizedBox.shrink();
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.6),
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.white10),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: ['😀', '😍', '🔥', '👏', '❤️'].map((emoji) {
+                          return GestureDetector(
+                            onTap: () {
+                              controller.sendEmoji(emoji);
+                              showEmojiBar.value = false;
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              child: Text(emoji, style: const TextStyle(fontSize: 18)),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    );
+                  }),
+
+
+                  // 4. Comment Input & Action Row
+
+                  // ===============================
+// FACEBOOK / TIKTOK STYLE
+// COMMENT INPUT BAR
+// ===============================
+
+                  SizedBox(
+                    height: 56,
+
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+
+                      children: [
+
+                        const SizedBox(width: 4),
+
+                        /// =========================
+                        /// COMMENT INPUT BOX
+                        /// =========================
+
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.68,
+
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                          ),
+
                           decoration: BoxDecoration(
-                            color: Colors.black.withValues(alpha: 0.5),
-                            borderRadius: BorderRadius.circular(24),
+                            color: Colors.black.withOpacity(0.45),
+
+                            borderRadius: BorderRadius.circular(30),
+
                             border: Border.all(
-                              color: Colors.white.withValues(alpha: 0.25),
-                              width: 1.0,
+                              color: Colors.white.withOpacity(0.08),
                             ),
                           ),
+
                           child: Row(
                             children: [
-                              Expanded(
-                                child: TextField(
-                                  controller: controller.commentController,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13,
+
+                              /// =========================
+                              /// SHOPPING BAG BUTTON
+                              /// =========================
+
+                              GestureDetector(
+                                onTap: () =>
+                                    _showLiveShoppingBasket(context, controller),
+
+                                child: Container(
+                                  height: 36,
+                                  width: 36,
+
+                                  decoration: BoxDecoration(
+                                    color: Colors.orange.withOpacity(0.15),
+                                    shape: BoxShape.circle,
                                   ),
-                                  onSubmitted: (_) => controller.addComment(),
-                                  decoration: const InputDecoration(
-                                    hintText: 'Add a comment...',
-                                    hintStyle: TextStyle(
-                                      color: Colors.white54,
-                                      fontSize: 13,
-                                    ),
-                                    border: InputBorder.none,
-                                    isDense: true,
+
+                                  child: Stack(
+                                    alignment: Alignment.center,
+
+                                    children: [
+
+                                      const Icon(
+                                        Icons.shopping_bag_rounded,
+                                        color: Colors.orange,
+                                        size: 18,
+                                      ),
+
+                                      Positioned(
+                                        right: 0,
+                                        top: 0,
+
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 3,
+                                            vertical: 1,
+                                          ),
+
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFF42F63),
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+
+                                          child: const Text(
+                                            '99+',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 6,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.send_rounded,
-                                  color: Colors.orangeAccent,
-                                  size: 18,
+
+                              const SizedBox(width: 10),
+
+                              /// =========================
+                              /// TEXT FIELD
+                              /// =========================
+
+                              Expanded(
+                                child: TextField(
+                                  controller: controller.commentController,
+
+                                  minLines: 1,
+                                  maxLines: 4,
+
+                                  keyboardType: TextInputType.multiline,
+                                  textInputAction: TextInputAction.newline,
+
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    height: 1.5,
+                                  ),
+
+                                  cursorColor: Colors.white,
+
+                                  decoration: InputDecoration(
+                                    hintText: 'Write a comment...',
+                                    hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.6),
+                                      fontSize: 15,
+                                    ),
+
+                                    border: InputBorder.none,
+
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                    ),
+                                  ),
                                 ),
-                                onPressed: controller.addComment,
-                                constraints: const BoxConstraints(),
-                                padding: EdgeInsets.zero,
+                              ),
+
+                              const SizedBox(width: 8),
+
+                              /// =========================
+                              /// SEND BUTTON
+                              /// =========================
+
+                              GestureDetector(
+                                onTap: controller.addComment,
+
+                                child: Container(
+                                  height: 38,
+                                  width: 38,
+
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFF42F63),
+                                    shape: BoxShape.circle,
+                                  ),
+
+                                  child: const Icon(
+                                    Icons.send_rounded,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      // Heart Toggle Button
-                      GestureDetector(
-                        onTap: controller.toggleLike,
-                        child: Obx(
-                          () => CircleAvatar(
-                            radius: 24,
-                            backgroundColor: controller.isLiked.value
-                                ? Colors.pink.withValues(alpha: 0.9)
-                                : Colors.black.withValues(alpha: 0.5),
-                            child: Icon(
-                              controller.isLiked.value
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: Colors.white,
-                              size: 22,
+
+                        const SizedBox(width: 10),
+
+                        /// =========================
+                        /// EMOJI BUTTON
+                        /// =========================
+
+                        _buildBottomActionIcon(
+                          icon: Icons.sentiment_satisfied_alt_rounded,
+                          onTap: () => showEmojiBar.toggle(),
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        /// =========================
+                        /// CO HOST BUTTON
+                        /// =========================
+
+                        _buildBottomActionIcon(
+                          icon: Icons.people_outline_rounded,
+
+                          onTap: () {
+                            Get.snackbar(
+                              'Co-Host Request',
+                              'Sending request to connect with the host...',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.black87,
+                              colorText: Colors.white,
+                            );
+                          },
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        /// =========================
+                        /// ROSE BUTTON
+                        /// =========================
+
+                        _buildBottomActionIcon(
+                          icon: Icons.local_florist_rounded,
+
+                          customWidget: const Text(
+                            '🌹',
+                            style: TextStyle(fontSize: 15),
+                          ),
+
+                          onTap: () => controller.sendRose(),
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        /// =========================
+                        /// GIFT BUTTON
+                        /// =========================
+
+                        _buildBottomActionIcon(
+                          icon: Icons.card_giftcard_rounded,
+
+                          customWidget: const Text(
+                            '🎁',
+                            style: TextStyle(fontSize: 15),
+                          ),
+
+                          onTap: () => controller.sendGift(),
+                        ),
+
+                        const SizedBox(width: 8),
+
+                        /// =========================
+                        /// SHARE BUTTON
+                        /// =========================
+
+                        GestureDetector(
+                          onTap: () {
+                            Get.snackbar(
+                              'Shared',
+                              'Live stream link copied to clipboard!',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.black87,
+                              colorText: Colors.white,
+                            );
+                          },
+
+                          child: Container(
+                            height: 40,
+                            width: 40,
+
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.4),
+                              shape: BoxShape.circle,
+                            ),
+
+                            child: Stack(
+                              alignment: Alignment.center,
+
+                              children: [
+
+                                const Icon(
+                                  Icons.reply_rounded,
+                                  color: Colors.white,
+                                  size: 18,
+                                ),
+
+                                Positioned(
+                                  bottom: 2,
+
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 3,
+                                      vertical: 1,
+                                    ),
+
+                                    decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.7),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+
+                                    child: const Text(
+                                      '102',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 6,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+
+                        const SizedBox(width: 12),
+                      ],
+                    ),
+                  )
+
+                  // 4. Comment Input & Icons Row
+
+                  // Row(
+                  //   children: [
+                  //     // Shopping Bag Button (Left side of comments)
+                  //     GestureDetector(
+                  //       onTap: () => _showLiveShoppingBasket(context, controller),
+                  //       child: Container(
+                  //         height: 40,
+                  //         width: 40,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.black.withValues(alpha: 0.4),
+                  //           shape: BoxShape.circle,
+                  //           border: Border.all(
+                  //             color: Colors.white24,
+                  //             width: 1.0,
+                  //           ),
+                  //         ),
+                  //         child: Stack(
+                  //           alignment: Alignment.center,
+                  //           children: [
+                  //             const Icon(
+                  //               Icons.shopping_bag_rounded,
+                  //               color: Colors.orange,
+                  //               size: 20,
+                  //             ),
+                  //             Positioned(
+                  //               right: -2,
+                  //               top: -2,
+                  //               child: Container(
+                  //                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                  //                 decoration: BoxDecoration(
+                  //                   color: const Color(0xFFF42F63),
+                  //                   borderRadius: BorderRadius.circular(8),
+                  //                 ),
+                  //                 constraints: const BoxConstraints(
+                  //                   minWidth: 16,
+                  //                 ),
+                  //                 child: const Text(
+                  //                   '99+',
+                  //                   style: TextStyle(
+                  //                     color: Colors.white,
+                  //                     fontSize: 6,
+                  //                     fontWeight: FontWeight.bold,
+                  //                   ),
+                  //                   textAlign: TextAlign.center,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const SizedBox(width: 8),
+                  //
+                  //     // Glassmorphic Input Textfield
+                  //     Expanded(
+                  //       child: Container(
+                  //         height: 48,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.black.withValues(alpha: 0.6),
+                  //           borderRadius: BorderRadius.circular(24),
+                  //           border: Border.all(
+                  //             color: Colors.white.withValues(alpha: 0.25),
+                  //             width: 1.2,
+                  //           ),
+                  //         ),
+                  //         child: Row(
+                  //           crossAxisAlignment: CrossAxisAlignment.center,
+                  //           children: [
+                  //             const SizedBox(width: 16),
+                  //             Expanded(
+                  //               child: TextField(
+                  //                 controller: controller.commentController,
+                  //                 style: const TextStyle(
+                  //                   color: Colors.white,
+                  //                   fontSize: 14,
+                  //                   fontWeight: FontWeight.w400,
+                  //                   height: 1.4,
+                  //                 ),
+                  //                 onSubmitted: (_) => controller.addComment(),
+                  //                 textAlignVertical: TextAlignVertical.center,
+                  //                 decoration: const InputDecoration(
+                  //                   hintText: 'Say something...',
+                  //                   hintStyle: TextStyle(
+                  //                     color: Colors.white54,
+                  //                     fontSize: 14,
+                  //                   ),
+                  //                   border: InputBorder.none,
+                  //                   isDense: false,
+                  //                   contentPadding: EdgeInsets.zero,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //             const SizedBox(width: 6),
+                  //             GestureDetector(
+                  //               onTap: controller.addComment,
+                  //               child: Container(
+                  //                 width: 36,
+                  //                 height: 36,
+                  //                 margin: const EdgeInsets.only(right: 6),
+                  //                 decoration: const BoxDecoration(
+                  //                   color: Color(0xFFF42F63),
+                  //                   shape: BoxShape.circle,
+                  //                   boxShadow: [
+                  //                     BoxShadow(
+                  //                       color: Color(0x3DF42F63),
+                  //                       blurRadius: 6,
+                  //                       spreadRadius: 1,
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //                 child: const Icon(
+                  //                   Icons.send_rounded,
+                  //                   color: Colors.white,
+                  //                   size: 16,
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const SizedBox(width: 8),
+                  //
+                  //     // Emoji trigger icon
+                  //     _buildBottomActionIcon(
+                  //       icon: Icons.sentiment_satisfied_alt_rounded,
+                  //       onTap: () => showEmojiBar.toggle(),
+                  //     ),
+                  //     const SizedBox(width: 6),
+                  //
+                  //     // Co-host/Connect icon
+                  //     _buildBottomActionIcon(
+                  //       icon: Icons.people_outline_rounded,
+                  //       onTap: () {
+                  //         Get.snackbar(
+                  //           'Co-Host Request',
+                  //           'Sending request to connect with the host...',
+                  //           snackPosition: SnackPosition.BOTTOM,
+                  //           backgroundColor: Colors.black87,
+                  //           colorText: Colors.white,
+                  //         );
+                  //       },
+                  //     ),
+                  //     const SizedBox(width: 6),
+                  //
+                  //     // Rose icon
+                  //     _buildBottomActionIcon(
+                  //       icon: Icons.local_florist_rounded,
+                  //       customWidget: const Text('🌹', style: TextStyle(fontSize: 16)),
+                  //       onTap: () => controller.sendRose(),
+                  //     ),
+                  //     const SizedBox(width: 6),
+                  //
+                  //     // Gift box icon
+                  //     _buildBottomActionIcon(
+                  //       icon: Icons.card_giftcard_rounded,
+                  //       customWidget: const Text('🎁', style: TextStyle(fontSize: 16)),
+                  //       onTap: () => controller.sendGift(),
+                  //     ),
+                  //     const SizedBox(width: 6),
+                  //
+                  //     // Share icon with badge 102
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Get.snackbar(
+                  //           'Shared',
+                  //           'Live stream link copied to clipboard!',
+                  //           snackPosition: SnackPosition.BOTTOM,
+                  //           backgroundColor: Colors.black87,
+                  //           colorText: Colors.white,
+                  //         );
+                  //       },
+                  //       child: Container(
+                  //         height: 40,
+                  //         width: 40,
+                  //         decoration: BoxDecoration(
+                  //           color: Colors.black.withValues(alpha: 0.4),
+                  //           shape: BoxShape.circle,
+                  //         ),
+                  //         child: Stack(
+                  //           alignment: Alignment.center,
+                  //           children: [
+                  //             const Icon(
+                  //               Icons.reply_rounded,
+                  //               color: Colors.white,
+                  //               size: 18,
+                  //             ),
+                  //             Positioned(
+                  //               bottom: 2,
+                  //               child: Container(
+                  //                 padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                  //                 decoration: BoxDecoration(
+                  //                   color: Colors.black.withValues(alpha: 0.6),
+                  //                   borderRadius: BorderRadius.circular(4),
+                  //                 ),
+                  //                 child: const Text(
+                  //                   '102',
+                  //                   style: TextStyle(
+                  //                     color: Colors.white70,
+                  //                     fontSize: 6,
+                  //                     fontWeight: FontWeight.bold,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
           ),
-          Positioned(
-            left: 20,
-            bottom: 220, // Positioned beautifully above the product card
-            child: GestureDetector(
-              onTap: () => _showLiveShoppingBasket(context, controller),
-              child: Container(
-                height: 56,
-                width: 56,
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.6),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: AppColors.primary.withValues(alpha: 0.5),
-                    width: 1.5,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.3),
-                      blurRadius: 12,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    const Icon(
-                      Icons.shopping_bag_rounded,
-                      color: Colors.white,
-                      size: 26,
-                    ),
-                    Obx(() {
-                      final cartController = Get.isRegistered<CartController>()
-                          ? Get.find<CartController>()
-                          : Get.put(CartController());
-                      final count = cartController.totalItemCount;
-                      if (count == 0) return const SizedBox.shrink();
-                      return Positioned(
-                        right: 8,
-                        top: 8,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          constraints: const BoxConstraints(
-                            minWidth: 16,
-                            minHeight: 16,
-                          ),
-                          child: Text(
-                            '$count',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 9,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      );
-                    }),
-                  ],
-                ),
-              ),
-            ),
-          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildBottomActionIcon({
+    required IconData icon,
+    Widget? customWidget,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.4),
+          shape: BoxShape.circle,
+        ),
+        alignment: Alignment.center,
+        child: customWidget ?? Icon(
+          icon,
+          color: Colors.white,
+          size: 18,
+        ),
       ),
     );
   }
@@ -466,6 +886,23 @@ class LiveSellScreen extends StatelessWidget {
         return LiveShoppingBasketSheet(
           controller: controller,
           sellerName: stream.sellerName,
+          sellerProfileImage: stream.sellerProfileImage,
+        );
+      },
+    );
+  }
+
+  void _showProductDetail(BuildContext context, LiveProductModel product) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      barrierColor: Colors.black45,
+      builder: (context) {
+        return LiveProductDetailSheet(
+          product: product,
+          sellerName: stream.sellerName,
+          sellerProfileImage: stream.sellerProfileImage,
         );
       },
     );

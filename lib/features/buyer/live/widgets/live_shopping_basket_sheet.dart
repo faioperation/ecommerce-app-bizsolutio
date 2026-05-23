@@ -1,23 +1,24 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_constants.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../routes/app_routes.dart';
 import '../../profile/controllers/cart_controller.dart';
 import '../../profile/models/cart_item_model.dart';
 import '../controllers/live_sell_controller.dart';
 import '../models/live_product_model.dart';
+import 'live_product_detail_sheet.dart';
 
 class LiveShoppingBasketSheet extends StatelessWidget {
   final LiveSellController controller;
   final String sellerName;
+  final String sellerProfileImage;
 
   const LiveShoppingBasketSheet({
     super.key,
     required this.controller,
     required this.sellerName,
+    required this.sellerProfileImage,
   });
 
   @override
@@ -26,352 +27,361 @@ class LiveShoppingBasketSheet extends StatelessWidget {
         ? Get.find<CartController>()
         : Get.put(CartController());
 
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.65,
-        decoration: BoxDecoration(
-          color: const Color(0xFF1E1B29).withValues(alpha: 0.85),
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.15),
-            width: 1.0,
-          ),
-        ),
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(10),
-                ),
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.72,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      child: Column(
+        children: [
+          // Drag Handle
+          const SizedBox(height: 8),
+          Center(
+            child: Container(
+              width: 36,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
-            const SizedBox(height: 16),
-            Row(
+          ),
+          const SizedBox(height: 8),
+
+          // Header
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "${sellerName.toLowerCase().replaceAll(' ', '')}'s showcase",
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(Icons.chevron_right_rounded, color: Colors.black54, size: 18),
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      // Text(
+                      //   '174.2K followers  |  123.4K sold',
+                      //   style: TextStyle(
+                      //     color: Colors.grey.shade500,
+                      //     fontSize: 11,
+                      //   ),
+                      // ),
+                    ],
+                  ),
+                ),
+                // Top-right action icons
                 Row(
                   children: [
-                    const Icon(
-                      Icons.shopping_bag_rounded,
-                      color: AppColors.primary,
-                      size: 24,
-                    ),
-                    const SizedBox(width: 8),
-                    const Text(
-                      'Live Shopping Basket',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Obx(() => Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        '${controller.liveProducts.length}',
-                        style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black87, size: 20),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            context.push(AppRoutes.profileCart);
+                          },
+                          constraints: const BoxConstraints(),
+                          padding: const EdgeInsets.all(8),
                         ),
-                      ),
-                    )),
+                        Obx(() {
+                          final count = cartController.totalItemCount;
+                          if (count == 0) return const SizedBox.shrink();
+                          return Positioned(
+                            right: 2,
+                            top: 2,
+                            child: Container(
+                              padding: const EdgeInsets.all(3),
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFF42F63),
+                                shape: BoxShape.circle,
+                              ),
+                              constraints: const BoxConstraints(
+                                minWidth: 14,
+                                minHeight: 14,
+                              ),
+                              child: Text(
+                                '$count',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        }),
+                      ],
+                    ),
                   ],
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close_rounded, color: Colors.white70),
-                  onPressed: () => Navigator.pop(context),
                 ),
               ],
             ),
-            const Divider(color: Colors.white12, height: 16),
-            Expanded(
-              child: Obx(() {
-                if (controller.liveProducts.isEmpty) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.05),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.shopping_basket_outlined,
-                            color: Colors.white.withValues(alpha: 0.3),
-                            size: 48,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'No products available in this session',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          'Check back soon! The seller has not added any featured items yet.',
-                          style: TextStyle(
-                            color: Colors.white.withValues(alpha: 0.6),
-                            fontSize: 13,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                return ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: controller.liveProducts.length,
-                  itemBuilder: (context, index) {
-                    final LiveProductModel product = controller.liveProducts[index];
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.all(10),
+          ),
+          const Divider(height: 1, thickness: 1, color: Color(0xFFF1F1F5)),
+
+          // Product List
+          Expanded(
+            child: Obx(() {
+              if (controller.liveProducts.isEmpty) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.shopping_bag_outlined, size: 48, color: Colors.grey),
+                      const SizedBox(height: 12),
+                      Text(
+                        'No products in this showcase',
+                        style: TextStyle(color: Colors.grey.shade600),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                itemCount: controller.liveProducts.length,
+                itemBuilder: (context, index) {
+                  final LiveProductModel product = controller.liveProducts[index];
+                  return GestureDetector(
+                    onTap: () => _showProductDetail(context, product),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.05),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: product.isCurrentlyFeatured
-                              ? AppColors.primary.withValues(alpha: 0.4)
-                              : Colors.white.withValues(alpha: 0.1),
-                          width: 1.0,
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey.shade100,
+                            width: 1.0,
+                          ),
                         ),
                       ),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Number Badge
-                          Container(
-                            width: 28,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              color: product.isCurrentlyFeatured
-                                  ? AppColors.primary
-                                  : Colors.white.withValues(alpha: 0.15),
-                              shape: BoxShape.circle,
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              '#${product.number}',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
+                          // Thumbnail Image with Index Badge
+                          Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(6),
+                                child: Image.network(
+                                  product.imageUrl,
+                                  width: 86,
+                                  height: 86,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (c, e, s) => Container(
+                                    width: 86,
+                                    height: 86,
+                                    color: Colors.grey.shade100,
+                                    child: const Icon(Icons.shopping_bag_outlined, color: Colors.grey),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          // Thumbnail image
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              product.imageUrl,
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.cover,
-                              errorBuilder: (c, e, s) => Container(
-                                width: 50,
-                                height: 50,
-                                color: Colors.white10,
-                                child: const Icon(Icons.shopping_bag_outlined, color: Colors.white30),
+                              // Product Number Badge
+                              Positioned(
+                                left: 0,
+                                top: 0,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withValues(alpha: 0.6),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(6),
+                                      bottomRight: Radius.circular(6),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    '${product.number}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                           const SizedBox(width: 12),
-                          // Details
+
+                          // Product Info details
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                // Title
                                 Text(
                                   product.title,
                                   style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    height: 1.2,
                                   ),
-                                  maxLines: 1,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(height: 4),
+
+                                // Delivery and Returns Badges
+                                // Row(
+                                //   children: [
+                                //     if (product.deliveryOption != null)
+                                //       Container(
+                                //         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                                //         decoration: BoxDecoration(
+                                //           color: const Color(0xFFE2F9F3),
+                                //           borderRadius: BorderRadius.circular(4),
+                                //         ),
+                                //         child: const Row(
+                                //           children: [
+                                //             Icon(Icons.local_shipping_outlined, color: Colors.teal, size: 10),
+                                //             SizedBox(width: 2),
+                                //             Text(
+                                //               'Free 3-day delivery',
+                                //               style: TextStyle(
+                                //                 color: Colors.teal,
+                                //                 fontSize: 8,
+                                //                 fontWeight: FontWeight.bold,
+                                //               ),
+                                //             ),
+                                //           ],
+                                //         ),
+                                //       ),
+                                //   ],
+                                // ),
+                                const SizedBox(height: 6),
+
+                                // Price & Buy Actions row
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '${AppConstants.currencySymbol}${product.price.toStringAsFixed(0)}',
+                                      '${AppConstants.currencySymbol}${product.price.toStringAsFixed(2)}',
                                       style: const TextStyle(
-                                        color: AppColors.primary,
-                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w800,
                                       ),
                                     ),
-                                    const SizedBox(width: 8),
-                                    if (product.isCurrentlyFeatured)
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                        decoration: BoxDecoration(
-                                          color: Colors.green.withValues(alpha: 0.2),
-                                          borderRadius: BorderRadius.circular(6),
-                                          border: Border.all(color: Colors.greenAccent, width: 0.5),
-                                        ),
-                                        child: const Text(
-                                          'LIVE NOW',
-                                          style: TextStyle(
-                                            color: Colors.greenAccent,
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.bold,
+                                    Row(
+                                      children: [
+                                        // Quick Cart Add button
+                                        GestureDetector(
+                                          onTap: () {
+                                            cartController.addItem(
+                                              CartItemModel(
+                                                productId: product.id,
+                                                name: product.title,
+                                                sellerName: sellerName,
+                                                imageUrl: product.imageUrl,
+                                                price: product.price,
+                                                quantity: 1,
+                                              ),
+                                            );
+                                            Get.snackbar(
+                                              'Added to cart',
+                                              '${product.title} added to basket!',
+                                              snackPosition: SnackPosition.BOTTOM,
+                                              backgroundColor: Colors.black87,
+                                              colorText: Colors.white,
+                                              duration: const Duration(seconds: 1),
+                                            );
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.all(6),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(color: Colors.grey.shade300, width: 1.0),
+                                              borderRadius: BorderRadius.circular(6),
+                                            ),
+                                            // child: const Icon(
+                                            //   Icons.add_shopping_cart_rounded,
+                                            //   color: Colors.black87,
+                                            //   size: 16,
+                                            // ),
                                           ),
                                         ),
-                                      )
-                                    else if (product.isUpcoming)
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white.withValues(alpha: 0.1),
-                                          borderRadius: BorderRadius.circular(6),
-                                        ),
-                                        child: const Text(
-                                          'UPCOMING',
-                                          style: TextStyle(
-                                            color: Colors.white70,
-                                            fontSize: 8,
-                                            fontWeight: FontWeight.bold,
+                                        const SizedBox(width: 8),
+
+                                        // Buy Button
+                                        ElevatedButton(
+                                          onPressed: () => _showProductDetail(context, product),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color(0xFFF42F63),
+                                            foregroundColor: Colors.white,
+                                            elevation: 0,
+                                            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+                                            minimumSize: Size.zero,
+                                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(6),
+                                            ),
+                                          ),
+                                          child: const Text(
+                                            'Buy',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          // Quick Add button
-                          ElevatedButton(
-                            onPressed: () {
-                              cartController.addItem(
-                                CartItemModel(
-                                  productId: product.id,
-                                  name: product.title,
-                                  sellerName: sellerName,
-                                  imageUrl: product.imageUrl,
-                                  price: product.price,
-                                  quantity: 1,
-                                ),
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('${product.title} added to basket!'),
-                                  backgroundColor: Colors.green.withValues(alpha: 0.9),
-                                  duration: const Duration(seconds: 1),
-                                  behavior: SnackBarBehavior.floating,
-                                ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                              minimumSize: Size.zero,
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: const Text(
-                              'Add',
-                              style: TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
                         ],
                       ),
-                    );
-                  },
-                );
-              }),
-            ),
-            // Checkout sticky bar
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              decoration: BoxDecoration(
-                color: const Color(0xFF1E1B29),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.2),
-                    blurRadius: 10,
-                    offset: const Offset(0, -5),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          'Selected Items',
-                          style: TextStyle(color: Colors.white60, fontSize: 12),
-                        ),
-                        const SizedBox(height: 2),
-                        Obx(() => Text(
-                          '${cartController.totalItemCount} Items • ${AppConstants.currencySymbol}${cartController.subtotal.toStringAsFixed(0)}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )),
-                      ],
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      context.push(AppRoutes.profileCart);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      'Checkout Now',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+                  );
+                },
+              );
+            }),
+          ),
+        ],
       ),
+    );
+  }
+
+  void _showProductDetail(BuildContext context, LiveProductModel product) {
+    // Dismiss the showcase sheet before opening details sheet (matching app UX)
+    Navigator.pop(context);
+    
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      barrierColor: Colors.black45,
+      builder: (context) {
+        return LiveProductDetailSheet(
+          product: product,
+          sellerName: sellerName,
+          sellerProfileImage: sellerProfileImage,
+        );
+      },
     );
   }
 }

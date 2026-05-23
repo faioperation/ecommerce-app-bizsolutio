@@ -6,7 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../routes/app_routes.dart';
 import '../controllers/auth_controller.dart';
-import '../widgets/glowing_floating_logo.dart';
+import '../../../core/widgets/glowing_floating_logo.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

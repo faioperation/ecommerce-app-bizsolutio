@@ -25,6 +25,8 @@ class StoryModel {
   final bool isLive;
   final List<StoryMediaModel> slides;
   final RxBool? _isSeen;
+  final int viewsCount;
+  final List<Map<String, String>> viewsList;
 
   RxBool get isSeen => _isSeen ?? false.obs;
 
@@ -35,6 +37,8 @@ class StoryModel {
     this.isLive = false,
     required this.slides,
     bool isSeen = false,
+    this.viewsCount = 0,
+    this.viewsList = const [],
   }) : _isSeen = RxBool(isSeen);
 }
 

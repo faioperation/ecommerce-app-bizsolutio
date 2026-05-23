@@ -6,6 +6,7 @@ class HomeController extends GetxController {
   final RxList<FeedItemModel> feedItems = <FeedItemModel>[].obs;
   final RxMap<String, RxList<CommentModel>> commentsMap = <String, RxList<CommentModel>>{}.obs;
   final RxBool isLoading = false.obs;
+  final Rxn<StoryModel> myStory = Rxn<StoryModel>();
 
   @override
   void onInit() {
@@ -253,9 +254,70 @@ class HomeController extends GetxController {
   }
 
   void markStoryAsSeen(String storyId) {
+    if (storyId == 'my_day') {
+      myStory.value?.isSeen.value = true;
+      return;
+    }
     final story = stories.firstWhereOrNull((s) => s.id == storyId);
     if (story != null) {
       story.isSeen.value = true;
+    }
+  }
+
+  void addMyStorySlide(String imageUrl, String caption) {
+    final newSlide = StoryMediaModel(
+      id: 'my_day_${DateTime.now().millisecondsSinceEpoch}',
+      mediaUrl: imageUrl,
+      type: StoryMediaType.image,
+      caption: caption,
+    );
+
+    final currentStory = myStory.value;
+    if (currentStory == null) {
+      myStory.value = StoryModel(
+        id: 'my_day',
+        sellerName: 'My Day',
+        profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200',
+        slides: [newSlide],
+        viewsCount: 14,
+        viewsList: [
+          {
+            'name': 'Emma Watson',
+            'avatar': 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150',
+            'time': 'Just now',
+          },
+          {
+            'name': 'Sophia Lee',
+            'avatar': 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150',
+            'time': '2m ago',
+          },
+          {
+            'name': 'Liam Carter',
+            'avatar': 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=150',
+            'time': '5m ago',
+          },
+          {
+            'name': 'Olivia Martinez',
+            'avatar': 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150',
+            'time': '12m ago',
+          },
+          {
+            'name': 'Noah Walker',
+            'avatar': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150',
+            'time': '20m ago',
+          },
+        ],
+      );
+    } else {
+      final updatedSlides = List<StoryMediaModel>.from(currentStory.slides)..add(newSlide);
+      myStory.value = StoryModel(
+        id: 'my_day',
+        sellerName: 'My Day',
+        profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200',
+        slides: updatedSlides,
+        viewsCount: currentStory.viewsCount + 3,
+        viewsList: currentStory.viewsList,
+      );
     }
   }
 }

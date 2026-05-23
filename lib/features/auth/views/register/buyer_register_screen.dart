@@ -4,6 +4,7 @@ import '../../controllers/register_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/constants/app_images.dart';
+import '../../../../core/widgets/glowing_floating_logo.dart';
 
 class BuyerRegisterScreen extends StatelessWidget {
   const BuyerRegisterScreen({super.key});
@@ -22,7 +23,12 @@ class BuyerRegisterScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Image.asset(AppImages.logo, height: 80),
+                const Center(
+                  child: GlowingFloatingLogo(
+                    imagePath: AppImages.logo,
+                    size: 80.0,
+                  ),
+                ),
                 const SizedBox(height: 24),
                 Text(
                   'Create an Account',
