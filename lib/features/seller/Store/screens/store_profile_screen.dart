@@ -5,15 +5,11 @@ import '../../../../core/theme/app_colors.dart';
 import '../controllers/store_controller.dart';
 import '../widgets/featured_product_card.dart';
 
-/// The main Store Profile dashboard view.
-/// Integrates the StoreController reactively to update the interface when
-/// fetching data, displaying loading indicator, or executing action callbacks.
 class StoreProfileScreen extends StatelessWidget {
   const StoreProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Instantiate/Find the controller using GetX
     final controller = Get.put(StoreController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
@@ -32,15 +28,6 @@ class StoreProfileScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.settings_outlined,
-              color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
-            ),
-            onPressed: () => controller.openSettings(context),
-          ),
-        ],
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
