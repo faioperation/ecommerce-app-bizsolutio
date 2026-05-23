@@ -25,7 +25,25 @@ class LoginController extends GetxController {
       isLoading.value = false;
 
       if (!context.mounted) return;
-      Get.find<AuthController>().login(role, context);
+
+      final email = emailController.text.trim().toLowerCase();
+      final password = passwordController.text;
+
+      UserRole selectedRole = role;
+
+      if (email == 'buyer@vango.live' && password == 'password123') {
+        selectedRole = UserRole.buyer;
+      } else if (email == 'seller@vango.live' && password == 'password123') {
+        selectedRole = UserRole.seller;
+      } else {
+        if (email.contains('seller')) {
+          selectedRole = UserRole.seller;
+        } else if (email.contains('buyer')) {
+          selectedRole = UserRole.buyer;
+        }
+      }
+
+      Get.find<AuthController>().login(selectedRole, context);
     }
   }
 

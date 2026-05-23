@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
-/// A custom widget that renders a logo with a floating (hovering) animation
-/// and a soft, pulsing multi-layered halo/glow effect in the background.
 class GlowingFloatingLogo extends StatefulWidget {
   final String imagePath;
   final double size;
@@ -12,7 +10,7 @@ class GlowingFloatingLogo extends StatefulWidget {
     super.key,
     required this.imagePath,
     this.size = 120.0,
-    this.animationDuration = const Duration(milliseconds: 2000), // Faster animation (1 second)
+    this.animationDuration = const Duration(milliseconds: 2000),
   });
 
   @override
@@ -23,10 +21,8 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
-  // Animation for the vertical bobbing / floating movement
   late final Animation<Offset> _floatAnimation;
 
-  // Animations for the pulsing background glow (scale and opacity)
   late final Animation<double> _glowScaleAnimation;
   late final Animation<double> _glowOpacityAnimation;
 
@@ -39,13 +35,11 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
       duration: widget.animationDuration,
     );
 
-    // Using a smooth easeInOut curve for organic, liquid floating motion
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
     );
 
-    // Float animation moves the logo 8 pixels up and down
     _floatAnimation = Tween<Offset>(
       begin: const Offset(0, -6),
       end: const Offset(0, 6),

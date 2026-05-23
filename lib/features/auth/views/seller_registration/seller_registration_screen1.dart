@@ -36,7 +36,7 @@ class SellerRegistrationScreen1 extends StatelessWidget {
                   size: 100.0,
                 ),
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 16),
               Text(
                 'Sell on Vango Live',
                 style: TextStyle(
@@ -55,7 +55,7 @@ class SellerRegistrationScreen1 extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 32),
 
               _buildBenefitItem(
                 context,
@@ -79,7 +79,7 @@ class SellerRegistrationScreen1 extends StatelessWidget {
                     'Get paid instantly and track your business growth with ease.',
               ),
 
-              const SizedBox(height: 32),
+              const SizedBox(height: 24),
 
               SizedBox(
                 width: double.infinity,
@@ -118,7 +118,7 @@ class SellerRegistrationScreen1 extends StatelessWidget {
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 32),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
