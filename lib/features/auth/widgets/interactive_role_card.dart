@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_spacing.dart';
 
-/// A custom, highly interactive role selection card that responds to user touch.
-/// When pressed, it scales down slightly (spring effect) and increases the border
-/// and background opacity to provide strong, premium tactile and visual feedback.
 class InteractiveRoleCard extends StatefulWidget {
   final String title;
   final String description;
@@ -32,13 +29,11 @@ class _InteractiveRoleCardState extends State<InteractiveRoleCard>
   @override
   void initState() {
     super.initState();
-    // Fast but smooth tap animation duration (100ms)
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 100),
     );
 
-    // Scaling down slightly from 1.0 to 0.94 to feel like a spring button
     _scaleAnimation = Tween<double>(
       begin: 1.0,
       end: 0.94,
@@ -66,7 +61,6 @@ class _InteractiveRoleCardState extends State<InteractiveRoleCard>
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
-          // Dynamic styling that reacts to tap progress (from 0.0 to 1.0)
           final double borderAlpha = 0.3 + (0.25 * _controller.value);
           final double bgAlpha = 0.05 + (0.03 * _controller.value);
 
@@ -84,7 +78,6 @@ class _InteractiveRoleCardState extends State<InteractiveRoleCard>
               ),
               child: Row(
                 children: [
-                  // Icon container with pulsing opacity highlight
                   Container(
                     padding: AppSpacing.edgeInsetsAllMd,
                     decoration: BoxDecoration(
@@ -98,7 +91,6 @@ class _InteractiveRoleCardState extends State<InteractiveRoleCard>
                     ),
                   ),
                   const SizedBox(width: 16),
-                  // Role Title and Description
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +110,6 @@ class _InteractiveRoleCardState extends State<InteractiveRoleCard>
                       ],
                     ),
                   ),
-                  // Chevron indicator showing action
                   Icon(
                     Icons.arrow_forward_ios,
                     color: widget.color,
