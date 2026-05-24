@@ -5,7 +5,6 @@ import '../../../core/widgets/glowing_floating_logo.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../routes/app_routes.dart';
-import '../controllers/auth_controller.dart';
 import '../widgets/interactive_role_card.dart';
 
 class RoleSelectionScreen extends StatelessWidget {
@@ -58,8 +57,7 @@ class RoleSelectionScreen extends StatelessWidget {
                 description: 'Discover products, watch live streams, and shop!',
                 icon: Icons.shopping_bag_outlined,
                 color: AppColors.primary,
-                onTap: () =>
-                    context.push(AppRoutes.login, extra: UserRole.buyer),
+                onTap: () => context.push(AppRoutes.registerBuyer),
               ),
               const SizedBox(height: 24),
               InteractiveRoleCard(
@@ -67,10 +65,34 @@ class RoleSelectionScreen extends StatelessWidget {
                 description: 'Set up your shop, go live, and start selling!',
                 icon: Icons.storefront_outlined,
                 color: AppColors.accentPink,
-                onTap: () =>
-                    context.push(AppRoutes.login, extra: UserRole.seller),
+                onTap: () => context.push(AppRoutes.sellerRegStep1),
               ),
               const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Have an account? ',
+                    style: TextStyle(
+                      color: Theme.of(context).brightness == Brightness.dark
+                          ? AppColors.darkTextSecondary
+                          : AppColors.lightTextSecondary,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => context.push(AppRoutes.login),
+                    child: const Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primary,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
             ],
           ),
         ),

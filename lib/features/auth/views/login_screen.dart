@@ -143,6 +143,125 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
 
+                  //const SizedBox(height: 24),
+
+                  // Demo Credentials Section
+                  // Container(
+                  //   padding: const EdgeInsets.all(16),
+                  //   decoration: BoxDecoration(
+                  //     color: Theme.of(context).brightness == Brightness.dark
+                  //         ? AppColors.darkBorder
+                  //         : AppColors.lightBorder.withOpacity(0.3),
+                  //     borderRadius: BorderRadius.circular(16),
+                  //     border: Border.all(
+                  //       color: Theme.of(context).brightness == Brightness.dark
+                  //           ? AppColors.darkBorder.withOpacity(0.5)
+                  //           : AppColors.lightBorder,
+                  //     ),
+                  //   ),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Row(
+                  //         children: [
+                  //           Icon(
+                  //             Icons.info_outline,
+                  //             size: 18,
+                  //             color: role == UserRole.buyer
+                  //                 ? AppColors.primary
+                  //                 : AppColors.accentPink,
+                  //           ),
+                  //           const SizedBox(width: 8),
+                  //           Text(
+                  //             'Demo Credentials (Tap to Auto-fill)',
+                  //             style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  //                   fontWeight: FontWeight.bold,
+                  //                 ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //       const SizedBox(height: 12),
+                  //       InkWell(
+                  //         onTap: () {
+                  //           controller.emailController.text = 'buyer@vango.live';
+                  //           controller.passwordController.text = 'password123';
+                  //         },
+                  //         borderRadius: BorderRadius.circular(8),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                  //           child: Row(
+                  //             children: [
+                  //               const Icon(Icons.shopping_bag_outlined, size: 16, color: AppColors.primary),
+                  //               const SizedBox(width: 8),
+                  //               Expanded(
+                  //                 child: Column(
+                  //                   crossAxisAlignment: CrossAxisAlignment.start,
+                  //                   children: [
+                  //                     Text(
+                  //                       'Buyer: buyer@vango.live',
+                  //                       style: TextStyle(
+                  //                         fontSize: 13,
+                  //                         fontWeight: FontWeight.w600,
+                  //                         color: Theme.of(context).brightness == Brightness.dark
+                  //                             ? AppColors.darkTextPrimary
+                  //                             : AppColors.lightTextPrimary,
+                  //                       ),
+                  //                     ),
+                  //                     const Text(
+                  //                       'Password: password123',
+                  //                       style: TextStyle(fontSize: 11, color: AppColors.lightTextSecondary),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //               const Icon(Icons.touch_app_outlined, size: 14, color: AppColors.lightTextSecondary),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       const Divider(height: 16),
+                  //       InkWell(
+                  //         onTap: () {
+                  //           controller.emailController.text = 'seller@vango.live';
+                  //           controller.passwordController.text = 'password123';
+                  //         },
+                  //         borderRadius: BorderRadius.circular(8),
+                  //         child: Padding(
+                  //           padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                  //           child: Row(
+                  //             children: [
+                  //               const Icon(Icons.storefront_outlined, size: 16, color: AppColors.accentPink),
+                  //               const SizedBox(width: 8),
+                  //               Expanded(
+                  //                 child: Column(
+                  //                   crossAxisAlignment: CrossAxisAlignment.start,
+                  //                   children: [
+                  //                     Text(
+                  //                       'Seller: seller@vango.live',
+                  //                       style: TextStyle(
+                  //                         fontSize: 13,
+                  //                         fontWeight: FontWeight.w600,
+                  //                         color: Theme.of(context).brightness == Brightness.dark
+                  //                             ? AppColors.darkTextPrimary
+                  //                             : AppColors.lightTextPrimary,
+                  //                       ),
+                  //                     ),
+                  //                     const Text(
+                  //                       'Password: password123',
+                  //                       style: TextStyle(fontSize: 11, color: AppColors.lightTextSecondary),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //               const Icon(Icons.touch_app_outlined, size: 14, color: AppColors.lightTextSecondary),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+
                   const SizedBox(height: 24),
 
                   Row(

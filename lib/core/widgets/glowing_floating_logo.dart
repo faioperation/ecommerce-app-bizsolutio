@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
-/// A custom widget that renders a logo with a floating (hovering) animation
-/// and a soft, pulsing multi-layered halo/glow effect in the background.
 class GlowingFloatingLogo extends StatefulWidget {
   final String imagePath;
   final double size;
@@ -12,7 +10,7 @@ class GlowingFloatingLogo extends StatefulWidget {
     super.key,
     required this.imagePath,
     this.size = 120.0,
-    this.animationDuration = const Duration(milliseconds: 2000), // Faster animation (1 second)
+    this.animationDuration = const Duration(milliseconds: 2000),
   });
 
   @override
@@ -23,10 +21,8 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
-  // Animation for the vertical bobbing / floating movement
   late final Animation<Offset> _floatAnimation;
 
-  // Animations for the pulsing background glow (scale and opacity)
   late final Animation<double> _glowScaleAnimation;
   late final Animation<double> _glowOpacityAnimation;
 
@@ -39,31 +35,26 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
       duration: widget.animationDuration,
     );
 
-    // Using a smooth easeInOut curve for organic, liquid floating motion
     final CurvedAnimation curvedAnimation = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOut,
     );
 
-    // Float animation moves the logo 8 pixels up and down
     _floatAnimation = Tween<Offset>(
       begin: const Offset(0, -6),
       end: const Offset(0, 6),
     ).animate(curvedAnimation);
 
-    // Pulse the halo scale between 0.85 and 1.15 times its base size
     _glowScaleAnimation = Tween<double>(
       begin: 0.85,
       end: 1.15,
     ).animate(curvedAnimation);
 
-    // Pulse the halo opacity for a more dramatic but soft glow
     _glowOpacityAnimation = Tween<double>(
       begin: 0.40,
       end: 0.75,
     ).animate(curvedAnimation);
 
-    // Loop the animation infinitely, reversing direction at each limit
     _controller.repeat(reverse: true);
   }
 
@@ -75,7 +66,6 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
 
   @override
   Widget build(BuildContext context) {
-    // The glow diameter is proportional to the logo size
     final double glowSize = widget.size * 1.8;
 
     return SizedBox(
@@ -84,7 +74,6 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // 1. Soft Glow / Halo Layer (at the back)
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
@@ -101,7 +90,7 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
                         colors: [
                           AppColors.primary.withValues(
                             alpha: 0.60,
-                          ), // Brighter core glow
+                          ),
                           AppColors.accentPink.withValues(alpha: 0.35),
                           AppColors.liveBadge.withValues(alpha: 0.15),
                           Colors.transparent,
@@ -115,7 +104,6 @@ class _GlowingFloatingLogoState extends State<GlowingFloatingLogo>
             },
           ),
 
-          // 2. Interactive Floating Logo Layer (in the front)
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
