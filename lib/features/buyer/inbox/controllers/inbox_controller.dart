@@ -4,6 +4,17 @@ import '../models/message_model.dart';
 
 class InboxController extends GetxController {
   final chatList = <ChatModel>[].obs;
+  final searchQuery = ''.obs;
+
+  List<ChatModel> get filteredChats {
+    if (searchQuery.value.trim().isEmpty) {
+      return chatList;
+    }
+    return chatList
+        .where((chat) =>
+            chat.name.toLowerCase().contains(searchQuery.value.toLowerCase()))
+        .toList();
+  }
 
   final Map<String, RxList<MessageModel>> _messagesMap = {};
 
@@ -146,6 +157,73 @@ class InboxController extends GetxController {
     if (idx != -1) {
       chatList[idx].unreadCount = 0;
       chatList.refresh();
+    }
+  }
+
+  void sendMediaMessage(String chatId, String path, String type, {String? text}) {
+    final defaultText = type == 'image' ? 'Sent an image' : 'Sent a video';
+    final msg = MessageModel(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      chatId: chatId,
+      text: (text != null && text.trim().isNotEmpty) ? text.trim() : defaultText,
+      timestamp: DateTime.now(),
+      isMe: true,
+      type: type,
+      mediaPath: path,
+    );
+
+    _messagesMap.putIfAbsent(chatId, () => <MessageModel>[].obs);
+    _messagesMap[chatId]!.add(msg);
+
+    final idx = chatList.indexWhere((c) => c.id == chatId);
+    if (idx != -1) {
+      chatList[idx].lastMessage = msg.text;
+      chatList[idx].lastMessageTime = DateTime.now();
+      final chat = chatList.removeAt(idx);
+      chatList.insert(0, chat);
+    }
+  }
+
+  void editMessage(String chatId, String messageId, String newText) {
+    if (newText.trim().isEmpty) return;
+    final list = _messagesMap[chatId];
+    if (list != null) {
+      final idx = list.indexWhere((m) => m.id == messageId);
+      if (idx != -1) {
+        final m = list[idx];
+        list[idx] = m.copyWith(text: newText.trim(), isEdited: true);
+        list.refresh();
+
+        // Update last message if this was the last message in chat history
+        final lastIdx = chatList.indexWhere((c) => c.id == chatId);
+        if (lastIdx != -1 && idx == list.length - 1) {
+          chatList[lastIdx].lastMessage = newText.trim();
+          chatList.refresh();
+        }
+      }
+    }
+  }
+
+  void deleteMessage(String chatId, String messageId) {
+    final list = _messagesMap[chatId];
+    if (list != null) {
+      final idx = list.indexWhere((m) => m.id == messageId);
+      if (idx != -1) {
+        list.removeAt(idx);
+        list.refresh();
+
+        // Update last message in the chat list
+        final lastIdx = chatList.indexWhere((c) => c.id == chatId);
+        if (lastIdx != -1) {
+          if (list.isEmpty) {
+            chatList[lastIdx].lastMessage = 'Conversation cleared';
+          } else {
+            final lastMsg = list.last;
+            chatList[lastIdx].lastMessage = lastMsg.text;
+          }
+          chatList.refresh();
+        }
+      }
     }
   }
 

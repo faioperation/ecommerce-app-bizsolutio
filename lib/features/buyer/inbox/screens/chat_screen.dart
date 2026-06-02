@@ -154,8 +154,12 @@ class ChatScreen extends StatelessWidget {
           ),
 
           ChatInputBar(
-            onSend: (text) {
-              ctrl.sendMessage(chatId, text);
+            onSend: (text, mediaPath, mediaType) {
+              if (mediaPath != null && mediaType != null) {
+                ctrl.sendMediaMessage(chatId, mediaPath, mediaType, text: text);
+              } else {
+                ctrl.sendMessage(chatId, text);
+              }
             },
           ),
         ],
