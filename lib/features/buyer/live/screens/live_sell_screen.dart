@@ -8,6 +8,8 @@ import '../widgets/live_pinned_product_card.dart';
 import '../widgets/live_shopping_basket_sheet.dart';
 import '../widgets/live_product_detail_sheet.dart';
 import '../models/live_product_model.dart';
+import '../widgets/live_video_simulator.dart';
+import '../widgets/live_duration_timer.dart';
 
 class LiveSellScreen extends StatelessWidget {
   final LiveStreamModel stream;
@@ -18,41 +20,17 @@ class LiveSellScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(LiveSellController());
     final showEmojiBar = false.obs;
+    final simulatorController = LiveVideoSimulatorController();
 
     return Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // 1. Live Video Feed (Background Image)
+          // 1. Live Video Feed (Simulated Animated Video)
           Positioned.fill(
-            child: Image.network(
-              stream.previewImageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                color: Colors.grey[900],
-                child: const Icon(
-                  Icons.videocam_off,
-                  color: Colors.white,
-                  size: 80,
-                ),
-              ),
-            ),
-          ),
-
-          // 2. Dark Gradient Overlay for text readability
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withValues(alpha: 0.4),
-                    Colors.transparent,
-                    Colors.black.withValues(alpha: 0.75),
-                  ],
-                ),
-              ),
+            child: LiveVideoSimulator(
+              imageUrl: stream.previewImageUrl,
+              controller: simulatorController,
             ),
           ),
 
@@ -66,106 +44,97 @@ class LiveSellScreen extends StatelessWidget {
                   // --- TOP BAR ROW ---
                   Row(
                     children: [
-                      // Profile Info Pill (Avatar, Name, Likes)
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.4),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CircleAvatar(
-                              radius: 14,
-                              backgroundImage: NetworkImage(
-                                stream.sellerProfileImage,
-                              ),
-                              onBackgroundImageError: (e, s) =>
-                                  const Icon(Icons.person, size: 14),
-                            ),
-                            const SizedBox(width: 6),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  stream.sellerName,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.favorite,
-                                      color: Colors.white70,
-                                      size: 8,
-                                    ),
-                                    const SizedBox(width: 2),
-                                    Text(
-                                      '10.4K',
-                                      style: TextStyle(
-                                        color: Colors.white.withValues(alpha: 0.8),
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-
-                      // Join Private Group Button
-                      GestureDetector(
-                        onTap: () => controller.joinSellerGroup(context, stream.sellerName),
+                      // LEFT: Profile Info Pill
+                      Flexible(
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 5,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(
-                              color: Colors.orange,
-                              width: 1.0,
-                            ),
+                            color: Colors.black.withValues(alpha: 0.4),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(
-                                Icons.group_add_rounded,
-                                color: Colors.orange,
-                                size: 11,
+                            children: [
+                              CircleAvatar(
+                                radius: 14,
+                                backgroundImage: NetworkImage(stream.sellerProfileImage),
+                                onBackgroundImageError: (e, s) =>
+                                    const Icon(Icons.person, size: 14),
                               ),
-                              SizedBox(width: 3),
-                              Text(
-                                'Join',
-                                style: TextStyle(
-                                  color: Colors.orange,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
+                              const SizedBox(width: 6),
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      stream.sellerName,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 11,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.favorite, color: Colors.white70, size: 8),
+                                        const SizedBox(width: 2),
+                                        Text(
+                                          '10.4K',
+                                          style: TextStyle(
+                                            color: Colors.white.withValues(alpha: 0.8),
+                                            fontSize: 8,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ),
+                      const SizedBox(width: 6),
+
+                      // CENTER: LIVE + Timer badge
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF42F63).withValues(alpha: 0.25),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: const Color(0xFFF42F63).withValues(alpha: 0.4), width: 1),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _PulsingDot(),
+                            SizedBox(width: 4),
+                            Text(
+                              'LIVE',
+                              style: TextStyle(
+                                color: Color(0xFFF42F63),
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            LiveDurationTimer(
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
 
                       const Spacer(),
 
-                      // Overlapping Viewer Avatars + Viewer Count
+                      // RIGHT: Viewer Count + Close Button
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
@@ -175,44 +144,7 @@ class LiveSellScreen extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            SizedBox(
-                              width: 32,
-                              height: 14,
-                              child: Stack(
-                                children: [
-                                  Positioned(
-                                    left: 0,
-                                    child: CircleAvatar(
-                                      radius: 7,
-                                      backgroundImage: const NetworkImage(
-                                        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&auto=format&fit=crop&q=60',
-                                      ),
-                                      onBackgroundImageError: (e, s) => const SizedBox.shrink(),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 9,
-                                    child: CircleAvatar(
-                                      radius: 7,
-                                      backgroundImage: const NetworkImage(
-                                        'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&auto=format&fit=crop&q=60',
-                                      ),
-                                      onBackgroundImageError: (e, s) => const SizedBox.shrink(),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: 18,
-                                    child: CircleAvatar(
-                                      radius: 7,
-                                      backgroundImage: const NetworkImage(
-                                        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&auto=format&fit=crop&q=60',
-                                      ),
-                                      onBackgroundImageError: (e, s) => const SizedBox.shrink(),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            const Icon(Icons.remove_red_eye_outlined, color: Colors.white70, size: 12),
                             const SizedBox(width: 4),
                             Text(
                               stream.viewerCount,
@@ -226,20 +158,21 @@ class LiveSellScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 8),
-
                       // Close Button
-                      CircleAvatar(
-                        radius: 15,
-                        backgroundColor: Colors.black.withValues(alpha: 0.4),
-                        child: IconButton(
-                          icon: const Icon(
+                      GestureDetector(
+                        onTap: () => context.pop(),
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
                             Icons.close_rounded,
                             color: Colors.white,
-                            size: 14,
+                            size: 16,
                           ),
-                          onPressed: () => context.pop(),
-                          padding: EdgeInsets.zero,
-                          constraints: const BoxConstraints(),
                         ),
                       ),
                     ],
@@ -314,6 +247,7 @@ class LiveSellScreen extends StatelessWidget {
                             onTap: () {
                               controller.sendEmoji(emoji);
                               showEmojiBar.value = false;
+                              simulatorController.triggerReaction(emoji);
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -472,7 +406,13 @@ class LiveSellScreen extends StatelessWidget {
                               /// =========================
 
                               GestureDetector(
-                                onTap: controller.addComment,
+                                onTap: () {
+                                  final text = controller.commentController.text.trim();
+                                  controller.addComment();
+                                  if (text.isNotEmpty) {
+                                    simulatorController.triggerReaction('💬');
+                                  }
+                                },
 
                                 child: Container(
                                   height: 38,
@@ -539,7 +479,10 @@ class LiveSellScreen extends StatelessWidget {
                             style: TextStyle(fontSize: 15),
                           ),
 
-                          onTap: () => controller.sendRose(),
+                          onTap: () {
+                            controller.sendRose();
+                            simulatorController.triggerReaction('🌹');
+                          },
                         ),
 
                         const SizedBox(width: 8),
@@ -556,7 +499,10 @@ class LiveSellScreen extends StatelessWidget {
                             style: TextStyle(fontSize: 15),
                           ),
 
-                          onTap: () => controller.sendGift(),
+                          onTap: () {
+                            controller.sendGift();
+                            simulatorController.triggerReaction('🎁');
+                          },
                         ),
 
                         const SizedBox(width: 8),
@@ -689,6 +635,56 @@ class LiveSellScreen extends StatelessWidget {
           product: product,
           sellerName: stream.sellerName,
           sellerProfileImage: stream.sellerProfileImage,
+        );
+      },
+    );
+  }
+}
+
+class _PulsingDot extends StatefulWidget {
+  const _PulsingDot();
+
+  @override
+  State<_PulsingDot> createState() => _PulsingDotState();
+}
+
+class _PulsingDotState extends State<_PulsingDot> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Container(
+          width: 6,
+          height: 6,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: const Color(0xFFF42F63),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFF42F63).withOpacity(0.2 + 0.8 * _controller.value),
+                blurRadius: 4 + 4 * _controller.value,
+                spreadRadius: 1 + 2 * _controller.value,
+              )
+            ],
+          ),
         );
       },
     );

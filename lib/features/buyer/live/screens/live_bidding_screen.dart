@@ -10,6 +10,8 @@ import '../widgets/auction_ended_banner.dart';
 import '../widgets/place_bid_bottom_sheet.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../widgets/live_video_simulator.dart';
+import '../widgets/live_duration_timer.dart';
 
 class LiveBiddingScreen extends StatelessWidget {
   final LiveStreamModel stream;
@@ -44,6 +46,7 @@ class LiveBiddingScreen extends StatelessWidget {
   void _openBidBottomSheet(
     BuildContext context,
     LiveBiddingController controller,
+    LiveVideoSimulatorController simulatorController,
   ) {
     showModalBottomSheet(
       context: context,
@@ -52,7 +55,10 @@ class LiveBiddingScreen extends StatelessWidget {
       builder: (context) {
         return PlaceBidBottomSheet(
           currentBid: controller.currentBid.value,
-          onBidConfirmed: (amount) => controller.placeBid(amount),
+          onBidConfirmed: (amount) {
+            controller.placeBid(amount);
+            simulatorController.triggerReaction('🔥');
+          },
         );
       },
     );
@@ -61,6 +67,7 @@ class LiveBiddingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(LiveBiddingController());
+    final simulatorController = LiveVideoSimulatorController();
 
     controller.onAuctionWonCallback = () =>
         _showCongratulationsDialog(context, controller);
@@ -70,17 +77,9 @@ class LiveBiddingScreen extends StatelessWidget {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.network(
-              stream.previewImageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Container(
-                color: Colors.grey[900],
-                child: const Icon(
-                  Icons.videocam_off,
-                  color: Colors.white,
-                  size: 80,
-                ),
-              ),
+            child: LiveVideoSimulator(
+              imageUrl: stream.previewImageUrl,
+              controller: simulatorController,
             ),
           ),
 
@@ -162,20 +161,41 @@ class LiveBiddingScreen extends StatelessWidget {
                                         children: [
                                           Container(
                                             padding: const EdgeInsets.symmetric(
-                                              horizontal: 4,
-                                              vertical: 1,
+                                              horizontal: 6,
+                                              vertical: 2,
                                             ),
                                             decoration: BoxDecoration(
-                                              color: AppColors.liveBadge,
-                                              borderRadius: BorderRadius.circular(4),
-                                            ),
-                                            child: const Text(
-                                              'LIVE',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 8,
-                                                fontWeight: FontWeight.bold,
+                                              color: AppColors.liveBadge.withOpacity(0.2),
+                                              borderRadius: BorderRadius.circular(10),
+                                              border: Border.all(
+                                                color: AppColors.liveBadge.withOpacity(0.4),
+                                                width: 1,
                                               ),
+                                            ),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const _PulsingDot(),
+                                                const SizedBox(width: 4),
+                                                const Text(
+                                                  'LIVE',
+                                                  style: TextStyle(
+                                                    color: AppColors.liveBadge,
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 4),
+                                                Container(width: 1, height: 6, color: AppColors.liveBadge.withOpacity(0.4)),
+                                                const SizedBox(width: 4),
+                                                const LiveDurationTimer(
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 8,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                           const SizedBox(width: 4),
@@ -344,7 +364,7 @@ class LiveBiddingScreen extends StatelessWidget {
                       totalBids: controller.totalBids.value,
                       secondsRemaining: controller.secondsRemaining.value,
                       onPlaceBidPressed: () =>
-                          _openBidBottomSheet(context, controller),
+                          _openBidBottomSheet(context, controller, simulatorController),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -383,7 +403,13 @@ class LiveBiddingScreen extends StatelessWidget {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
-                                    onSubmitted: (_) => controller.addComment(),
+                                      onSubmitted: (_) {
+                                        final text = controller.commentController.text.trim();
+                                        controller.addComment();
+                                        if (text.isNotEmpty) {
+                                          simulatorController.triggerReaction('💬');
+                                        }
+                                      },
                                     decoration: const InputDecoration(
                                       hintText: 'Add a comment or enter a bid...',
                                       hintStyle: TextStyle(
@@ -400,9 +426,14 @@ class LiveBiddingScreen extends StatelessWidget {
                               const SizedBox(width: 8),
                               Obx(
                                 () => GestureDetector(
-                                  onTap: controller.isAuctionEnded.value
-                                      ? null
-                                      : controller.addComment,
+                                  onTap: () {
+                                    if (controller.isAuctionEnded.value) return;
+                                    final text = controller.commentController.text.trim();
+                                    controller.addComment();
+                                    if (text.isNotEmpty) {
+                                      simulatorController.triggerReaction('💬');
+                                    }
+                                  },
                                   child: Opacity(
                                     opacity: controller.isAuctionEnded.value ? 0.5 : 1.0,
                                     child: Container(
@@ -434,7 +465,10 @@ class LiveBiddingScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       GestureDetector(
-                        onTap: controller.toggleLike,
+                        onTap: () {
+                          controller.toggleLike();
+                          simulatorController.triggerReaction('❤️');
+                        },
                         child: Obx(
                           () => CircleAvatar(
                             radius: 24,
@@ -477,6 +511,56 @@ class LiveBiddingScreen extends StatelessWidget {
           }),
         ],
       ),
+    );
+  }
+}
+
+class _PulsingDot extends StatefulWidget {
+  const _PulsingDot();
+
+  @override
+  State<_PulsingDot> createState() => _PulsingDotState();
+}
+
+class _PulsingDotState extends State<_PulsingDot> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    )..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Container(
+          width: 5,
+          height: 5,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: const Color(0xFFF42F63),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFFF42F63).withOpacity(0.2 + 0.8 * _controller.value),
+                blurRadius: 3 + 3 * _controller.value,
+                spreadRadius: 1 + 1 * _controller.value,
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

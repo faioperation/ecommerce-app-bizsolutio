@@ -9,6 +9,8 @@ import '../widgets/feed_card.dart';
 import '../widgets/home_comments_sheet.dart';
 import '../../../../core/theme/app_spacing.dart';
 import 'my_day_view_screen.dart';
+import '../controllers/live_list_controller.dart';
+import '../widgets/live_stream_card.dart';
 
 class BuyerHomeScreen extends StatelessWidget {
   const BuyerHomeScreen({super.key});
@@ -17,6 +19,7 @@ class BuyerHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(HomeController());
     final notificationController = Get.put(NotificationController());
+    final liveListController = Get.put(LiveListController());
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -236,6 +239,39 @@ class BuyerHomeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
+
+                Obx(() {
+                  if (liveListController.isLoading.value) {
+                    return const SizedBox(height: 80, child: Center(child: CircularProgressIndicator()));
+                  }
+                  if (liveListController.liveStreams.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SectionTitle(title: 'Active Live Streams'),
+                      SizedBox(
+                        height: 330,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: liveListController.liveStreams.length,
+                          itemBuilder: (context, index) {
+                            final stream = liveListController.liveStreams[index];
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              margin: const EdgeInsets.only(right: 16),
+                              child: LiveStreamCard(stream: stream),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                    ],
+                  );
+                }),
 
                 const SectionTitle(title: 'For You'),
 
