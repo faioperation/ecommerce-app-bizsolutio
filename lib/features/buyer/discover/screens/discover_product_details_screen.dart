@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../controllers/discover_controller.dart';
 import '../models/discover_product_model.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/services/app_share_service.dart';
 import '../../checkout/screens/checkout_screen.dart';
 import '../../checkout/models/order_item_model.dart';
 import '../../profile/controllers/cart_controller.dart';
@@ -382,7 +383,13 @@ class _DiscoverProductDetailsScreenState
                           color: Colors.black87,
                           size: 18,
                         ),
-                        onPressed: () {},
+                        onPressed: () => AppShareService.shareProduct(
+                          productId: activeProduct.id,
+                          productName: activeProduct.name,
+                          price: activeProduct.price,
+                          sellerName: activeProduct.sellerName,
+                          context: context,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 12),

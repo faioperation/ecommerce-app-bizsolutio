@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get/get.dart';
+import '../../../../core/services/app_share_service.dart';
 import '../../home/models/live_model.dart';
 import '../controllers/live_bidding_controller.dart';
 import '../widgets/live_bid_bubble.dart';
@@ -301,7 +302,14 @@ class LiveBiddingScreen extends StatelessWidget {
                             color: Colors.white,
                             size: 20,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            AppShareService.shareLiveAuction(
+                              streamId: stream.id,
+                              title: stream.title,
+                              sellerName: stream.sellerName,
+                              context: context,
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(width: 8),

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import '../../../../core/services/app_share_service.dart';
 
 class ShopCoverHeader extends StatelessWidget {
   final String coverImageUrl;
   final bool isDark;
+  final String shopId;
+  final String shopName;
 
   const ShopCoverHeader({
     super.key,
     required this.coverImageUrl,
     required this.isDark,
+    this.shopId = 'shop',
+    this.shopName = 'Shop',
   });
 
   @override
@@ -44,7 +49,11 @@ class ShopCoverHeader extends StatelessWidget {
               color: Colors.white,
               size: 20,
             ),
-            onPressed: () {},
+            onPressed: () => AppShareService.shareShop(
+              shopId: shopId,
+              shopName: shopName,
+              context: context,
+            ),
           ),
         ),
         const SizedBox(width: 8),

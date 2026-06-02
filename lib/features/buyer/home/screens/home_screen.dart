@@ -5,6 +5,7 @@ import '../../../../routes/app_routes.dart';
 import '../controllers/home_controller.dart';
 import '../controllers/notification_controller.dart';
 import '../widgets/home_widgets.dart';
+import '../../../../core/services/app_share_service.dart';
 import '../widgets/feed_card.dart';
 import '../widgets/home_comments_sheet.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -297,9 +298,11 @@ class BuyerHomeScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        onShare: () => Get.snackbar(
-                          'Info',
-                          'Share functionality coming soon!',
+                        onShare: () => AppShareService.shareFeedPost(
+                          postId: item.id,
+                          caption: item.title,
+                          sellerName: item.sellerName,
+                          context: context,
                         ),
                         onAddToCart: () => controller.addToCart(item.id),
                       );

@@ -63,6 +63,8 @@ class _ShopProfileScreenState extends State<ShopProfileScreen>
               ShopCoverHeader(
                 coverImageUrl: shop.coverImageUrl,
                 isDark: isDark,
+                shopId: shop.id,
+                shopName: shop.name,
               ),
               ShopProfileDetails(
                 shop: shop,

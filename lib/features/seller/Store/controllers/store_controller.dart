@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../routes/app_routes.dart';
+import '../../../../core/services/app_share_service.dart';
 import '../models/store_model.dart';
 
 /// GetX controller for managing the Store Profile data and user actions.
@@ -114,14 +115,10 @@ class StoreController extends GetxController {
   void shareStore(BuildContext context) {
     if (store.value == null) return;
     
-    // Simulate copy to clipboard
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Store link for "${store.value!.name}" copied to clipboard!'),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: const Color(0xFF6C4DFF), // Matches primary color
-        duration: const Duration(seconds: 2),
-      ),
+    AppShareService.shareShop(
+      shopId: store.value!.id,
+      shopName: store.value!.name,
+      context: context,
     );
   }
 

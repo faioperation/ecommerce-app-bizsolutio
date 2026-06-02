@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get/get.dart';
+import '../../../../core/services/app_share_service.dart';
 import '../../home/models/live_model.dart';
 import '../controllers/live_sell_controller.dart';
 import '../widgets/live_comment_bubble.dart';
@@ -513,12 +514,11 @@ class LiveSellScreen extends StatelessWidget {
 
                         GestureDetector(
                           onTap: () {
-                            Get.snackbar(
-                              'Shared',
-                              'Live stream link copied to clipboard!',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.black87,
-                              colorText: Colors.white,
+                            AppShareService.shareLiveStream(
+                              streamId: stream.id,
+                              title: stream.title,
+                              sellerName: stream.sellerName,
+                              context: context,
                             );
                           },
 
