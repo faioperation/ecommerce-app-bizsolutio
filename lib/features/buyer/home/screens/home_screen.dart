@@ -159,7 +159,7 @@ class BuyerHomeScreen extends StatelessWidget {
                                 isLive: false,
                                 isSeen: myStoryData.isSeen.value,
                                 onTap: () {
-                                  Navigator.of(context).push(
+                                  Navigator.of(context, rootNavigator: true).push(
                                     MaterialPageRoute(
                                       fullscreenDialog: true,
                                       builder: (context) => MyDayViewScreen(
@@ -181,7 +181,7 @@ class BuyerHomeScreen extends StatelessWidget {
                             isLive: story.isLive,
                             isSeen: story.isSeen.value,
                             onTap: () {
-                              Navigator.of(context).push(
+                              Navigator.of(context, rootNavigator: true).push(
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
                                   builder: (context) => MyDayViewScreen(
@@ -206,10 +206,7 @@ class BuyerHomeScreen extends StatelessWidget {
                       label: 'Flash Sale',
                       icon: Icons.flash_on,
                       gradient: const [Color(0xFFF59E0B), Color(0xFFD97706)],
-                      onTap: () => Get.snackbar(
-                        'Info',
-                        'Flash Sale Screen coming soon!',
-                      ),
+                      onTap: () => context.push(AppRoutes.flashSale),
                     ),
                     const SizedBox(width: 12),
                     HomeCategoryButton(

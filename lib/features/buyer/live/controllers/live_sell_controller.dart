@@ -271,7 +271,7 @@ class LiveSellController extends GetxController {
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
-                        "https://bizsolutio.com/groups/${sellerName.toLowerCase().replaceAll(' ', '_')}_vip",
+                        "https://fashiohub.com/groups/${sellerName.toLowerCase().replaceAll(' ', '_')}_vip",
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           color: Colors.blue.shade700,

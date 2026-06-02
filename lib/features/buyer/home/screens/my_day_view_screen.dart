@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../models/home_models.dart';
 import '../controllers/home_controller.dart';
+import '../controllers/story_interaction_controller.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class MyDayViewScreen extends StatefulWidget {
@@ -28,6 +29,8 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
   int _currentSlideIndex = 0;
   bool _isPaused = false;
   final TextEditingController _replyController = TextEditingController();
+  final StoryInteractionController _interactionController = Get.put(StoryInteractionController());
+  final FocusNode _replyFocusNode = FocusNode();
 
   // For the flying emojis animation
   final List<FloatingEmoji> _floatingEmojis = [];
@@ -51,6 +54,16 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
       }
     });
 
+    _replyFocusNode.addListener(() {
+      if (_replyFocusNode.hasFocus) {
+        _progressAnimController.stop();
+      } else {
+        if (!_isPaused) {
+          _progressAnimController.forward();
+        }
+      }
+    });
+
     // Start progress
     _startProgress();
     
@@ -63,6 +76,7 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
     _pageController.dispose();
     _progressAnimController.dispose();
     _replyController.dispose();
+    _replyFocusNode.dispose();
     
     // Dispose all active flying emoji controllers to prevent ticker leaks
     for (var emoji in _floatingEmojis) {
@@ -87,6 +101,9 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
   }
 
   void _goToNextSlide() {
+    if (_replyFocusNode.hasFocus) {
+      _replyFocusNode.unfocus();
+    }
     if (_currentSlideIndex < _activeStory.slides.length - 1) {
       setState(() {
         _currentSlideIndex++;
@@ -134,6 +151,9 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
   }
 
   void _goToPrevSlide() {
+    if (_replyFocusNode.hasFocus) {
+      _replyFocusNode.unfocus();
+    }
     if (_currentSlideIndex > 0) {
       setState(() {
         _currentSlideIndex--;
@@ -199,6 +219,40 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
     Navigator.of(context).pop();
   }
 
+  void _sendTextReply(String text) {
+    if (text.trim().isEmpty) return;
+    _interactionController.sendStoryReply(
+      story: _activeStory,
+      text: text,
+      isReaction: false,
+    );
+    Get.snackbar(
+      'Reply Sent',
+      'Your response was sent to ${_activeStory.sellerName}!',
+      backgroundColor: const Color(0xFF6C4DFF),
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+    );
+    _replyController.clear();
+  }
+
+  void _sendEmojiReply(String emoji) {
+    _spawnEmoji(emoji);
+    _interactionController.sendStoryReply(
+      story: _activeStory,
+      text: emoji,
+      isReaction: true,
+    );
+    Get.snackbar(
+      'Reaction Sent',
+      'You reacted $emoji to ${_activeStory.sellerName}\'s story!',
+      backgroundColor: const Color(0xFF6C4DFF),
+      colorText: Colors.white,
+      snackPosition: SnackPosition.BOTTOM,
+      duration: const Duration(seconds: 1),
+    );
+  }
+
   // Spawns a floating emoji animation
   void _spawnEmoji(String emoji) {
     if (!mounted) return;
@@ -238,8 +292,15 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          if (_replyFocusNode.hasFocus) {
+            _replyFocusNode.unfocus();
+          }
+        },
+        child: Stack(
+          children: [
           // 1. Full-screen background + long-press pause handler
           Positioned.fill(
             child: GestureDetector(
@@ -631,19 +692,11 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
                               ),
                               child: TextField(
                                 controller: _replyController,
+                                focusNode: _replyFocusNode,
                                 style: const TextStyle(color: Colors.white, fontSize: 14),
-                                onTap: _pauseStory,
                                 onSubmitted: (val) {
-                                  _resumeStory();
-                                  if (val.trim().isNotEmpty) {
-                                    Get.snackbar(
-                                      'Reply Sent',
-                                      'Your response was sent to ${_activeStory.sellerName}!',
-                                      backgroundColor: const Color(0xFF6C4DFF),
-                                      colorText: Colors.white,
-                                    );
-                                    _replyController.clear();
-                                  }
+                                  _replyFocusNode.unfocus();
+                                  _sendTextReply(val);
                                 },
                                 decoration: InputDecoration(
                                   hintText: 'Send message to ${_activeStory.sellerName}...',
@@ -664,18 +717,11 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
                           GestureDetector(
                             onTap: () {
                               if (_replyController.text.trim().isNotEmpty) {
-                                Get.snackbar(
-                                  'Reply Sent',
-                                  'Your response was sent to ${_activeStory.sellerName}!',
-                                  backgroundColor: const Color(0xFF6C4DFF),
-                                  colorText: Colors.white,
-                                );
-                                _replyController.clear();
-                                FocusScope.of(context).unfocus();
-                                _resumeStory();
+                                _sendTextReply(_replyController.text);
+                                _replyFocusNode.unfocus();
                               } else {
                                 // If empty, trigger a heart burst!
-                                _spawnEmoji('❤️');
+                                _sendEmojiReply('❤️');
                               }
                             },
                             child: Container(
@@ -702,13 +748,14 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
           ),
         ],
       ),
+     ),
     );
   }
 
   // Quick reaction emoji builder
   Widget _buildEmojiReaction(String emoji) {
     return GestureDetector(
-      onTap: () => _spawnEmoji(emoji),
+      onTap: () => _sendEmojiReply(emoji),
       child: Container(
         padding: const EdgeInsets.all(6),
         decoration: const BoxDecoration(shape: BoxShape.circle),
@@ -722,8 +769,6 @@ class _MyDayViewScreenState extends State<MyDayViewScreen>
 
   // Renders the image or the premium simulated video content
   Widget _buildMediaContent(StoryMediaModel slide) {
-    final size = MediaQuery.of(context).size;
-
     if (slide.type == StoryMediaType.video) {
       // 1. HIGH-FIDELITY SIMULATED CINEMATIC VIDEO PLAYER
       return Stack(

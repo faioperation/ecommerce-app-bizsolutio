@@ -24,6 +24,7 @@ import '../features/auth/views/seller_registration/seller_registration_screen5.d
 import '../features/auth/controllers/seller_registration_controller.dart';
 import '../features/buyer/home/screens/home_screen.dart';
 import '../features/buyer/home/screens/trending_screen.dart';
+import '../features/buyer/home/screens/flash_sale_screen.dart';
 import '../features/buyer/home/screens/following_screen.dart';
 import '../features/buyer/home/models/live_model.dart';
 import '../features/buyer/home/screens/live_list_screen.dart';
@@ -352,6 +353,10 @@ class AppPages {
               GoRoute(
                 path: AppRoutes.trending,
                 builder: (context, state) => const TrendingScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.flashSale,
+                builder: (context, state) => const FlashSaleScreen(),
               ),
               GoRoute(
                 path: AppRoutes.following,
