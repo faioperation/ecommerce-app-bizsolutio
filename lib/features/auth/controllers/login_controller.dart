@@ -47,11 +47,11 @@ class LoginController extends GetxController {
     }
   }
 
-  void navigateToRegister(BuildContext context, UserRole role) {
-    if (role == UserRole.buyer) {
-      context.push(AppRoutes.registerBuyer);
+  void navigateToRegister(BuildContext context) {
+    if (context.canPop()) {
+      context.pop();
     } else {
-      context.push(AppRoutes.sellerRegStep1);
+      context.go(AppRoutes.roleSelection);
     }
   }
 
