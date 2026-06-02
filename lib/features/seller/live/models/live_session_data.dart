@@ -5,12 +5,16 @@ class LiveSessionData {
   final String? coverImagePath; // null if no cover was uploaded
   final List<LiveStreamProduct> selectedProducts;
   final LiveType liveType;
+  final double? startingBid;
+  final int? biddingDuration; // in minutes
 
   const LiveSessionData({
     required this.title,
     this.coverImagePath,
     required this.selectedProducts,
     required this.liveType,
+    this.startingBid,
+    this.biddingDuration,
   });
 }
 

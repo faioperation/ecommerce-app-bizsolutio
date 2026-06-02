@@ -8,6 +8,7 @@ import '../widgets/live_product_selection_card.dart';
 import '../widgets/live_type_selector.dart';
 import '../widgets/tips_card.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../models/live_session_data.dart';
 
 /// The central Setup Livestream screen allowing sellers to configure
 /// their upcoming live stream broadcast details.
@@ -256,10 +257,34 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
                   const SizedBox(height: 24),
                   
                   // 3. Live Type Selection (Sell vs Bidding)
-                  Obx(() => LiveTypeSelector(
-                        selectedType: _controller.selectedLiveType.value,
-                        onTypeSelected: _controller.selectLiveType,
-                      )),
+                  Obx(() {
+                    final isBidding = _controller.selectedLiveType.value == LiveType.bidding;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LiveTypeSelector(
+                          selectedType: _controller.selectedLiveType.value,
+                          onTypeSelected: _controller.selectLiveType,
+                        ),
+                        if (isBidding) ...[
+                          const SizedBox(height: 24),
+                          SettingsTextField(
+                            label: 'Starting Bid Amount (\$)',
+                            controller: _controller.startingBidController,
+                            placeholder: 'Enter starting bid price (e.g. 50)',
+                            keyboardType: TextInputType.number,
+                          ),
+                          const SizedBox(height: 24),
+                          SettingsTextField(
+                            label: 'Bidding Duration (Minutes)',
+                            controller: _controller.biddingDurationController,
+                            placeholder: 'Enter duration in minutes (e.g. 10)',
+                            keyboardType: TextInputType.number,
+                          ),
+                        ],
+                      ],
+                    );
+                  }),
                   const SizedBox(height: 24),
                   
                   // 4. Suggestions advice card
