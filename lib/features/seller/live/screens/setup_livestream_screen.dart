@@ -60,7 +60,13 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
             color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
             size: 20,
           ),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go(AppRoutes.sellerDashboard);
+            }
+          },
         ),
         title: Text(
           'Setup Livestream',
@@ -304,11 +310,39 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
               ),
             ),
             child: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              child: Row(
                 children: [
-                  SizedBox(
-                    width: double.infinity,
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        if (context.canPop()) {
+                          context.pop();
+                        } else {
+                          context.go(AppRoutes.sellerDashboard);
+                        }
+                      },
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: isDark ? Colors.white70 : Colors.black87,
+                        side: BorderSide(
+                          color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                          width: 1.5,
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        'Back',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
                     child: ElevatedButton(
                       onPressed: _handleSubmit,
                       style: ElevatedButton.styleFrom(
@@ -326,21 +360,6 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextButton(
-                    onPressed: () => context.pop(),
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 44),
-                    ),
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: isDark ? Colors.white70 : Colors.black87,
                       ),
                     ),
                   ),

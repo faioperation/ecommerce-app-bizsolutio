@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../routes/app_routes.dart';
+import '../../products/controllers/products_controller.dart';
 import '../controllers/store_controller.dart';
 import '../widgets/featured_product_card.dart';
 
@@ -11,6 +14,7 @@ class StoreProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(StoreController());
+    final productsController = Get.put(SellerProductsController());
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
@@ -28,6 +32,18 @@ class StoreProfileScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.add,
+              color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
+            ),
+            onPressed: () {
+              context.push(AppRoutes.sellerAddProduct);
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
@@ -148,7 +164,11 @@ class StoreProfileScreen extends StatelessWidget {
                         const SizedBox(width: 24),
                         _buildStatItem('4.8', 'Rating', isDark, isRating: true),
                         const SizedBox(width: 24),
-                        _buildStatItem('127', 'Products', isDark),
+                        Obx(() => _buildStatItem(
+                              productsController.productsList.length.toString(),
+                              'Products',
+                              isDark,
+                            )),
                       ],
                     ),
                     const SizedBox(height: 24),
@@ -240,21 +260,40 @@ class StoreProfileScreen extends StatelessWidget {
                     const SizedBox(height: 16),
                     
                     // 2-column Grid of Reusable FeaturedProductCards
-                    GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 0.80,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                      ),
-                      itemCount: store.featuredProducts.length,
-                      itemBuilder: (context, index) {
-                        final product = store.featuredProducts[index];
-                        return FeaturedProductCard(product: product);
-                      },
-                    ),
+                    Obx(() {
+                      final products = productsController.productsList;
+                      if (products.isEmpty) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 24),
+                            child: Text(
+                              'No products found. Add products using the + icon above.',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                        );
+                      }
+                      return GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.80,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 16,
+                        ),
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          final product = products[index];
+                          return FeaturedProductCard(
+                            product: product,
+                            onTap: () {
+                              context.push(AppRoutes.sellerAddProduct, extra: product);
+                            },
+                          );
+                        },
+                      );
+                    }),
                     const SizedBox(height: 32),
                   ],
                 ),
