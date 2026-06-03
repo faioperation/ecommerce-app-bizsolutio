@@ -22,6 +22,8 @@ class SetupLivestreamController extends GetxController {
   // Reactive state fields
   final RxList<StoreProductModel> selectedProducts = <StoreProductModel>[].obs;
   late TextEditingController titleController;
+  late TextEditingController startingBidController;
+  late TextEditingController biddingDurationController;
   
   // Stream options
   final Rx<LiveType> selectedLiveType = LiveType.sell.obs;
@@ -31,11 +33,15 @@ class SetupLivestreamController extends GetxController {
   void onInit() {
     super.onInit();
     titleController = TextEditingController();
+    startingBidController = TextEditingController();
+    biddingDurationController = TextEditingController();
   }
 
   @override
   void onClose() {
     titleController.dispose();
+    startingBidController.dispose();
+    biddingDurationController.dispose();
     super.onClose();
   }
 
@@ -61,6 +67,8 @@ class SetupLivestreamController extends GetxController {
   /// Reset all form fields to their default unselected state
   void reset() {
     titleController.clear();
+    startingBidController.clear();
+    biddingDurationController.clear();
     selectedProducts.clear();
     selectedLiveType.value = LiveType.sell;
     searchQuery.value = '';
@@ -102,6 +110,60 @@ class SetupLivestreamController extends GetxController {
       return null;
     }
 
+    double? startingBid;
+    int? biddingDuration;
+
+    if (selectedLiveType.value == LiveType.bidding) {
+      final startingBidText = startingBidController.text.trim();
+      final biddingDurationText = biddingDurationController.text.trim();
+
+      if (startingBidText.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter starting bid amount.'),
+            backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        return null;
+      }
+
+      if (biddingDurationText.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter bidding duration.'),
+            backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        return null;
+      }
+
+      startingBid = double.tryParse(startingBidText);
+      if (startingBid == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter a valid starting bid amount.'),
+            backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        return null;
+      }
+
+      biddingDuration = int.tryParse(biddingDurationText);
+      if (biddingDuration == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Please enter a valid duration in minutes.'),
+            backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        return null;
+      }
+    }
+
     // Map store products to lightweight LiveStreamProduct models
     final liveProducts = selectedProducts.map((p) => LiveStreamProduct(
       id: p.id,
@@ -115,6 +177,8 @@ class SetupLivestreamController extends GetxController {
       coverImagePath: null, // Cover image removed per requirements
       selectedProducts: liveProducts,
       liveType: selectedLiveType.value,
+      startingBid: startingBid,
+      biddingDuration: biddingDuration,
     );
   }
 }

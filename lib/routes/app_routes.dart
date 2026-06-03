@@ -46,6 +46,7 @@ class AppRoutes {
   static const String sellerSettings = '/seller/settings';
   static const String sellerMessages = '/seller/messages';
   static const String trending = '/buyer/home/trending';
+  static const String flashSale = '/buyer/home/flash-sale';
   static const String following = '/buyer/home/following';
   static const String liveNow = '/buyer/home/live-now';
   static const String notifications = '/buyer/home/notifications';

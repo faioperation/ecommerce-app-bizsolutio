@@ -5,10 +5,13 @@ import '../../../../routes/app_routes.dart';
 import '../controllers/home_controller.dart';
 import '../controllers/notification_controller.dart';
 import '../widgets/home_widgets.dart';
+import '../../../../core/services/app_share_service.dart';
 import '../widgets/feed_card.dart';
 import '../widgets/home_comments_sheet.dart';
 import '../../../../core/theme/app_spacing.dart';
 import 'my_day_view_screen.dart';
+import '../controllers/live_list_controller.dart';
+import '../widgets/live_stream_card.dart';
 
 class BuyerHomeScreen extends StatelessWidget {
   const BuyerHomeScreen({super.key});
@@ -17,6 +20,7 @@ class BuyerHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(HomeController());
     final notificationController = Get.put(NotificationController());
+    final liveListController = Get.put(LiveListController());
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -159,7 +163,7 @@ class BuyerHomeScreen extends StatelessWidget {
                                 isLive: false,
                                 isSeen: myStoryData.isSeen.value,
                                 onTap: () {
-                                  Navigator.of(context).push(
+                                  Navigator.of(context, rootNavigator: true).push(
                                     MaterialPageRoute(
                                       fullscreenDialog: true,
                                       builder: (context) => MyDayViewScreen(
@@ -181,7 +185,7 @@ class BuyerHomeScreen extends StatelessWidget {
                             isLive: story.isLive,
                             isSeen: story.isSeen.value,
                             onTap: () {
-                              Navigator.of(context).push(
+                              Navigator.of(context, rootNavigator: true).push(
                                 MaterialPageRoute(
                                   fullscreenDialog: true,
                                   builder: (context) => MyDayViewScreen(
@@ -206,10 +210,7 @@ class BuyerHomeScreen extends StatelessWidget {
                       label: 'Flash Sale',
                       icon: Icons.flash_on,
                       gradient: const [Color(0xFFF59E0B), Color(0xFFD97706)],
-                      onTap: () => Get.snackbar(
-                        'Info',
-                        'Flash Sale Screen coming soon!',
-                      ),
+                      onTap: () => context.push(AppRoutes.flashSale),
                     ),
                     const SizedBox(width: 12),
                     HomeCategoryButton(
@@ -240,6 +241,39 @@ class BuyerHomeScreen extends StatelessWidget {
                   ],
                 ),
 
+                Obx(() {
+                  if (liveListController.isLoading.value) {
+                    return const SizedBox(height: 80, child: Center(child: CircularProgressIndicator()));
+                  }
+                  if (liveListController.liveStreams.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SectionTitle(title: 'Active Live Streams'),
+                      SizedBox(
+                        height: 330,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: liveListController.liveStreams.length,
+                          itemBuilder: (context, index) {
+                            final stream = liveListController.liveStreams[index];
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.85,
+                              margin: const EdgeInsets.only(right: 16),
+                              child: LiveStreamCard(stream: stream),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                    ],
+                  );
+                }),
+
                 const SectionTitle(title: 'For You'),
 
                 Obx(
@@ -264,9 +298,11 @@ class BuyerHomeScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        onShare: () => Get.snackbar(
-                          'Info',
-                          'Share functionality coming soon!',
+                        onShare: () => AppShareService.shareFeedPost(
+                          postId: item.id,
+                          caption: item.title,
+                          sellerName: item.sellerName,
+                          context: context,
                         ),
                         onAddToCart: () => controller.addToCart(item.id),
                       );

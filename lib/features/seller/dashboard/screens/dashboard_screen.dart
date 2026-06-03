@@ -19,16 +19,6 @@ class SellerDashboardScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: isDark ? Colors.black : const Color(0xFFF8F9FC),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push(AppRoutes.sellerSetupLivestream);
-        },
-        backgroundColor: isDark ? const Color(0xFF1E1E2A) : Colors.white,
-        foregroundColor: isDark ? Colors.white : Colors.black87,
-        shape: const CircleBorder(),
-        elevation: 4,
-        child: const Icon(Icons.videocam_outlined, size: 28),
-      ),
       body: SafeArea(
         child: Obx(() {
           if (controller.isLoading.value) {
@@ -167,7 +157,7 @@ class SellerDashboardScreen extends StatelessWidget {
                   // Quick Actions
                   SellerQuickActions(
                     onAddProduct: () {
-                      context.go(AppRoutes.sellerProducts);
+                      context.push(AppRoutes.sellerAddProduct);
                     },
                     onGoLive: () {
                       context.push(AppRoutes.sellerSetupLivestream);

@@ -1,13 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../models/store_model.dart';
+import '../../products/models/product_model.dart';
 
 /// A reusable, highly stylized product card designed for the Store's grid.
 /// Features a centered product image container, descriptive titles,
 /// and bold local currency pricing formatted in Bengali Taka (৳).
 class FeaturedProductCard extends StatelessWidget {
-  final StoreProductModel product;
+  final SellerProductModel product;
   final VoidCallback? onTap;
 
   const FeaturedProductCard({
@@ -25,7 +26,7 @@ class FeaturedProductCard extends StatelessWidget {
           () {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Tapped on "${product.title}"'),
+                content: Text('Tapped on "${product.name}"'),
                 behavior: SnackBarBehavior.floating,
                 duration: const Duration(milliseconds: 1000),
               ),
@@ -54,18 +55,41 @@ class FeaturedProductCard extends StatelessWidget {
           children: [
             // 1. Centered Image Container
             Expanded(
-              child: Container(
-                margin: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: isDark
-                      ? Colors.white.withValues(alpha: 0.05)
-                      : const Color(0xFFF3F4F6), // Cool light grey background
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  product.image,
-                  style: const TextStyle(fontSize: 48), // Sizeable emoji
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Container(
+                  margin: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? Colors.white.withValues(alpha: 0.05)
+                        : const Color(0xFFF3F4F6), // Cool light grey background
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  alignment: Alignment.center,
+                  child: product.image.startsWith('http')
+                      ? Image.network(
+                          product.image,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(Icons.shopping_bag_outlined, size: 36);
+                          },
+                        )
+                      : (product.image.isNotEmpty && !product.image.startsWith('http') && File(product.image).existsSync())
+                          ? Image.file(
+                              File(product.image),
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.shopping_bag_outlined, size: 36);
+                              },
+                            )
+                          : Text(
+                              product.image.isNotEmpty ? product.image : '📦',
+                              style: const TextStyle(fontSize: 48),
+                            ),
                 ),
               ),
             ),
@@ -77,7 +101,7 @@ class FeaturedProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    product.title,
+                    product.name,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

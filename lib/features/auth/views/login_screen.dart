@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
     final controller = Get.put(LoginController());
 
     return Scaffold(
-      appBar: AppBar(title: Text('Login as ${role.name.capitalizeFirst}')),
+      appBar: AppBar(title: const Text('Login')),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -273,7 +273,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () =>
-                            controller.navigateToRegister(context, role),
+                            controller.navigateToRegister(context),
                         child: Text(
                           'Sign Up',
                           style: TextStyle(

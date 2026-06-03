@@ -8,6 +8,7 @@ import '../widgets/live_product_selection_card.dart';
 import '../widgets/live_type_selector.dart';
 import '../widgets/tips_card.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../models/live_session_data.dart';
 
 /// The central Setup Livestream screen allowing sellers to configure
 /// their upcoming live stream broadcast details.
@@ -59,7 +60,13 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
             color: isDark ? AppColors.darkTextPrimary : AppColors.lightTextPrimary,
             size: 20,
           ),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go(AppRoutes.sellerDashboard);
+            }
+          },
         ),
         title: Text(
           'Setup Livestream',
@@ -256,10 +263,34 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
                   const SizedBox(height: 24),
                   
                   // 3. Live Type Selection (Sell vs Bidding)
-                  Obx(() => LiveTypeSelector(
-                        selectedType: _controller.selectedLiveType.value,
-                        onTypeSelected: _controller.selectLiveType,
-                      )),
+                  Obx(() {
+                    final isBidding = _controller.selectedLiveType.value == LiveType.bidding;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        LiveTypeSelector(
+                          selectedType: _controller.selectedLiveType.value,
+                          onTypeSelected: _controller.selectLiveType,
+                        ),
+                        if (isBidding) ...[
+                          const SizedBox(height: 24),
+                          SettingsTextField(
+                            label: 'Starting Bid Amount (\$)',
+                            controller: _controller.startingBidController,
+                            placeholder: 'Enter starting bid price (e.g. 50)',
+                            keyboardType: TextInputType.number,
+                          ),
+                          const SizedBox(height: 24),
+                          SettingsTextField(
+                            label: 'Bidding Duration (Minutes)',
+                            controller: _controller.biddingDurationController,
+                            placeholder: 'Enter duration in minutes (e.g. 10)',
+                            keyboardType: TextInputType.number,
+                          ),
+                        ],
+                      ],
+                    );
+                  }),
                   const SizedBox(height: 24),
                   
                   // 4. Suggestions advice card
@@ -279,11 +310,39 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
               ),
             ),
             child: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              child: Row(
                 children: [
-                  SizedBox(
-                    width: double.infinity,
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        if (context.canPop()) {
+                          context.pop();
+                        } else {
+                          context.go(AppRoutes.sellerDashboard);
+                        }
+                      },
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: isDark ? Colors.white70 : Colors.black87,
+                        side: BorderSide(
+                          color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
+                          width: 1.5,
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        'Back',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
                     child: ElevatedButton(
                       onPressed: _handleSubmit,
                       style: ElevatedButton.styleFrom(
@@ -301,21 +360,6 @@ class _SetupLivestreamScreenState extends State<SetupLivestreamScreen> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextButton(
-                    onPressed: () => context.pop(),
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 44),
-                    ),
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                        color: isDark ? Colors.white70 : Colors.black87,
                       ),
                     ),
                   ),

@@ -24,6 +24,7 @@ import '../features/auth/views/seller_registration/seller_registration_screen5.d
 import '../features/auth/controllers/seller_registration_controller.dart';
 import '../features/buyer/home/screens/home_screen.dart';
 import '../features/buyer/home/screens/trending_screen.dart';
+import '../features/buyer/home/screens/flash_sale_screen.dart';
 import '../features/buyer/home/screens/following_screen.dart';
 import '../features/buyer/home/models/live_model.dart';
 import '../features/buyer/home/screens/live_list_screen.dart';
@@ -56,7 +57,6 @@ import '../features/buyer/profile/screens/terms_of_service_screen.dart';
 import '../features/buyer/shop/screens/shop_profile_screen.dart';
 import '../features/seller/dashboard/screens/dashboard_screen.dart';
 import '../features/seller/dashboard/screens/revenue_analytics_screen.dart';
-import '../features/seller/products/screens/products_screen.dart';
 import '../features/seller/products/screens/add_product_screen.dart';
 import '../features/seller/products/models/product_model.dart';
 import '../features/seller/orders/models/order_model.dart';
@@ -66,7 +66,6 @@ import '../features/seller/profile/screens/profile_screen.dart';
 import '../features/seller/inbox/screens/inbox_screen.dart';
 import '../features/seller/Store/screens/store_profile_screen.dart';
 import '../features/seller/Store/screens/store_settings_screen.dart';
-import '../features/seller/live/screens/live_screen.dart';
 import '../features/seller/live/screens/setup_livestream_screen.dart';
 import '../features/seller/live/screens/live_preview_screen.dart';
 import '../features/seller/live/screens/live_broadcast_screen.dart';
@@ -354,6 +353,10 @@ class AppPages {
                 builder: (context, state) => const TrendingScreen(),
               ),
               GoRoute(
+                path: AppRoutes.flashSale,
+                builder: (context, state) => const FlashSaleScreen(),
+              ),
+              GoRoute(
                 path: AppRoutes.following,
                 builder: (context, state) => const FollowingScreen(),
               ),
@@ -434,10 +437,6 @@ class AppPages {
         builder: (context, state) => const SetupLivestreamScreen(),
       ),
       GoRoute(
-        path: AppRoutes.sellerLive,
-        builder: (context, state) => const SellerLivestreamScreen(),
-      ),
-      GoRoute(
         path: AppRoutes.sellerLivePreview,
         builder: (context, state) {
           final sessionData = state.extra as LiveSessionData;
@@ -477,16 +476,7 @@ class AppPages {
               ),
             ],
           ),
-          // Index 1: Products
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: AppRoutes.sellerProducts,
-                builder: (context, state) => const ProductsScreen(),
-              ),
-            ],
-          ),
-          // Index 2: Orders
+          // Index 1: Orders
           StatefulShellBranch(
             routes: [
               GoRoute(
@@ -495,21 +485,30 @@ class AppPages {
               ),
             ],
           ),
-          // Index 3: Store — matches nav bar 'Store' tab
+          // Index 2: Go Live
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoutes.sellerStore,
-                builder: (context, state) => const StoreProfileScreen(),
+                path: AppRoutes.sellerLive,
+                builder: (context, state) => const SetupLivestreamScreen(),
               ),
             ],
           ),
-          // Index 4: Messages
+          // Index 3: Messages
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: AppRoutes.sellerMessages,
                 builder: (context, state) => const SellerInboxScreen(),
+              ),
+            ],
+          ),
+          // Index 4: Store
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: AppRoutes.sellerStore,
+                builder: (context, state) => const StoreProfileScreen(),
               ),
             ],
           ),
