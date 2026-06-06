@@ -66,6 +66,8 @@ import '../features/seller/profile/screens/profile_screen.dart';
 import '../features/seller/inbox/screens/inbox_screen.dart';
 import '../features/seller/Store/screens/store_profile_screen.dart';
 import '../features/seller/Store/screens/store_settings_screen.dart';
+import '../features/seller/Store/screens/create_story_screen.dart';
+import '../features/seller/Store/screens/seller_story_viewer_screen.dart';
 import '../features/seller/live/screens/setup_livestream_screen.dart';
 import '../features/seller/live/screens/live_preview_screen.dart';
 import '../features/seller/live/screens/live_broadcast_screen.dart';
@@ -222,7 +224,10 @@ class AppPages {
       GoRoute(
         path: AppRoutes.checkout,
         builder: (context, state) {
-          return const CheckoutScreen();
+          final item = state.extra as dynamic;
+          // To avoid circular dependency or import issues, we can just cast it or use it if we import the model
+          // I will import OrderItemModel at the top. But since it's dynamic right now, I'll let it be passed.
+          return CheckoutScreen(buyNowItem: item);
         },
       ),
       GoRoute(
@@ -327,6 +332,14 @@ class AppPages {
           final prod = state.extra as SellerProductModel?;
           return SellerAddProductScreen(editProduct: prod);
         },
+      ),
+      GoRoute(
+        path: AppRoutes.sellerCreateStory,
+        builder: (context, state) => const CreateStoryScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.sellerViewStory,
+        builder: (context, state) => const SellerStoryViewerScreen(),
       ),
 
       GoRoute(

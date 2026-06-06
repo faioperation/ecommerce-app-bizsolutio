@@ -8,6 +8,8 @@ class StoryMediaModel {
   final StoryMediaType type;
   final int duration; // in seconds
   final String? caption;
+  final DateTime? timestamp;
+  final List<Map<String, String>> viewers; // Mock viewers
 
   StoryMediaModel({
     required this.id,
@@ -15,6 +17,8 @@ class StoryMediaModel {
     required this.type,
     this.duration = 5,
     this.caption,
+    this.timestamp,
+    this.viewers = const [],
   });
 }
 

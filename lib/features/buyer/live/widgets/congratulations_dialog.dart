@@ -123,7 +123,7 @@ class CongratulationsDialog extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 const Text(
-                  'Payment required within 24 hours',
+                  'Payment required immediately',
                   style: TextStyle(
                     color: Colors.orangeAccent,
                     fontSize: 12,

@@ -3,6 +3,11 @@ class ProfileUserModel {
   final String name;
   final String email;
   final String? avatarUrl;
+  final String? bannerUrl;
+  final String bio;
+  final int followersCount;
+  final int followingCount;
+  final int profileViews;
   final int ordersCount;
   final int wishlistCount;
   final int loyaltyPoints;
@@ -12,6 +17,11 @@ class ProfileUserModel {
     required this.name,
     required this.email,
     this.avatarUrl,
+    this.bannerUrl,
+    this.bio = '',
+    this.followersCount = 0,
+    this.followingCount = 0,
+    this.profileViews = 0,
     this.ordersCount = 0,
     this.wishlistCount = 0,
     this.loyaltyPoints = 0,
@@ -29,6 +39,11 @@ class ProfileUserModel {
       name: json['name'] ?? '',
       email: json['email'] ?? '',
       avatarUrl: json['avatarUrl'],
+      bannerUrl: json['bannerUrl'],
+      bio: json['bio'] ?? '',
+      followersCount: json['followersCount'] ?? 0,
+      followingCount: json['followingCount'] ?? 0,
+      profileViews: json['profileViews'] ?? 0,
       ordersCount: json['ordersCount'] ?? 0,
       wishlistCount: json['wishlistCount'] ?? 0,
       loyaltyPoints: json['loyaltyPoints'] ?? 0,
@@ -40,6 +55,11 @@ class ProfileUserModel {
     'name': name,
     'email': email,
     'avatarUrl': avatarUrl,
+    'bannerUrl': bannerUrl,
+    'bio': bio,
+    'followersCount': followersCount,
+    'followingCount': followingCount,
+    'profileViews': profileViews,
     'ordersCount': ordersCount,
     'wishlistCount': wishlistCount,
     'loyaltyPoints': loyaltyPoints,

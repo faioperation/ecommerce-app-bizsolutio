@@ -19,7 +19,16 @@ class CheckoutScreen extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     if (buyNowItem != null) {
-      controller.loadBuyNowItem(buyNowItem!);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        // Only load if it's not already the only item, to prevent infinite loops or unnecessary updates
+        if (controller.orderItems.isEmpty || controller.orderItems.first.productId != buyNowItem!.productId) {
+          controller.loadBuyNowItem(buyNowItem!);
+        }
+      });
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.loadFromCart();
+      });
     }
 
     return Scaffold(

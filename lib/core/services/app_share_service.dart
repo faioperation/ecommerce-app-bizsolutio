@@ -77,6 +77,22 @@ class AppShareService {
     await _share(message, subject: 'Check out this shop!', context: context);
   }
 
+  /// Share a buyer profile
+  static Future<void> shareBuyerProfile({
+    required String profileId,
+    required String userName,
+    String? bio,
+    BuildContext? context,
+  }) async {
+    final link = '$_baseUrl/user/$profileId';
+    final extra = (bio != null && bio.isNotEmpty) ? '\n$bio' : '';
+    final message =
+        '👤 Check out $userName\'s profile!$extra\n\n'
+        'View profile 👉 $link\n\n'
+        '#Bizsolutio #Profile';
+    await _share(message, subject: 'Check out this profile!', context: context);
+  }
+
   /// Share a feed post (home screen day/post)
   static Future<void> shareFeedPost({
     required String postId,

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get/get.dart';
 import '../../../../core/services/app_share_service.dart';
+import '../../../../routes/app_routes.dart';
+import '../../profile/controllers/cart_controller.dart';
+import '../../profile/models/cart_item_model.dart';
+import '../../checkout/models/order_item_model.dart';
 import '../../home/models/live_model.dart';
 import '../controllers/live_bidding_controller.dart';
 import '../widgets/live_bid_bubble.dart';
@@ -33,11 +37,41 @@ class LiveBiddingScreen extends StatelessWidget {
           onProceedToPayment: () {
             Navigator.of(context).pop();
             Get.snackbar(
-              'Checkout',
-              'Redirecting to secure payment portal...',
-              backgroundColor: AppColors.success,
+              'Payment Required',
+              'Please complete payment immediately to secure your item',
+              backgroundColor: AppColors.primary,
               colorText: Colors.white,
             );
+            
+            // Create the item models
+            final winningBid = controller.currentBid.value;
+            final productName = 'iPhone 15 Pro Max 256GB'; // Static mock based on CongratulationsDialog
+            
+            final cartItem = CartItemModel(
+              productId: stream.id,
+              name: productName,
+              sellerName: stream.sellerName,
+              imageUrl: stream.previewImageUrl,
+              price: winningBid,
+              quantity: 1,
+            );
+            
+            final orderItem = OrderItemModel(
+              productId: stream.id,
+              name: productName,
+              imageUrl: stream.previewImageUrl,
+              price: winningBid,
+              quantity: 1,
+            );
+            
+            // Add to cart so it stays if they abandon checkout
+            if (!Get.isRegistered<CartController>()) {
+              Get.put(CartController());
+            }
+            Get.find<CartController>().addItem(cartItem);
+            
+            // Navigate to checkout passing the bid amount as buyNowItem
+            context.push(AppRoutes.checkout, extra: orderItem);
           },
         );
       },
@@ -402,68 +436,60 @@ class LiveBiddingScreen extends StatelessWidget {
                             children: [
                               const SizedBox(width: 12),
                               Expanded(
-                                child: Obx(
-                                  () => TextField(
-                                    controller: controller.commentController,
-                                    enabled: !controller.isAuctionEnded.value,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                      onSubmitted: (_) {
-                                        final text = controller.commentController.text.trim();
-                                        controller.addComment();
-                                        if (text.isNotEmpty) {
-                                          simulatorController.triggerReaction('💬');
-                                        }
-                                      },
-                                    decoration: const InputDecoration(
-                                      hintText: 'Add a comment or enter a bid...',
-                                      hintStyle: TextStyle(
-                                        color: Colors.white54,
-                                        fontSize: 14,
-                                      ),
-                                      border: InputBorder.none,
-                                      isDense: true,
-                                      contentPadding: EdgeInsets.symmetric(vertical: 8),
-                                    ),
+                                child: TextField(
+                                  controller: controller.commentController,
+                                  enabled: true, // Always enabled
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
                                   ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Obx(
-                                () => GestureDetector(
-                                  onTap: () {
-                                    if (controller.isAuctionEnded.value) return;
+                                  onSubmitted: (_) {
                                     final text = controller.commentController.text.trim();
                                     controller.addComment();
                                     if (text.isNotEmpty) {
                                       simulatorController.triggerReaction('💬');
                                     }
                                   },
-                                  child: Opacity(
-                                    opacity: controller.isAuctionEnded.value ? 0.5 : 1.0,
-                                    child: Container(
-                                      width: 36,
-                                      height: 36,
-                                      decoration: const BoxDecoration(
-                                        color: AppColors.accentPink,
-                                        shape: BoxShape.circle,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Color(0x3DF42F63),
-                                            blurRadius: 6,
-                                            spreadRadius: 1,
-                                          ),
-                                        ],
-                                      ),
-                                      child: const Icon(
-                                        Icons.send_rounded,
-                                        color: Colors.white,
-                                        size: 16,
-                                      ),
+                                  decoration: const InputDecoration(
+                                    hintText: 'Add a comment...',
+                                    hintStyle: TextStyle(
+                                      color: Colors.white54,
+                                      fontSize: 14,
                                     ),
+                                    border: InputBorder.none,
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.symmetric(vertical: 8),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              GestureDetector(
+                                onTap: () {
+                                  final text = controller.commentController.text.trim();
+                                  controller.addComment();
+                                  if (text.isNotEmpty) {
+                                    simulatorController.triggerReaction('💬');
+                                  }
+                                },
+                                child: Container(
+                                  width: 36,
+                                  height: 36,
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.accentPink,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Color(0x3DF42F63),
+                                        blurRadius: 6,
+                                        spreadRadius: 1,
+                                      ),
+                                    ],
+                                  ),
+                                  child: const Icon(
+                                    Icons.send_rounded,
+                                    color: Colors.white,
+                                    size: 16,
                                   ),
                                 ),
                               ),

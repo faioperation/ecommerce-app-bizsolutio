@@ -26,6 +26,8 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
 
   final List<String> _selectedImages = [];
   String? _uploadedVideo;
+  String? _selectedSize;
+  final List<String> _sizes = ['S', 'M', 'L', 'XL', 'XXL', '32', '34', '36', '38'];
 
   @override
   void initState() {
@@ -40,7 +42,12 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
     _descController = TextEditingController(text: p?.description ?? '');
 
     if (p != null) {
-      _selectedImages.add(p.image);
+      if (p.images != null && p.images!.isNotEmpty) {
+        _selectedImages.addAll(p.images!);
+      } else {
+        _selectedImages.add(p.image);
+      }
+      _selectedSize = p.size;
       if (p.video != null) {
         _uploadedVideo = p.video;
       }
@@ -70,7 +77,9 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
       return;
     }
 
-    final controller = Get.find<SellerProductsController>();
+    final controller = Get.isRegistered<SellerProductsController>() 
+        ? Get.find<SellerProductsController>() 
+        : Get.put(SellerProductsController());
     final isEdit = widget.editProduct != null;
 
     final newProduct = SellerProductModel(
@@ -79,9 +88,11 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
       category: _categoryController.text.trim(),
       price: double.tryParse(_priceController.text.trim()) ?? 0.0,
       stock: int.tryParse(_stockController.text.trim()) ?? 0,
-      image: _selectedImages.first,
+      image: _selectedImages.isNotEmpty ? _selectedImages.first : '',
+      images: _selectedImages.toList(),
       description: _descController.text.trim(),
       video: _uploadedVideo,
+      size: _selectedSize,
     );
 
     bool success = false;
@@ -171,6 +182,44 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
                             ? 'Please enter product name'
                             : null,
                       ),
+
+                      const SizedBox(height: 20),
+
+                      // Size Dropdown
+                      DropdownButtonFormField<String>(
+                        value: _selectedSize,
+                        decoration: InputDecoration(
+                          labelText: 'Size',
+                          labelStyle: TextStyle(color: isDark ? Colors.grey : Colors.grey[700]),
+                          filled: true,
+                          fillColor: isDark ? const Color(0xFF1E1E2A) : Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: isDark ? const Color(0xFF2A2A3C) : const Color(0xFFE5E7EB),
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                              color: isDark ? const Color(0xFF2A2A3C) : const Color(0xFFE5E7EB),
+                            ),
+                          ),
+                        ),
+                        dropdownColor: isDark ? const Color(0xFF1E1E2A) : Colors.white,
+                        items: _sizes.map((size) {
+                          return DropdownMenuItem(
+                            value: size,
+                            child: Text(size, style: TextStyle(color: isDark ? Colors.white : Colors.black87)),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          setState(() {
+                            _selectedSize = val;
+                          });
+                        },
+                      ),
+
                       const SizedBox(height: 20),
 
                       // Price & Stock
@@ -224,6 +273,7 @@ class _SellerAddProductScreenState extends State<SellerAddProductScreen> {
                             ? 'Please enter category'
                             : null,
                       ),
+
                       const SizedBox(height: 20),
 
                       // Description
