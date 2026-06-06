@@ -7,6 +7,7 @@ import '../../../../routes/app_routes.dart';
 import '../../products/controllers/products_controller.dart';
 import '../controllers/store_controller.dart';
 import '../widgets/featured_product_card.dart';
+import '../widgets/store_profile_avatar.dart';
 
 class StoreProfileScreen extends StatelessWidget {
   const StoreProfileScreen({super.key});
@@ -98,29 +99,9 @@ class StoreProfileScreen extends StatelessWidget {
                     Positioned(
                       top: 70,
                       left: 24,
-                      child: Container(
-                        width: 84,
-                        height: 84,
-                        decoration: BoxDecoration(
-                          color: isDark ? AppColors.darkCard : Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: isDark ? AppColors.darkBorder : Colors.white,
-                            width: 3,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.15),
-                              blurRadius: 12,
-                              offset: const Offset(0, 6),
-                            ),
-                          ],
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          store.avatar,
-                          style: const TextStyle(fontSize: 44),
-                        ),
+                      child: StoreProfileAvatarWidget(
+                        initials: store.avatar,
+                        isDark: isDark,
                       ),
                     ),
                   ],

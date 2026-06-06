@@ -5,8 +5,10 @@ class SellerProductModel {
   final double price;
   final int stock;
   final String image;
+  final List<String>? images;
   final String description;
   final String? video;
+  final String? size;
 
   SellerProductModel({
     required this.id,
@@ -15,8 +17,10 @@ class SellerProductModel {
     required this.price,
     required this.stock,
     required this.image,
+    this.images,
     required this.description,
     this.video,
+    this.size,
   });
 
   bool get isOutOfStock => stock <= 0;
@@ -29,8 +33,10 @@ class SellerProductModel {
       price: (json['price'] ?? 0.0).toDouble(),
       stock: json['stock'] ?? 0,
       image: json['image'] ?? '',
+      images: json['images'] != null ? List<String>.from(json['images']) : null,
       description: json['description'] ?? '',
       video: json['video'],
+      size: json['size'],
     );
   }
 
@@ -42,8 +48,10 @@ class SellerProductModel {
       'price': price,
       'stock': stock,
       'image': image,
+      'images': images,
       'description': description,
       'video': video,
+      'size': size,
     };
   }
 }

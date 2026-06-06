@@ -32,6 +32,8 @@ class AppRoutes {
   static const String sellerRevenueAnalytics = '/seller/dashboard/revenue-analytics';
   static const String sellerProducts = '/seller/products';
   static const String sellerAddProduct = '/seller/products/add';
+  static const String sellerCreateStory = '/seller/story/create';
+  static const String sellerViewStory = '/seller/story/view';
   static const String sellerLive = '/seller/live';
   static const String sellerOrders = '/seller/orders';
   static const String sellerOrderDetail = '/seller/orders/detail';
