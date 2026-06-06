@@ -224,7 +224,10 @@ class AppPages {
       GoRoute(
         path: AppRoutes.checkout,
         builder: (context, state) {
-          return const CheckoutScreen();
+          final item = state.extra as dynamic;
+          // To avoid circular dependency or import issues, we can just cast it or use it if we import the model
+          // I will import OrderItemModel at the top. But since it's dynamic right now, I'll let it be passed.
+          return CheckoutScreen(buyNowItem: item);
         },
       ),
       GoRoute(
