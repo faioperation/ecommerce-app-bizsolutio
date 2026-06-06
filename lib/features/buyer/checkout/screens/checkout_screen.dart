@@ -25,6 +25,10 @@ class CheckoutScreen extends StatelessWidget {
           controller.loadBuyNowItem(buyNowItem!);
         }
       });
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        controller.loadFromCart();
+      });
     }
 
     return Scaffold(

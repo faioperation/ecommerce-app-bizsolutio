@@ -5,6 +5,7 @@ import '../models/address_model.dart';
 import '../models/payment_method_model.dart';
 import '../models/delivery_option_model.dart';
 import '../models/order_item_model.dart';
+import '../../profile/controllers/cart_controller.dart';
 
 class CheckoutController extends GetxController {
   final selectedAddressId = ''.obs;
@@ -137,6 +138,20 @@ class CheckoutController extends GetxController {
   void loadBuyNowItem(OrderItemModel item) {
     orderItems.clear();
     orderItems.add(item);
+  }
+
+  void loadFromCart() {
+    if (Get.isRegistered<CartController>()) {
+      final cartController = Get.find<CartController>();
+      final items = cartController.items.map((c) => OrderItemModel(
+        productId: c.productId,
+        name: c.name,
+        imageUrl: c.imageUrl,
+        price: c.price,
+        quantity: c.quantity,
+      )).toList();
+      orderItems.assignAll(items);
+    }
   }
 
   void selectAddress(String id) => selectedAddressId.value = id;
