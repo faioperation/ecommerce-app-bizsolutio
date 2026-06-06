@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -36,98 +37,171 @@ class EditProfileScreen extends StatelessWidget {
         centerTitle: false,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 16),
-            GestureDetector(
-              onTap: controller.pickImage,
+            // Banner & Avatar Stack
+            SizedBox(
+              height: 200,
               child: Stack(
-                alignment: Alignment.bottomRight,
+                clipBehavior: Clip.none,
                 children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: isDark ? Colors.black : Colors.white,
-                        width: 4,
+                  // Banner
+                  GestureDetector(
+                    onTap: () => controller.pickBanner(context),
+                    child: Obx(() => Container(
+                      height: 150,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: isDark ? const Color(0xFF2A2535) : AppColors.lightBorder,
+                        image: controller.selectedBannerPath.value != null
+                            ? DecorationImage(
+                                image: controller.selectedBannerPath.value!.startsWith('http')
+                                    ? NetworkImage(controller.selectedBannerPath.value!)
+                                    : FileImage(File(controller.selectedBannerPath.value!)) as ImageProvider,
+                                fit: BoxFit.cover,
+                              )
+                            : null,
                       ),
-                    ),
-                    child: const Center(
-                      child: Icon(Icons.person, color: Colors.white, size: 48),
-                    ),
+                      child: controller.selectedBannerPath.value == null
+                          ? const Center(child: Icon(Icons.add_photo_alternate, color: Colors.grey, size: 40))
+                          : Align(
+                              alignment: Alignment.topRight,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  padding: const EdgeInsets.all(6),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black54,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(Icons.edit, color: Colors.white, size: 16),
+                                ),
+                              ),
+                            ),
+                    )),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(6),
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                      size: 16,
+                  // Avatar
+                  Positioned(
+                    bottom: 0,
+                    left: 24,
+                    child: GestureDetector(
+                      onTap: () => controller.pickImage(context),
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Obx(() => Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: isDark ? Colors.black : const Color(0xFFF8F9FC),
+                                width: 4,
+                              ),
+                              image: controller.selectedAvatarPath.value != null
+                                  ? DecorationImage(
+                                      image: controller.selectedAvatarPath.value!.startsWith('http')
+                                          ? NetworkImage(controller.selectedAvatarPath.value!)
+                                          : FileImage(File(controller.selectedAvatarPath.value!)) as ImageProvider,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : null,
+                            ),
+                            child: controller.selectedAvatarPath.value == null
+                                ? const Center(child: Icon(Icons.person, color: Colors.white, size: 40))
+                                : null,
+                          )),
+                          Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              shape: BoxShape.circle,
+                              border: Border.all(color: isDark ? Colors.black : Colors.white, width: 2),
+                            ),
+                            child: const Icon(
+                              Icons.camera_alt,
+                              color: Colors.white,
+                              size: 14,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 32),
 
-            _buildTextField(
-              controller: controller.nameController,
-              label: 'Full Name',
-              icon: Icons.person_outline,
-              isDark: isDark,
-            ),
-            const SizedBox(height: 20),
-            _buildTextField(
-              controller: controller.phoneController,
-              label: 'Phone Number',
-              icon: Icons.phone_outlined,
-              isDark: isDark,
-              keyboardType: TextInputType.phone,
-            ),
-            const SizedBox(height: 40),
-
-            Obx(
-              () => SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: controller.isLoading.value
-                      ? null
-                      : controller.saveProfile,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    elevation: 0,
+            // Form Fields
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  _buildTextField(
+                    controller: controller.nameController,
+                    label: 'Full Name',
+                    icon: Icons.person_outline,
+                    isDark: isDark,
                   ),
-                  child: controller.isLoading.value
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
+                  const SizedBox(height: 20),
+                  _buildTextField(
+                    controller: controller.bioController,
+                    label: 'Bio',
+                    icon: Icons.info_outline,
+                    isDark: isDark,
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 20),
+                  _buildTextField(
+                    controller: controller.phoneController,
+                    label: 'Phone Number',
+                    icon: Icons.phone_outlined,
+                    isDark: isDark,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  const SizedBox(height: 40),
+
+                  Obx(
+                    () => SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () => controller.saveProfile(context),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                        )
-                      : const Text(
-                          'Save Changes',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                          ),
+                          elevation: 0,
                         ),
-                ),
+                        child: controller.isLoading.value
+                            ? const SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text(
+                                'Save Changes',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  fontFamily: 'Inter',
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                ],
               ),
             ),
           ],
@@ -142,6 +216,7 @@ class EditProfileScreen extends StatelessWidget {
     required IconData icon,
     required bool isDark,
     TextInputType keyboardType = TextInputType.text,
+    int maxLines = 1,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,6 +236,7 @@ class EditProfileScreen extends StatelessWidget {
         TextField(
           controller: controller,
           keyboardType: keyboardType,
+          maxLines: maxLines,
           style: TextStyle(
             color: isDark
                 ? AppColors.darkTextPrimary
@@ -168,7 +244,12 @@ class EditProfileScreen extends StatelessWidget {
             fontFamily: 'Inter',
           ),
           decoration: InputDecoration(
-            prefixIcon: Icon(icon, color: AppColors.primary),
+            prefixIcon: maxLines > 1 
+                ? Padding(
+                    padding: const EdgeInsets.only(bottom: 48), // align top
+                    child: Icon(icon, color: AppColors.primary),
+                  ) 
+                : Icon(icon, color: AppColors.primary),
             filled: true,
             fillColor: isDark ? const Color(0xFF1A1625) : Colors.white,
             border: OutlineInputBorder(
